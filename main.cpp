@@ -32,7 +32,7 @@ int main()
 
     sprite.setTexture(texture);
     sprite.setScale(0.5f, 0.5f);
-    float speed = 1.345;
+    float speed = 7.345;
     float speed_y = speed;
     float speed_x = speed;
     float x = 0;
