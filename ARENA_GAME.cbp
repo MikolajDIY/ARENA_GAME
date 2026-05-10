@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="SFML_DVD" />
+		<Option title="ARENA_GAME" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -46,6 +46,12 @@
 			<Add library="sfml-system" />
 			<Add directory="ext/SFML-2.6.2/lib" />
 		</Linker>
+		<Unit filename="arena.cpp" />
+		<Unit filename="arena.h" />
+		<Unit filename="game.cpp">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="game.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
