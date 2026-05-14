@@ -3,6 +3,7 @@
 #include <string>
 #include "textureMenager.h"
 #include "player.h"
+#include "shop.h"
 
 class Arena;
 
@@ -36,11 +37,14 @@ private:
     TextureMenager textures;
 
     Player player;
+    Shop shop;
     Arena* currentArena = nullptr;
 
     Button* btnStart = nullptr;
     Button* btnMenu = nullptr;
+    Button* btnShop = nullptr;
     Button* btnSettings = nullptr;
+    Button* btnExit = nullptr;
 
     bool isMouseClicked_Left = false;
     bool isMouseClicked_Right = false;
@@ -56,5 +60,5 @@ public:
     void DisplayMenu(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
     void DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
     void DisplaySettings(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-
+    void DisplayShop(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
 };

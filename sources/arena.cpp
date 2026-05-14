@@ -9,7 +9,8 @@ Arena::Arena(std::string arenaName, TextureMenager& textures, Player& mainPlayer
     btnBackToMenu->ChangeSize(70,40);
     btnBackToMenu->ChangePosition(10,10);
 
-    // Wczytanie tekstur tla i przeciwnikow
+    // Wczytanie tekstur tla i przeciwnikow (tu lub w ich konstruktorach
+                                             //Do przemyslenia)
 
 }
 
@@ -32,9 +33,12 @@ bool Arena::Update(int mouseX, int mouseY, bool isClicked) {
 
 void Arena::Draw(sf::RenderWindow& window){
     // Rysowanie Areny
-
+    // Rysowanie Przeciwnikow
+    // Rysowania Gracza
+    player.Update();
     player.Draw(window);
 
+    //Rysowanie Przyciskow
     btnBackToMenu->Draw(window);
 }
 

@@ -13,6 +13,8 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="sources" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-mwindows" />
@@ -46,17 +48,17 @@
 			<Add library="sfml-system" />
 			<Add directory="ext/SFML-2.6.2/lib" />
 		</Linker>
-		<Unit filename="arena.cpp" />
-		<Unit filename="arena.h" />
-		<Unit filename="game.cpp">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="game.h" />
-		<Unit filename="main.cpp" />
-		<Unit filename="player.cpp" />
-		<Unit filename="player.h" />
-		<Unit filename="textureMenager.cpp" />
-		<Unit filename="textureMenager.h" />
+		<Unit filename="include/arena.h" />
+		<Unit filename="include/game.h" />
+		<Unit filename="include/player.h" />
+		<Unit filename="include/shop.h" />
+		<Unit filename="include/textureMenager.h" />
+		<Unit filename="sources/arena.cpp" />
+		<Unit filename="sources/game.cpp" />
+		<Unit filename="sources/main.cpp" />
+		<Unit filename="sources/player.cpp" />
+		<Unit filename="sources/shop.cpp" />
+		<Unit filename="sources/textureMenager.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

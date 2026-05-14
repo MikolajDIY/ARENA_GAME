@@ -6,7 +6,7 @@ TextureMenager::TextureMenager(){
         mainFont.loadFromFile("C:/Windows/Fonts/arial.ttf"); // Gdyby sie nie wczytalo
     }
 
-    testSword.loadFromFile("img/testSword.png");
+    steelSwordTexture.loadFromFile("img/testSword.png");
     playerTexture.loadFromFile("img/player.png");
 }
 TextureMenager::~TextureMenager(){
@@ -15,3 +15,4 @@ TextureMenager::~TextureMenager(){
 
 sf::Font& TextureMenager::getMainFont(){return mainFont;}
 sf::Texture& TextureMenager::getPlayerTexture(){return playerTexture;}
+sf::Texture& TextureMenager::getSteelSwordTexture(){return steelSwordTexture;}

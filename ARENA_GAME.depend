@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1778751446 source:c:\psio\arena_game\arena.cpp
+1778752326 source:c:\psio\arena_game\arena.cpp
 	"arena.h"
 	"textureMenager.h"
 	"player.h"
 
-1778751157 c:\psio\arena_game\arena.h
+1778752326 c:\psio\arena_game\arena.h
 	<SFML/Graphics.hpp>
 	<string>
 	"game.h"
@@ -427,7 +427,7 @@
 	<SFML/Graphics/Drawable.hpp>
 	<SFML/Window/GlResource.hpp>
 
-1778747410 c:\psio\arena_game\game.h
+1778752326 c:\psio\arena_game\game.h
 	<SFML/Graphics.hpp>
 	<string>
 	"textureMenager.h"
@@ -437,23 +437,73 @@
 	"game.h"
 	"arena.h"
 
-1778750215 source:c:\psio\arena_game\game.cpp
+1778752326 source:c:\psio\arena_game\game.cpp
 	"game.h"
 	"arena.h"
 	"textureMenager.h"
 
-1778749650 source:c:\psio\arena_game\texturemenager.cpp
+1778780963 source:c:\psio\arena_game\texturemenager.cpp
 	"textureMenager.h"
 
-1778749283 c:\psio\arena_game\texturemenager.h
+1778781019 c:\psio\arena_game\texturemenager.h
 	<SFML/Graphics.hpp>
 	<string>
 
-1778750149 source:c:\psio\arena_game\player.cpp
+1778781052 source:c:\psio\arena_game\player.cpp
 	"player.h"
 
-1778749946 c:\psio\arena_game\player.h
+1778752326 c:\psio\arena_game\player.h
 	<string>
 	<SFML/Graphics.hpp>
+	"textureMenager.h"
+
+1778784512 source:c:\psio\arena_game\sources\arena.cpp
+	"arena.h"
+	"textureMenager.h"
+	"player.h"
+
+1778752326 c:\psio\arena_game\include\arena.h
+	<SFML/Graphics.hpp>
+	<string>
+	"game.h"
+
+1778785774 c:\psio\arena_game\include\game.h
+	<SFML/Graphics.hpp>
+	<string>
+	"textureMenager.h"
+	"player.h"
+	"shop.h"
+
+1778781019 c:\psio\arena_game\include\texturemenager.h
+	<SFML/Graphics.hpp>
+	<string>
+
+1778786181 c:\psio\arena_game\include\player.h
+	<string>
+	<SFML/Graphics.hpp>
+	"textureMenager.h"
+
+1778785924 source:c:\psio\arena_game\sources\game.cpp
+	"game.h"
+	"arena.h"
+	"textureMenager.h"
+
+1778505513 source:c:\psio\arena_game\sources\main.cpp
+	"game.h"
+	"arena.h"
+
+1778783229 source:c:\psio\arena_game\sources\player.cpp
+	"player.h"
+
+1778780963 source:c:\psio\arena_game\sources\texturemenager.cpp
+	"textureMenager.h"
+
+1778785367 source:c:\psio\arena_game\sources\shop.cpp
+	"shop.h"
+	"game.h"
+
+1778785345 c:\psio\arena_game\include\shop.h
+	<SFML/Graphics.hpp>
+	<string>
 	"textureMenager.h"
 

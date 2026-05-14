@@ -62,7 +62,7 @@ void Button::ChangeSize(float x, float y){
 //-------------------------------------------------------
 
 
-Game::Game() : player(textures){
+Game::Game() : player(textures), shop(textures,player){
     window_width = 800;
     window_height = 600;
 };
@@ -71,6 +71,7 @@ Game::~Game(){
     delete btnMenu;
     delete btnSettings;
     delete btnStart;
+    delete btnExit;
 }
 
 void Game::Run(){
@@ -85,8 +86,10 @@ void Game::Run(){
     GameState MenuState = GameState::MainMenu;
 
     btnStart = new Button("START", {275,200}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
-    btnSettings = new Button("SETTINGS", {275, 300}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
     btnMenu = new Button("MENU",{275,300},textures.getMainFont(),sf::Color::Blue, sf::Color::Cyan);
+    btnShop = new Button("SHOP",{275,300}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
+    btnSettings = new Button("SETTINGS", {275, 400}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
+    btnExit = new Button("EXIT",{275,500},textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
 
     while(window.isOpen()){
         sf::Event event;
@@ -107,7 +110,9 @@ void Game::Run(){
         if (MenuState == GameState::Arena) {
             DisplayArena(window, textures ,MenuState,mousePos);
         }
-
+        else if(MenuState == GameState::Shop){
+            DisplayShop(window, textures, MenuState, mousePos);
+        }
         else if(MenuState == GameState::Settings){
             DisplaySettings(window, textures ,MenuState,mousePos);
         }
@@ -127,12 +132,20 @@ void Game::DisplayMenu(sf::RenderWindow& window, TextureMenager& textures, GameS
     if(btnStart->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         Menu_State = GameState::Arena;
     }
+    if(btnShop->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+        Menu_State = GameState::Shop;
+    }
     if(btnSettings->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         Menu_State = GameState::Settings;
     }
+    if(btnExit->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+        window.close();
+    }
 
     btnStart->Draw(window);
+    btnShop->Draw(window);
     btnSettings->Draw(window);
+    btnExit->Draw(window);
 
 }
 
@@ -164,5 +177,14 @@ void Game::DisplaySettings(sf::RenderWindow& window, TextureMenager& textures, G
     }
     btnMenu->Draw(window);
 
+}
+
+void Game::DisplayShop(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
+    if(!shop.Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+        Menu_State = GameState::MainMenu;
+    }
+    else{
+        shop.Draw(window);
+    }
 }
 

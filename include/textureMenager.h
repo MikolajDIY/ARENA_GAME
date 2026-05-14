@@ -16,7 +16,7 @@ private:
     sf::Font mainFont;
 
     // Textury itemow
-    sf::Texture testSword;
+    sf::Texture steelSwordTexture;
 
 public:
     TextureMenager();
@@ -27,4 +27,5 @@ public:
     sf::Font& getMainFont();
 
     sf::Texture& getPlayerTexture();
+    sf::Texture& getSteelSwordTexture();
 };
