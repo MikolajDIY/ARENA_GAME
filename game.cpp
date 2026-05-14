@@ -1,5 +1,6 @@
 #include "game.h"
 #include "arena.h"
+#include "textureMenager.h"
 //-------------------------------------------------------
 //                  CLASS BUTTON
 //-------------------------------------------------------
@@ -61,7 +62,7 @@ void Button::ChangeSize(float x, float y){
 //-------------------------------------------------------
 
 
-Game::Game(){
+Game::Game() : player(textures){
     window_width = 800;
     window_height = 600;
 };
@@ -83,9 +84,9 @@ void Game::Run(){
 
     GameState MenuState = GameState::MainMenu;
 
-    btnStart = new Button("START", {275,200}, font, sf::Color::Blue, sf::Color::Cyan);
-    btnSettings = new Button("SETTINGS", {275, 300}, font, sf::Color::Blue, sf::Color::Cyan);
-    btnMenu = new Button("MENU",{275,300},font,sf::Color::Blue, sf::Color::Cyan);
+    btnStart = new Button("START", {275,200}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
+    btnSettings = new Button("SETTINGS", {275, 300}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
+    btnMenu = new Button("MENU",{275,300},textures.getMainFont(),sf::Color::Blue, sf::Color::Cyan);
 
     while(window.isOpen()){
         sf::Event event;
@@ -104,22 +105,22 @@ void Game::Run(){
 
 
         if (MenuState == GameState::Arena) {
-            DisplayArena(window,font,MenuState,mousePos);
+            DisplayArena(window, textures ,MenuState,mousePos);
         }
 
         else if(MenuState == GameState::Settings){
-            DisplaySettings(window,font,MenuState,mousePos);
+            DisplaySettings(window, textures ,MenuState,mousePos);
         }
         else if(MenuState == GameState::MainMenu){
-            DisplayMenu(window, font, MenuState, mousePos);
+            DisplayMenu(window, textures, MenuState, mousePos);
         }
         window.display();
 
     }
 }
 
-void Game::DisplayMenu(sf::RenderWindow& window, sf::Font& font, GameState& Menu_State, sf::Vector2i& Mouse_pos){
-    sf::Text title("MENU", font, 60);
+void Game::DisplayMenu(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
+    sf::Text title("MENU", textures.getMainFont(), 60);
     title.setPosition(280, 100);
     window.draw(title);
 
@@ -135,9 +136,9 @@ void Game::DisplayMenu(sf::RenderWindow& window, sf::Font& font, GameState& Menu
 
 }
 
-void Game::DisplayArena(sf::RenderWindow& window, sf::Font& font, GameState& Menu_State, sf::Vector2i& Mouse_pos){
+void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
     if (currentArena == nullptr) {
-                currentArena = new Arena("Arena", font); // Tworzymy arenę tylko raz przy wejściu
+                currentArena = new Arena("Arena", textures, player);
             }
 
             // Sprawdzamy, czy arena chce kontynuować działanie
@@ -153,8 +154,8 @@ void Game::DisplayArena(sf::RenderWindow& window, sf::Font& font, GameState& Men
             }
 }
 
-void Game::DisplaySettings(sf::RenderWindow& window, sf::Font& font, GameState& Menu_State, sf::Vector2i& Mouse_pos){
-    sf::Text title("SETTINGS",font,60);
+void Game::DisplaySettings(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
+    sf::Text title("SETTINGS", textures.getMainFont(),60);
     title.setPosition(280,100);
     window.draw(title);
 

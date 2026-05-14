@@ -1,6 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "textureMenager.h"
+#include "player.h"
+
 class Arena;
 
 enum class GameState{MainMenu,Arena,Shop,GameOver, Settings};
@@ -30,9 +33,9 @@ private:
     int window_height = 600;
 
     sf::RenderWindow window;
-    sf::Texture playerTexture;
+    TextureMenager textures;
 
-    //Player player; // Po napisaniu klasy Player odkomentowac
+    Player player;
     Arena* currentArena = nullptr;
 
     Button* btnStart = nullptr;
@@ -50,8 +53,8 @@ public:
 
     void Run();
 
-    void DisplayMenu(sf::RenderWindow& window, sf::Font& font, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplayArena(sf::RenderWindow& window, sf::Font& font, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplaySettings(sf::RenderWindow& window, sf::Font& font, GameState& Menu_State, sf::Vector2i& Mouse_pos);
+    void DisplayMenu(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
+    void DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
+    void DisplaySettings(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
 
 };

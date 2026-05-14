@@ -9,17 +9,17 @@ enum class TurnState{PlayerMove, PlayerAttack, EnemiesTurn};
 class Arena{
 private:
     std::string name;
-    sf::Texture backgroundTexture;
     std::vector<sf::Texture> enemyTextures;
     sf::Sprite backgroundSprite;
-    sf::Font arenaFont;
+    TextureMenager& textures;
     TurnState currentState;
+    Player& player;
     // std::vector<Enemy*> enemies; // Po napisaniu klasy Enemy odkomentowac
 
     Button* btnBackToMenu = nullptr;
 
 public:
-    Arena(std::string arenaName, sf::Font font);
+    Arena(std::string arenaName, TextureMenager& textures, Player& mainPlayer);
 
     ~Arena();
 
