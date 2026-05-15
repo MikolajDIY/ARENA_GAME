@@ -2,7 +2,8 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "textureMenager.h"
-enum class SwordsTypes{SteelSword, GoldSword, WoodenSword};
+enum class SwordsTypes{Basic, Steel, Godnes};
+enum class PlayerType{Basic, Steel, Godnes};
 
 class Player{
 private:
@@ -10,7 +11,14 @@ private:
     sf::Sprite playerSprite;
     sf::Sprite swordSprite;
     sf::Vector2f position;
+    TextureMenager& textures;
+
     SwordsTypes swordtype;
+    PlayerType playertype;
+
+    // Odblokowane przedmioty
+    std::map<SwordsTypes, bool> unlockedSwords;
+    std::map<PlayerType, bool> unlockedSkins;
 
 public:
     Player(TextureMenager& textures);
