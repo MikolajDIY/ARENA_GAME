@@ -83,7 +83,7 @@ void Game::Run(){
         font.loadFromFile("C:/Windows/Fonts/arial.ttf");
     }
 
-    GameState MenuState = GameState::MainMenu;
+    GameState MenuState = GameState::Intro;
 
     btnStart = new Button("START", {275,200}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
     btnMenu = new Button("MENU",{275,300},textures.getMainFont(),sf::Color::Blue, sf::Color::Cyan);
@@ -119,6 +119,9 @@ void Game::Run(){
         else if(MenuState == GameState::MainMenu){
             DisplayMenu(window, textures, MenuState, mousePos);
         }
+        else if (MenuState == GameState::Intro) {
+            DisplayIntro(window, MenuState);
+        }
         window.display();
 
     }
@@ -126,7 +129,7 @@ void Game::Run(){
 
 void Game::DisplayMenu(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
     sf::Text title("MENU", textures.getMainFont(), 60);
-    title.setPosition(280, 100);
+    title.setPosition(300, 100);
     window.draw(title);
 
     if(btnStart->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
@@ -152,19 +155,19 @@ void Game::DisplayMenu(sf::RenderWindow& window, TextureMenager& textures, GameS
 void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
     if (currentArena == nullptr) {
                 currentArena = new Arena("Arena", textures, player);
-            }
+        }
 
-            // Sprawdzamy, czy arena chce kontynuować działanie
-            bool stayInArena = currentArena->Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left);
+        // Sprawdzamy, czy arena chce kontynuować działanie
+        bool stayInArena = currentArena->Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left);
 
-            if (!stayInArena) {
-                delete currentArena;
-                currentArena = nullptr;
-                Menu_State = GameState::MainMenu;
-            }
-            else {
-                currentArena->Draw(window);
-            }
+        if (!stayInArena) {
+            delete currentArena;
+            currentArena = nullptr;
+            Menu_State = GameState::MainMenu;
+        }
+        else {
+            currentArena->Draw(window);
+        }
 }
 
 void Game::DisplaySettings(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
@@ -186,5 +189,35 @@ void Game::DisplayShop(sf::RenderWindow& window, TextureMenager& textures, GameS
     else{
         shop.Draw(window);
     }
+}
+
+void Game::DisplayIntro(sf::RenderWindow& window, GameState& Menu_State){
+    // Czas wyświetlania jednego ekranu w sekundach
+    const float displayTime = 1.0f;
+
+    // Inicjalizacja przy pierwszym wejściu do metody
+    if (!isIntroInitialized) {
+            introSprite.setTexture(textures.getStudio()); // studio
+
+        introClock.restart();
+        isIntroInitialized = true;
+    }
+
+    // Zmiana na game name
+    if (introClock.getElapsedTime().asSeconds() >= displayTime) {
+        if (introStage == 1) {
+            introStage = 2;
+                introSprite.setTexture(textures.getGameName());
+
+            introClock.restart();
+        }
+        else if (introStage == 2) {
+            // Koniec intro, przełączamy stan gry na Menu Główne
+            Menu_State = GameState::MainMenu;
+        }
+    }
+
+    // Rysowanie aktualnego loga na ekranie
+    window.draw(introSprite);
 }
 

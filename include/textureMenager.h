@@ -4,13 +4,17 @@
 
 class TextureMenager{
 private:
-    // Textury postaci i tla
+    // Textury tla
     sf::Texture arenaBackGroundTexture;
+    sf::Texture studio;
+    sf::Texture gameName;
 
+    // Textury Gracza
     sf::Texture playerTextureBasic;
     sf::Texture playerTextureSteel;
     sf::Texture playerTextureGodnes;
 
+    // Textury Przeciwnikow
     sf::Texture BossTexture;
     sf::Texture ZombieTexture;
     sf::Texture SkeletonTexture;
@@ -31,6 +35,8 @@ public:
 
     // Gettery
     sf::Font& getMainFont();
+    sf::Texture& getStudio();
+    sf::Texture& getGameName();
 
     sf::Texture& getPlayerTextureBasic();
     sf::Texture& getBasicSwordTexture();
@@ -40,4 +46,9 @@ public:
 
     sf::Texture& getPlayerTextureGodnes();
     sf::Texture& getGodnesSwordTexture();
+
+    sf::Texture& getSkeleton();
+    sf::Texture& getZombie();
+    sf::Texture& getMage();
+    sf::Texture& getBoss();
 };

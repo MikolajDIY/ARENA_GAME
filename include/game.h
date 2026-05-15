@@ -7,7 +7,7 @@
 
 class Arena;
 
-enum class GameState{MainMenu,Arena,Shop,GameOver, Settings};
+enum class GameState{MainMenu,Arena,Shop,GameOver, Settings, Intro};
 
 class Button{
 private:
@@ -49,6 +49,12 @@ private:
     bool isMouseClicked_Left = false;
     bool isMouseClicked_Right = false;
 
+    // Intor
+    sf::Sprite introSprite;
+    sf::Clock introClock;
+    int introStage = 1;
+    bool isIntroInitialized = false;
+
 public:
     int points;
 
@@ -61,4 +67,5 @@ public:
     void DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
     void DisplaySettings(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
     void DisplayShop(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
+    void DisplayIntro(sf::RenderWindow& window, GameState& Menu_State);
 };

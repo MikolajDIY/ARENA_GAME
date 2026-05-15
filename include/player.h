@@ -13,6 +13,7 @@ private:
     sf::Vector2f position;
     TextureMenager& textures;
 
+    // Czym aktualnie jest gracz
     SwordsTypes swordtype;
     PlayerType playertype;
 
