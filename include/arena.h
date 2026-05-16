@@ -10,7 +10,7 @@ class Arena{
 private:
     std::string name;
     std::vector<sf::Texture> enemyTextures;
-    sf::Sprite backgroundSprite;
+    sf::Sprite arenaBackGround;
     TextureMenager& textures;
     TurnState currentState;
     Player& player;

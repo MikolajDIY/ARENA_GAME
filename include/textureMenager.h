@@ -36,10 +36,13 @@ public:
 
     // Gettery
     sf::Font& getMainFont();
+    // TLA
     sf::Texture& getStudio();
     sf::Texture& getGameName();
     sf::Texture& getMenuBackGround();
+    sf::Texture& getArenaBackGround();
 
+    // GRACZ I JEGO EKWIPUNEK
     sf::Texture& getPlayerTextureBasic();
     sf::Texture& getBasicSwordTexture();
 
@@ -49,6 +52,7 @@ public:
     sf::Texture& getPlayerTextureGodnes();
     sf::Texture& getGodnesSwordTexture();
 
+    // PRZECIWNICY
     sf::Texture& getSkeleton();
     sf::Texture& getZombie();
     sf::Texture& getMage();

@@ -8,7 +8,7 @@ Arena::Arena(std::string arenaName, TextureMenager& textures, Player& mainPlayer
     currentState = TurnState::PlayerMove;
     btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     btnBackToMenu->ChangeSize(90,40);
-
+    arenaBackGround.setTexture(textures.getArenaBackGround());
 
     // Wczytanie tekstur tla i przeciwnikow (tu lub w ich konstruktorach
                                              //Do przemyslenia)
@@ -34,6 +34,7 @@ bool Arena::Update(int mouseX, int mouseY, bool isClicked) {
 
 void Arena::Draw(sf::RenderWindow& window){
     // Rysowanie Areny
+    window.draw(arenaBackGround);
     // Rysowanie Przeciwnikow
     // Rysowania Gracza
     player.Update();
