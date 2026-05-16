@@ -16,6 +16,7 @@ private:
     int window_height = 600;
 
     sf::RenderWindow window;
+    sf::Sprite menuBackGround;
     TextureMenager textures;
 
     Player player;

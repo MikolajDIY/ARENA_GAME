@@ -5,6 +5,7 @@ TextureMenager::TextureMenager(){
     if (!mainFont.loadFromFile("fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf")) {
         mainFont.loadFromFile("C:/Windows/Fonts/arial.ttf"); // Gdyby sie nie wczytalo
     }
+    menuBackGround.loadFromFile("img/backgrounds/menu.png");
     gameName.loadFromFile("img/intro/the-arena.png");
     studio.loadFromFile("img/intro/intro.png");
 
@@ -24,6 +25,7 @@ TextureMenager::~TextureMenager(){
 sf::Font& TextureMenager::getMainFont(){return mainFont;}
 sf::Texture& TextureMenager::getGameName(){return gameName;}
 sf::Texture& TextureMenager::getStudio(){return studio;}
+sf::Texture& TextureMenager::getMenuBackGround(){return menuBackGround;}
 
 sf::Texture& TextureMenager::getPlayerTextureBasic(){return playerTextureBasic;}
 sf::Texture& TextureMenager::getBasicSwordTexture(){return basicSwordTexture;}

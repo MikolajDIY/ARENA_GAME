@@ -2,6 +2,7 @@
 #include "arena.h"
 #include "textureMenager.h"
 #include "theme.h"
+#include "utils.h"
 
 //-------------------------------------------------------
 //                  CLASS GAME
@@ -11,6 +12,7 @@
 Game::Game() : player(textures), shop(textures,player), settings(textures, player){
     window_width = 800;
     window_height = 600;
+    menuBackGround.setTexture(textures.getMenuBackGround());
 };
 
 Game::~Game(){
@@ -30,9 +32,6 @@ void Game::Run(){
     }
 
     GameState MenuState = GameState::Intro;
-
-    sf::Color normalColor(30, 30, 30, 220);  // Ciemny grafit
-    sf::Color hoverColor(45, 80, 45, 240);   // Mroczna, toksyczna zieleń
 
     btnStart = new Button("START", {275, 200}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     btnMenu = new Button("MENU", {275, 300}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
@@ -77,9 +76,13 @@ void Game::Run(){
 }
 
 void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos){
-    sf::Text title("MENU", textures.getMainFont(), 60);
-    title.setPosition(300, 100);
-    window.draw(title);
+    sf::Text title("The Arena", textures.getMainFont(), 60);
+    Utils::CenterTextOrigin(title);
+    title.setOutlineColor(sf::Color::Black);
+    title.setFillColor(Theme::Text);
+    title.setOutlineThickness(3.f);
+    title.setPosition(400, 100);
+
 
     if(btnStart->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         Menu_State = GameState::Arena;
@@ -94,10 +97,12 @@ void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vect
         window.close();
     }
 
+    window.draw(menuBackGround);
     btnStart->Draw(window);
     btnShop->Draw(window);
     btnSettings->Draw(window);
     btnExit->Draw(window);
+    window.draw(title);
 
 }
 

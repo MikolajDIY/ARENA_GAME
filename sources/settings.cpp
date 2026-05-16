@@ -1,23 +1,37 @@
 #include "settings.h"
 #include "button.h"
 #include "theme.h"
+#include "utils.h"
 
  Settings::Settings(TextureMenager& textures, Player& player){
-    btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
-    btnBackToMenu->ChangeSize(80,40);
+    buttons["BackToMenu"] = new Button("Menu", {10,10},textures.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    buttons["BackToMenu"]->ChangeSize(80,40);
+
+    texts["Settings"] = sf::Text("Settings",textures.getMainFont(), 60);
+    Utils::CenterTextOrigin(texts["Settings"]);
+    texts["Settings"].setPosition(400,40);
  }
 
  Settings::~Settings(){
-    delete btnBackToMenu;
+    for (auto const& pair : buttons){
+        delete pair.second;
+    }
+    buttons.clear();
  }
 
 bool Settings::Update(int mouseX, int mouseY, bool isClicked){
-    if (btnBackToMenu->IsClicked(mouseX, mouseY, isClicked)) {
+    if (buttons["BackToMenu"]->IsClicked(mouseX, mouseY, isClicked)) {
         return false;
     }
     return true;
  }
 
 void Settings::Draw(sf::RenderWindow& window){
-    btnBackToMenu->Draw(window);
+    for(auto const& pair : buttons){
+        pair.second->Draw(window);
+    }
+    for(auto const& pair : texts){
+        window.draw(pair.second);
+    }
+
  }

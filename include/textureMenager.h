@@ -5,7 +5,8 @@
 class TextureMenager{
 private:
     // Textury tla
-    sf::Texture arenaBackGroundTexture;
+    sf::Texture arenaBackGround;
+    sf::Texture menuBackGround;
     sf::Texture studio;
     sf::Texture gameName;
 
@@ -37,6 +38,7 @@ public:
     sf::Font& getMainFont();
     sf::Texture& getStudio();
     sf::Texture& getGameName();
+    sf::Texture& getMenuBackGround();
 
     sf::Texture& getPlayerTextureBasic();
     sf::Texture& getBasicSwordTexture();
