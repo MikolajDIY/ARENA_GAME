@@ -4,30 +4,11 @@
 #include "textureMenager.h"
 #include "player.h"
 #include "shop.h"
-
+#include "button.h"
+#include "settings.h"
 class Arena;
 
 enum class GameState{MainMenu,Arena,Shop,GameOver, Settings, Intro};
-
-class Button{
-private:
-    sf::RectangleShape shape;
-    sf::Text buttonText;
-    sf::Color normalColor;
-    sf::Color hoverColor;
-    sf::Vector2f Position;
-    int fontSize;
-
-public:
-    Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color normalC, sf::Color hoverC);
-
-    bool IsClicked(int mouseX, int mouseY, bool MouseClicked);
-
-    void Draw(sf::RenderWindow& window);
-    void ChangePosition(float x, float y);
-    void ChangeSize(float x, float y);
-    void ChangeTextColor(sf::Color color);
-};
 
 class Game{
 private:
@@ -39,6 +20,7 @@ private:
 
     Player player;
     Shop shop;
+    Settings settings;
     Arena* currentArena = nullptr;
 
     Button* btnStart = nullptr;
@@ -64,9 +46,9 @@ public:
 
     void Run();
 
-    void DisplayMenu(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
+    void DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos);
     void DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplaySettings(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplayShop(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
+    void DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos);
+    void DisplayShop(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos);
     void DisplayIntro(sf::RenderWindow& window, GameState& Menu_State);
 };

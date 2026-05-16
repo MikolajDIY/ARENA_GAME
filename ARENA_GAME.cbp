@@ -53,6 +53,7 @@
 		<Unit filename="include/player.h" />
 		<Unit filename="include/shop.h" />
 		<Unit filename="include/textureMenager.h" />
+		<Unit filename="include/theme.h" />
 		<Unit filename="sources/arena.cpp" />
 		<Unit filename="sources/game.cpp" />
 		<Unit filename="sources/main.cpp" />

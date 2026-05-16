@@ -2,89 +2,13 @@
 #include "arena.h"
 #include "textureMenager.h"
 #include "theme.h"
-//-------------------------------------------------------
-//                  CLASS BUTTON
-//-------------------------------------------------------
-
-
-Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color normalC, sf::Color hoverC){
-    normalColor = normalC;
-    hoverColor = hoverC;
-    Position = pos;
-
-    shape.setSize(sf::Vector2f(250, 60));
-    shape.setPosition(Position);
-    shape.setFillColor(normalColor);
-
-    // Obramowanie przycisku
-    shape.setOutlineThickness(3.f);
-    shape.setOutlineColor(sf::Color(100, 70, 50));
-
-    buttonText.setFont(font);
-    buttonText.setString(text);
-    buttonText.setCharacterSize(30);
-    buttonText.setFillColor(Theme::Text);
-
-    sf::FloatRect textRect = buttonText.getLocalBounds();
-    buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-    buttonText.setPosition(Position.x + shape.getSize().x / 2.0f, Position.y + shape.getSize().y / 2.0f);
-}
-
-bool Button::IsClicked(int mouseX, int mouseY, bool MouseClicked){
-    sf::Vector2f mousePos(static_cast<float>(mouseX), static_cast<float>(mouseY));
-    bool Hoverd = shape.getGlobalBounds().contains(mousePos);
-
-    if(Hoverd){
-        shape.setFillColor(hoverColor);
-    }
-    else{
-        shape.setFillColor(normalColor);
-    }
-    return Hoverd && MouseClicked;
-}
-
-void Button::Draw(sf::RenderWindow& window){
-    window.draw(shape);
-    window.draw(buttonText);
-}
-
-void Button::ChangePosition(float x, float y){
-    Position.x = x;
-    Position.y = y;
-    shape.setPosition(Position);
-
-    buttonText.setPosition(
-        Position.x + (shape.getSize().x / 2.f), Position.y + (shape.getSize().y / 2.f)
-    );
-}
-void Button::ChangeSize(float x, float y){
-    shape.setSize(sf::Vector2f(x,y));
-    fontSize = y/2;
-    buttonText.setCharacterSize(fontSize);
-    // Zmiana rozmiaru tekstu
-    int fontSize = static_cast<int>(y / 2);
-    buttonText.setCharacterSize(fontSize);
-    // Obliczenie nowego srodka tekstu
-    sf::FloatRect textRect = buttonText.getLocalBounds();
-    buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-
-    buttonText.setPosition(
-        Position.x + (shape.getSize().x / 2.0f),
-        Position.y + (shape.getSize().y / 2.0f)
-    );
-}
-
-void Button::ChangeTextColor(sf::Color color){
-    buttonText.setFillColor(color);
-}
-
 
 //-------------------------------------------------------
 //                  CLASS GAME
 //-------------------------------------------------------
 
 
-Game::Game() : player(textures), shop(textures,player){
+Game::Game() : player(textures), shop(textures,player), settings(textures, player){
     window_width = 800;
     window_height = 600;
 };
@@ -136,13 +60,13 @@ void Game::Run(){
             DisplayArena(window, textures ,MenuState,mousePos);
         }
         else if(MenuState == GameState::Shop){
-            DisplayShop(window, textures, MenuState, mousePos);
+            DisplayShop(window, MenuState, mousePos);
         }
         else if(MenuState == GameState::Settings){
-            DisplaySettings(window, textures ,MenuState,mousePos);
+            DisplaySettings(window, MenuState,mousePos);
         }
         else if(MenuState == GameState::MainMenu){
-            DisplayMenu(window, textures, MenuState, mousePos);
+            DisplayMenu(window, MenuState, mousePos);
         }
         else if (MenuState == GameState::Intro) {
             DisplayIntro(window, MenuState);
@@ -152,7 +76,7 @@ void Game::Run(){
     }
 }
 
-void Game::DisplayMenu(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
+void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos){
     sf::Text title("MENU", textures.getMainFont(), 60);
     title.setPosition(300, 100);
     window.draw(title);
@@ -195,19 +119,16 @@ void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, Game
         }
 }
 
-void Game::DisplaySettings(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
-    sf::Text title("SETTINGS", textures.getMainFont(),60);
-    title.setPosition(280,100);
-    window.draw(title);
-
-    if(btnMenu->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+void Game::DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos){
+    if(!settings.Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         Menu_State = GameState::MainMenu;
     }
-    btnMenu->Draw(window);
-
+    else{
+        settings.Draw(window);
+    }
 }
 
-void Game::DisplayShop(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
+void Game::DisplayShop(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos){
     if(!shop.Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         Menu_State = GameState::MainMenu;
     }

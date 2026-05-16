@@ -457,7 +457,7 @@
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
 
-1778926849 source:c:\psio\arena_game\sources\arena.cpp
+1778928121 source:c:\psio\arena_game\sources\arena.cpp
 	"arena.h"
 	"textureMenager.h"
 	"player.h"
@@ -468,12 +468,14 @@
 	<string>
 	"game.h"
 
-1778926632 c:\psio\arena_game\include\game.h
+1778936219 c:\psio\arena_game\include\game.h
 	<SFML/Graphics.hpp>
 	<string>
 	"textureMenager.h"
 	"player.h"
 	"shop.h"
+	"button.h"
+	"settings.h"
 
 1778885718 c:\psio\arena_game\include\texturemenager.h
 	<SFML/Graphics.hpp>
@@ -484,7 +486,7 @@
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
 
-1778926709 source:c:\psio\arena_game\sources\game.cpp
+1778936357 source:c:\psio\arena_game\sources\game.cpp
 	"game.h"
 	"arena.h"
 	"textureMenager.h"
@@ -497,10 +499,10 @@
 1778858350 source:c:\psio\arena_game\sources\player.cpp
 	"player.h"
 
-1778924568 source:c:\psio\arena_game\sources\texturemenager.cpp
+1778928121 source:c:\psio\arena_game\sources\texturemenager.cpp
 	"textureMenager.h"
 
-1778926860 source:c:\psio\arena_game\sources\shop.cpp
+1778928121 source:c:\psio\arena_game\sources\shop.cpp
 	"shop.h"
 	"game.h"
 	"theme.h"
@@ -510,6 +512,24 @@
 	<string>
 	"textureMenager.h"
 
-1778926777 c:\psio\arena_game\include\theme.h
+1778928121 c:\psio\arena_game\include\theme.h
 	<SFML/Graphics.hpp>
+
+1778935550 c:\psio\arena_game\include\button.h
+	<SFML/Graphics.hpp>
+	<string>
+
+1778935619 source:c:\psio\arena_game\sources\button.cpp
+	"button.h"
+	"theme.h"
+
+1778935852 source:c:\psio\arena_game\sources\settings.cpp
+	"settings.h"
+	"button.h"
+	"theme.h"
+
+1778935756 c:\psio\arena_game\include\settings.h
+	<SFML/Graphics.hpp>
+	<string>
+	"textureMenager.h"
 
