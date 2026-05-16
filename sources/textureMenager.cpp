@@ -2,7 +2,7 @@
 
 TextureMenager::TextureMenager(){
     // Ladowanie czcionki
-    if (!mainFont.loadFromFile("fonts/porkybold.otf")) {
+    if (!mainFont.loadFromFile("fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf")) {
         mainFont.loadFromFile("C:/Windows/Fonts/arial.ttf"); // Gdyby sie nie wczytalo
     }
     gameName.loadFromFile("img/intro/the-arena.png");

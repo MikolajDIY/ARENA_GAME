@@ -26,6 +26,7 @@ public:
     void Draw(sf::RenderWindow& window);
     void ChangePosition(float x, float y);
     void ChangeSize(float x, float y);
+    void ChangeTextColor(sf::Color color);
 };
 
 class Game{

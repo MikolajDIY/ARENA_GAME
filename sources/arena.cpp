@@ -1,13 +1,14 @@
 #include "arena.h"
 #include "textureMenager.h"
 #include "player.h"
+#include "theme.h"
 
 Arena::Arena(std::string arenaName, TextureMenager& textures, Player& mainPlayer) : textures(textures), player(mainPlayer){
     name = arenaName;
     currentState = TurnState::PlayerMove;
-    btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), sf::Color::Red, sf::Color::Magenta);
-    btnBackToMenu->ChangeSize(70,40);
-    btnBackToMenu->ChangePosition(10,10);
+    btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnBackToMenu->ChangeSize(90,40);
+
 
     // Wczytanie tekstur tla i przeciwnikow (tu lub w ich konstruktorach
                                              //Do przemyslenia)

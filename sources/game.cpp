@@ -1,6 +1,7 @@
 #include "game.h"
 #include "arena.h"
 #include "textureMenager.h"
+#include "theme.h"
 //-------------------------------------------------------
 //                  CLASS BUTTON
 //-------------------------------------------------------
@@ -15,13 +16,18 @@ Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color nor
     shape.setPosition(Position);
     shape.setFillColor(normalColor);
 
+    // Obramowanie przycisku
+    shape.setOutlineThickness(3.f);
+    shape.setOutlineColor(sf::Color(100, 70, 50));
+
     buttonText.setFont(font);
     buttonText.setString(text);
     buttonText.setCharacterSize(30);
+    buttonText.setFillColor(Theme::Text);
 
-    buttonText.setPosition(
-        Position.x + (shape.getSize().x / 2.f) - (buttonText.getGlobalBounds().width / 2.f), Position.y +10
-    );
+    sf::FloatRect textRect = buttonText.getLocalBounds();
+    buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+    buttonText.setPosition(Position.x + shape.getSize().x / 2.0f, Position.y + shape.getSize().y / 2.0f);
 }
 
 bool Button::IsClicked(int mouseX, int mouseY, bool MouseClicked){
@@ -46,14 +52,30 @@ void Button::ChangePosition(float x, float y){
     Position.x = x;
     Position.y = y;
     shape.setPosition(Position);
+
     buttonText.setPosition(
-        Position.x + (shape.getSize().x / 2.f) - (buttonText.getGlobalBounds().width / 2.f), Position.y +10
+        Position.x + (shape.getSize().x / 2.f), Position.y + (shape.getSize().y / 2.f)
     );
 }
 void Button::ChangeSize(float x, float y){
     shape.setSize(sf::Vector2f(x,y));
     fontSize = y/2;
     buttonText.setCharacterSize(fontSize);
+    // Zmiana rozmiaru tekstu
+    int fontSize = static_cast<int>(y / 2);
+    buttonText.setCharacterSize(fontSize);
+    // Obliczenie nowego srodka tekstu
+    sf::FloatRect textRect = buttonText.getLocalBounds();
+    buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+
+    buttonText.setPosition(
+        Position.x + (shape.getSize().x / 2.0f),
+        Position.y + (shape.getSize().y / 2.0f)
+    );
+}
+
+void Button::ChangeTextColor(sf::Color color){
+    buttonText.setFillColor(color);
 }
 
 
@@ -85,11 +107,14 @@ void Game::Run(){
 
     GameState MenuState = GameState::Intro;
 
-    btnStart = new Button("START", {275,200}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
-    btnMenu = new Button("MENU",{275,300},textures.getMainFont(),sf::Color::Blue, sf::Color::Cyan);
-    btnShop = new Button("SHOP",{275,300}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
-    btnSettings = new Button("SETTINGS", {275, 400}, textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
-    btnExit = new Button("EXIT",{275,500},textures.getMainFont(), sf::Color::Blue, sf::Color::Cyan);
+    sf::Color normalColor(30, 30, 30, 220);  // Ciemny grafit
+    sf::Color hoverColor(45, 80, 45, 240);   // Mroczna, toksyczna zieleń
+
+    btnStart = new Button("START", {275, 200}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnMenu = new Button("MENU", {275, 300}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnShop = new Button("SHOP", {275, 300}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnSettings = new Button("SETTINGS", {275, 400}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnExit = new Button("EXIT", {275, 500}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
 
     while(window.isOpen()){
         sf::Event event;

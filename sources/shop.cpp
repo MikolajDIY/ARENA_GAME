@@ -1,10 +1,10 @@
 #include "shop.h"
 #include "game.h"
+#include "theme.h"
 
  Shop::Shop(TextureMenager& textures, Player& player){
-    btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), sf::Color::Red, sf::Color::Magenta);
-    btnBackToMenu->ChangeSize(70,40);
-    btnBackToMenu->ChangePosition(10,10);
+    btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnBackToMenu->ChangeSize(80,40);
  }
 
  Shop::~Shop(){
