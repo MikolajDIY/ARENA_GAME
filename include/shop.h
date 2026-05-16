@@ -8,6 +8,7 @@ class Player;
 class Shop{
 private:
     Button* btnBackToMenu;
+    sf::Sprite BackGround;
 
 public:
     Shop(TextureMenager& textures, Player& player);

@@ -5,6 +5,7 @@
  Shop::Shop(TextureMenager& textures, Player& player){
     btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     btnBackToMenu->ChangeSize(80,40);
+    BackGround.setTexture(textures.getShopBackGround());
  }
 
  Shop::~Shop(){
@@ -19,5 +20,6 @@ bool Shop::Update(int mouseX, int mouseY, bool isClicked){
  }
 
 void Shop::Draw(sf::RenderWindow& window){
+    window.draw(BackGround);
     btnBackToMenu->Draw(window);
  }

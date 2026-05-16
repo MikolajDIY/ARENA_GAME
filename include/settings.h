@@ -8,6 +8,7 @@ class Player;
 
 class Settings{
 private:
+    sf::Sprite BackGround;
     std::map<std::string, Button*> buttons;
     std::map<std::string, sf::Text> texts;
 

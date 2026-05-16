@@ -4,6 +4,7 @@
 #include "utils.h"
 
  Settings::Settings(TextureMenager& textures, Player& player){
+    BackGround.setTexture(textures.getSettingsBackGround());
     buttons["BackToMenu"] = new Button("Menu", {10,10},textures.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     buttons["BackToMenu"]->ChangeSize(80,40);
 
@@ -27,11 +28,12 @@ bool Settings::Update(int mouseX, int mouseY, bool isClicked){
  }
 
 void Settings::Draw(sf::RenderWindow& window){
+    window.draw(BackGround);
+
     for(auto const& pair : buttons){
         pair.second->Draw(window);
     }
     for(auto const& pair : texts){
         window.draw(pair.second);
     }
-
  }

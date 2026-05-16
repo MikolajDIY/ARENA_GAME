@@ -9,6 +9,8 @@ private:
     sf::Texture menuBackGround;
     sf::Texture studio;
     sf::Texture gameName;
+    sf::Texture settingsBackGround;
+    sf::Texture shopBackGround;
 
     // Textury Gracza
     sf::Texture playerTextureBasic;
@@ -41,6 +43,8 @@ public:
     sf::Texture& getGameName();
     sf::Texture& getMenuBackGround();
     sf::Texture& getArenaBackGround();
+    sf::Texture& getSettingsBackGround();
+    sf::Texture& getShopBackGround();
 
     // GRACZ I JEGO EKWIPUNEK
     sf::Texture& getPlayerTextureBasic();

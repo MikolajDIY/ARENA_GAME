@@ -5,10 +5,13 @@ TextureMenager::TextureMenager(){
     if (!mainFont.loadFromFile("fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf")) {
         mainFont.loadFromFile("C:/Windows/Fonts/arial.ttf"); // Gdyby sie nie wczytalo
     }
+    // WCZYTANIE TLA
     menuBackGround.loadFromFile("img/backgrounds/menu.png");
     arenaBackGround.loadFromFile("img/backgrounds/arena.png");
     gameName.loadFromFile("img/intro/the-arena.png");
     studio.loadFromFile("img/intro/intro.png");
+    settingsBackGround.loadFromFile("img/backgrounds/settings.png");
+    shopBackGround.loadFromFile("img/backgrounds/shop.png");
 
     basicSwordTexture.loadFromFile("img/s_basic.png");
     playerTextureBasic.loadFromFile("img/p_basic.png");
@@ -28,6 +31,8 @@ sf::Texture& TextureMenager::getGameName(){return gameName;}
 sf::Texture& TextureMenager::getStudio(){return studio;}
 sf::Texture& TextureMenager::getMenuBackGround(){return menuBackGround;}
 sf::Texture& TextureMenager::getArenaBackGround(){return arenaBackGround;}
+sf::Texture& TextureMenager::getSettingsBackGround(){return settingsBackGround;}
+sf::Texture& TextureMenager::getShopBackGround(){return shopBackGround;}
 
 sf::Texture& TextureMenager::getPlayerTextureBasic(){return playerTextureBasic;}
 sf::Texture& TextureMenager::getBasicSwordTexture(){return basicSwordTexture;}
