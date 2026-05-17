@@ -1,5 +1,9 @@
 #include "textureMenager.h"
 
+// -------------------------------------
+//              CLASS TEXTUREMENAGER
+// -------------------------------------
+
 TextureMenager::TextureMenager(){
     // Ladowanie czcionki
     if (!mainFont.loadFromFile("fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf")) {
@@ -13,19 +17,26 @@ TextureMenager::TextureMenager(){
     settingsBackGround.loadFromFile("img/backgrounds/settings.png");
     shopBackGround.loadFromFile("img/backgrounds/shop.png");
 
+    // WCZYTANIE MIECZY
     basicSwordTexture.loadFromFile("img/s_basic.png");
-    playerTextureBasic.loadFromFile("img/p_basic.png");
-
     steelSwordTexture.loadFromFile("img/s_steel.png");
-    playerTextureSteel.loadFromFile("img/p_steel.png");
-
     godnesSwordTexture.loadFromFile("img/s_godnes.png");
+
+    // WCZYTANIE ZBROJI
+    playerTextureBasic.loadFromFile("img/p_basic.png");
+    playerTextureSteel.loadFromFile("img/p_steel.png");
     playerTextureGodnes.loadFromFile("img/p_godnes.png");
+
+    // WCZYTANIE WROGOW
+    MageTexture.loadFromFile("img/mag.png");
+    SkeletonTexture.loadFromFile("img/skeleton.png");
+    ZombieTexture.loadFromFile("img/zombie.png");
+    BossTexture.loadFromFile("img/boss.png");
 }
 TextureMenager::~TextureMenager(){
 
 }
-
+// GETERY TLA
 sf::Font& TextureMenager::getMainFont(){return mainFont;}
 sf::Texture& TextureMenager::getGameName(){return gameName;}
 sf::Texture& TextureMenager::getStudio(){return studio;}
@@ -34,15 +45,17 @@ sf::Texture& TextureMenager::getArenaBackGround(){return arenaBackGround;}
 sf::Texture& TextureMenager::getSettingsBackGround(){return settingsBackGround;}
 sf::Texture& TextureMenager::getShopBackGround(){return shopBackGround;}
 
-sf::Texture& TextureMenager::getPlayerTextureBasic(){return playerTextureBasic;}
+// GETERY MIECZY
 sf::Texture& TextureMenager::getBasicSwordTexture(){return basicSwordTexture;}
-
-sf::Texture& TextureMenager::getPlayerTextureSteel(){return playerTextureSteel;}
 sf::Texture& TextureMenager::getSteelSwordTexture(){return steelSwordTexture;}
-
-sf::Texture& TextureMenager::getPlayerTextureGodnes(){return playerTextureGodnes;}
 sf::Texture& TextureMenager::getGodnesSwordTexture(){return godnesSwordTexture;}
 
+// GETERY ZBROJI
+sf::Texture& TextureMenager::getPlayerTextureBasic(){return playerTextureBasic;}
+sf::Texture& TextureMenager::getPlayerTextureSteel(){return playerTextureSteel;}
+sf::Texture& TextureMenager::getPlayerTextureGodnes(){return playerTextureGodnes;}
+
+// GETERY TEXTUR WROGA
 sf::Texture& TextureMenager::getSkeleton(){return SkeletonTexture;}
 sf::Texture& TextureMenager::getZombie(){return ZombieTexture;}
 sf::Texture& TextureMenager::getMage(){return MageTexture;}

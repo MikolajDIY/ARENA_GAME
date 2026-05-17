@@ -24,11 +24,7 @@ private:
     Settings settings;
     Arena* currentArena = nullptr;
 
-    Button* btnStart = nullptr;
-    Button* btnMenu = nullptr;
-    Button* btnShop = nullptr;
-    Button* btnSettings = nullptr;
-    Button* btnExit = nullptr;
+    std::map<std::string, Button*> buttons;
 
     bool isMouseClicked_Left = false;
     bool isMouseClicked_Right = false;

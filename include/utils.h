@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+//--------------------------------------
+// FUNKCJE KTORE BEDZIEMY CZESTO UZYWAC
+//--------------------------------------
 namespace Utils{
     inline void CenterTextOrigin(sf::Text& text){
         sf::FloatRect bounds = text.getLocalBounds();

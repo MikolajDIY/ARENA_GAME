@@ -1,19 +1,30 @@
 #include "shop.h"
 #include "game.h"
 #include "theme.h"
+#include "utils.h"
 
- Shop::Shop(TextureMenager& textures, Player& player){
-    btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
-    btnBackToMenu->ChangeSize(80,40);
+Shop::Shop(TextureMenager& textures, Player& player) : player(player){
     BackGround.setTexture(textures.getShopBackGround());
+    buttons["BackToMenu"] = new Button("Menu", {10,10},textures.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    buttons["BackToMenu"]->ChangeSize(80,40);
+
+    texts["Shop"] = sf::Text("Shop",textures.getMainFont(), 40);
+    Utils::CenterTextOrigin(texts["Shop"]);
+    texts["Shop"].setPosition(400,40);
  }
 
- Shop::~Shop(){
-    delete btnBackToMenu;
+Shop::~Shop(){
+    for (auto const& button : buttons){
+        delete button.second;
+    }
+    buttons.clear();
  }
 
+// -------------------------------------
+// RYSOWANIE SKLEPU
+// -------------------------------------
 bool Shop::Update(int mouseX, int mouseY, bool isClicked){
-    if (btnBackToMenu->IsClicked(mouseX, mouseY, isClicked)) {
+    if (buttons["BackToMenu"]->IsClicked(mouseX, mouseY, isClicked)) {
         return false;
     }
     return true;
@@ -21,5 +32,11 @@ bool Shop::Update(int mouseX, int mouseY, bool isClicked){
 
 void Shop::Draw(sf::RenderWindow& window){
     window.draw(BackGround);
-    btnBackToMenu->Draw(window);
+
+    for(auto const& button : buttons){
+        button.second->Draw(window);
+    }
+    for(auto const& button : texts){
+        window.draw(button.second);
+    }
  }

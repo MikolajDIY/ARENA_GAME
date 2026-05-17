@@ -4,6 +4,9 @@
 
 class TextureMenager{
 private:
+    // Czcionki
+    sf::Font mainFont;
+
     // Textury tla
     sf::Texture arenaBackGround;
     sf::Texture menuBackGround;
@@ -17,19 +20,16 @@ private:
     sf::Texture playerTextureSteel;
     sf::Texture playerTextureGodnes;
 
+    // Textury itemow
+    sf::Texture basicSwordTexture;
+    sf::Texture steelSwordTexture;
+    sf::Texture godnesSwordTexture;
+
     // Textury Przeciwnikow
     sf::Texture BossTexture;
     sf::Texture ZombieTexture;
     sf::Texture SkeletonTexture;
     sf::Texture MageTexture;
-
-    // Czcionki
-    sf::Font mainFont;
-
-    // Textury itemow
-    sf::Texture basicSwordTexture;
-    sf::Texture steelSwordTexture;
-    sf::Texture godnesSwordTexture;
 
 public:
     TextureMenager();

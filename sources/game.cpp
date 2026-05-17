@@ -16,15 +16,22 @@ Game::Game() : player(textures), shop(textures,player), settings(textures, playe
 };
 
 Game::~Game(){
-    delete btnMenu;
-    delete btnSettings;
-    delete btnStart;
-    delete btnExit;
+    for(auto& button : buttons){
+        delete button.second;
+    }
 }
-
+// -------------------------------------
+// PETLA GLOWNA GRY
+// -------------------------------------
 void Game::Run(){
     window.create(sf::VideoMode(window_width, window_height),"ARENA GAME");
     window.setFramerateLimit(60);
+    // Dodanie ikony aplikacji
+    sf::Image icon;
+    icon.loadFromFile("img/icons/game.png");
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+
+
     sf::Font font;
     if (!font.loadFromFile("fonts/porkybold.otf")) {
         // Zapasowy plan, gdyby PorkyBold sie nie chcial wczytac
@@ -33,11 +40,11 @@ void Game::Run(){
 
     GameState MenuState = GameState::Intro;
 
-    btnStart = new Button("START", {275, 200}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
-    btnMenu = new Button("MENU", {275, 300}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
-    btnShop = new Button("SHOP", {275, 300}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
-    btnSettings = new Button("SETTINGS", {275, 400}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
-    btnExit = new Button("EXIT", {275, 500}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    buttons["btnStart"] = new Button("START", {275, 200}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    buttons["btnMenu"] = new Button("MENU", {275, 300}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    buttons["btnShop"] = new Button("SHOP", {275, 300}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    buttons["btnSettings"] = new Button("SETTINGS", {275, 400}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    buttons["btnExit"] = new Button("EXIT", {275, 500}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
 
     while(window.isOpen()){
         sf::Event event;
@@ -74,7 +81,10 @@ void Game::Run(){
 
     }
 }
-
+// -------------------------------------
+// WYSWIETLANIE STANOW MENU
+// -------------------------------------
+// MENU
 void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos){
     sf::Text title("The Arena", textures.getMainFont(), 60);
     Utils::CenterTextOrigin(title);
@@ -84,33 +94,31 @@ void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vect
     title.setPosition(400, 100);
 
 
-    if(btnStart->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+    if(buttons["btnStart"]->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         Menu_State = GameState::Arena;
     }
-    if(btnShop->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+    if(buttons["btnShop"]->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         Menu_State = GameState::Shop;
     }
-    if(btnSettings->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+    if(buttons["btnSettings"]->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         Menu_State = GameState::Settings;
     }
-    if(btnExit->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+    if(buttons["btnExit"]->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         window.close();
     }
 
     window.draw(menuBackGround);
-    btnStart->Draw(window);
-    btnShop->Draw(window);
-    btnSettings->Draw(window);
-    btnExit->Draw(window);
+    for(auto const& button : buttons){
+        button.second->Draw(window);
+    }
     window.draw(title);
 
 }
-
+// ARENA
 void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
     if (currentArena == nullptr) {
                 currentArena = new Arena("Arena", textures, player);
         }
-
         // Sprawdzamy, czy arena chce kontynuować działanie
         bool stayInArena = currentArena->Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left);
 
@@ -132,7 +140,7 @@ void Game::DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, sf::
         settings.Draw(window);
     }
 }
-
+// SHOP
 void Game::DisplayShop(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos){
     if(!shop.Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
         Menu_State = GameState::MainMenu;
@@ -141,7 +149,7 @@ void Game::DisplayShop(sf::RenderWindow& window, GameState& Menu_State, sf::Vect
         shop.Draw(window);
     }
 }
-
+// INTRO
 void Game::DisplayIntro(sf::RenderWindow& window, GameState& Menu_State){
     // Czas wyświetlania jednego ekranu w sekundach
     const float displayTime = 1.0f;

@@ -7,8 +7,11 @@ class Player;
 
 class Shop{
 private:
-    Button* btnBackToMenu;
     sf::Sprite BackGround;
+    std::map<std::string, Button*> buttons;
+    std::map<std::string, sf::Text> texts;
+
+    Player& player;
 
 public:
     Shop(TextureMenager& textures, Player& player);

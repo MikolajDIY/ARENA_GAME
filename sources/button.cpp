@@ -28,6 +28,9 @@ Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color nor
     buttonText.setPosition(Position.x + shape.getSize().x / 2.0f, Position.y + shape.getSize().y / 2.0f);
 }
 
+// -------------------------------------
+// SPRAWDZENIE CZY KLIKNIETY I RYSOWANIE
+// -------------------------------------
 bool Button::IsClicked(int mouseX, int mouseY, bool MouseClicked){
     sf::Vector2f mousePos(static_cast<float>(mouseX), static_cast<float>(mouseY));
     bool Hoverd = shape.getGlobalBounds().contains(mousePos);
@@ -46,6 +49,9 @@ void Button::Draw(sf::RenderWindow& window){
     window.draw(buttonText);
 }
 
+// -------------------------------------
+// DODATKOWE FUNKCJE - MODYFIKACJE ISTNIEJACYCH
+// -------------------------------------
 void Button::ChangePosition(float x, float y){
     Position.x = x;
     Position.y = y;

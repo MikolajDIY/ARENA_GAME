@@ -10,9 +10,6 @@ Arena::Arena(std::string arenaName, TextureMenager& textures, Player& mainPlayer
     btnBackToMenu->ChangeSize(90,40);
     arenaBackGround.setTexture(textures.getArenaBackGround());
 
-    // Wczytanie tekstur tla i przeciwnikow (tu lub w ich konstruktorach
-                                             //Do przemyslenia)
-
 }
 
 Arena::~Arena(){
@@ -23,6 +20,9 @@ void Arena::Fight(){
     // Mechanika walki
 }
 
+// -------------------------------------
+// RYSOWANIE ARENY
+// -------------------------------------
 bool Arena::Update(int mouseX, int mouseY, bool isClicked) {
     if (btnBackToMenu->IsClicked(mouseX, mouseY, isClicked)) {
         return false;
