@@ -21,6 +21,11 @@ void Player::Update(){
     playerSprite.setPosition(position);
     swordSprite.setPosition(position + sf::Vector2f(15.f, 95.f));
 }
+
+void Player::Update(float x, float y){
+    position = sf::Vector2f(x,y);
+    playerSprite.setPosition(position);
+}
 // -------------------------------------
 // SKLEP I USTAWIENIA - ZARZADZANIE EKWIPUNKIEM GRACZA
 // -------------------------------------

@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include "game.h"
+#include "enemy.h"
 inline sf::Font font;
 
 enum class TurnState{PlayerMove, PlayerAttack, EnemiesTurn};
@@ -9,12 +10,12 @@ enum class TurnState{PlayerMove, PlayerAttack, EnemiesTurn};
 class Arena{
 private:
     std::string name;
-    std::vector<sf::Texture> enemyTextures;
     sf::Sprite arenaBackGround;
     TextureMenager& textures;
     TurnState currentState;
     Player& player;
-    // std::vector<Enemy*> enemies; // Po napisaniu klasy Enemy odkomentowac
+
+    std::vector<Enemy*> enemies;
 
     Button* btnBackToMenu = nullptr;
 

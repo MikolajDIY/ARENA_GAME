@@ -33,5 +33,6 @@ public:
 
     // Rysowanie Gracza
     void Update();
+    void Update(float x, float y);
     void Draw(sf::RenderWindow& window);
 };

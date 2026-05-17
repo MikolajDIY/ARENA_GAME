@@ -49,25 +49,37 @@
 			<Add directory="ext/SFML-2.6.2/lib" />
 		</Linker>
 		<Unit filename="include/arena.h" />
+		<Unit filename="include/boss.h" />
 		<Unit filename="include/button.h" />
+		<Unit filename="include/enemy.h" />
 		<Unit filename="include/game.h" />
+		<Unit filename="include/mage.h" />
 		<Unit filename="include/player.h" />
 		<Unit filename="include/settings.h" />
 		<Unit filename="include/shop.h" />
+		<Unit filename="include/skeleton.h">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="include/textureMenager.h" />
 		<Unit filename="include/theme.h" />
 		<Unit filename="include/utils.h" />
+		<Unit filename="include/zombie.h" />
 		<Unit filename="resources.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
 		<Unit filename="sources/arena.cpp" />
+		<Unit filename="sources/boss.cpp" />
 		<Unit filename="sources/button.cpp" />
+		<Unit filename="sources/enemy.cpp" />
 		<Unit filename="sources/game.cpp" />
+		<Unit filename="sources/mage.cpp" />
 		<Unit filename="sources/main.cpp" />
 		<Unit filename="sources/player.cpp" />
 		<Unit filename="sources/settings.cpp" />
 		<Unit filename="sources/shop.cpp" />
+		<Unit filename="sources/skeleton.cpp" />
 		<Unit filename="sources/textureMenager.cpp" />
+		<Unit filename="sources/zombie.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
