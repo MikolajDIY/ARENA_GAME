@@ -154,12 +154,16 @@ void Game::DisplayIntro(sf::RenderWindow& window, GameState& Menu_State){
     // Czas wyświetlania jednego ekranu w sekundach
     const float displayTime = 1.0f;
 
+    if(introStage >= 3){
+        return;
+    }
+
     // Inicjalizacja przy pierwszym wejściu do metody
-    if (!isIntroInitialized) {
+    if (introStage == 0) {
             introSprite.setTexture(textures.getStudio()); // studio
 
         introClock.restart();
-        isIntroInitialized = true;
+        introStage = 1;
     }
 
     // Zmiana na game name

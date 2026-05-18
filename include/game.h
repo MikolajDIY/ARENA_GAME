@@ -32,8 +32,7 @@ private:
     // Intor
     sf::Sprite introSprite;
     sf::Clock introClock;
-    int introStage = 1;
-    bool isIntroInitialized = false;
+    int introStage = 0;
 
 public:
     int points;
