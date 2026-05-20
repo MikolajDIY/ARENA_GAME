@@ -12,7 +12,10 @@ private:
     int fontSize;
 
 public:
+    // Konstruktor domyslny
     Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color normalC, sf::Color hoverC);
+    // Uproszczony - domysle kolory i czcionka
+    Button(std::string text, sf::Vector2f pos, sf::Vector2f siz);
 
     bool IsClicked(int mouseX, int mouseY, bool MouseClicked);
 

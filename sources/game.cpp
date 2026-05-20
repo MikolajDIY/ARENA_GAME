@@ -177,6 +177,7 @@ void Game::DisplayIntro(sf::RenderWindow& window, GameState& Menu_State){
         else if (introStage == 2) {
             // Koniec intro, przełączamy stan gry na Menu Główne
             Menu_State = GameState::MainMenu;
+            introStage = 3;
         }
     }
 

@@ -11,6 +11,8 @@ Shop::Shop(TextureMenager& textures, Player& player) : player(player){
     texts["Shop"] = sf::Text("Shop",textures.getMainFont(), 40);
     Utils::CenterTextOrigin(texts["Shop"]);
     texts["Shop"].setPosition(400,40);
+
+
  }
 
 Shop::~Shop(){

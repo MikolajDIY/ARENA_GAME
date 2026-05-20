@@ -4,7 +4,7 @@
 //                  CLASS BUTTON
 //-------------------------------------------------------
 
-
+// Konstruktor glowny
 Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color normalC, sf::Color hoverC){
     normalColor = normalC;
     hoverColor = hoverC;
@@ -16,7 +16,7 @@ Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color nor
 
     // Obramowanie przycisku
     shape.setOutlineThickness(3.f);
-    shape.setOutlineColor(sf::Color(100, 70, 50));
+    shape.setOutlineColor(Theme::ButtonOutline);
 
     buttonText.setFont(font);
     buttonText.setString(text);
@@ -24,8 +24,28 @@ Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color nor
     buttonText.setFillColor(Theme::Text);
 
     sf::FloatRect textRect = buttonText.getLocalBounds();
-    buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-    buttonText.setPosition(Position.x + shape.getSize().x / 2.0f, Position.y + shape.getSize().y / 2.0f);
+    buttonText.setOrigin(textRect.left + textRect.width / 2.f, textRect.top + textRect.height / 2.f);
+    buttonText.setPosition(Position.x + shape.getSize().x / 2.f, Position.y + shape.getSize().y / 2.f);
+}
+
+// Konstruktor uproszczony - domyslna czcionka i kolory
+Button::Button(std::string text, sf::Vector2f pos, sf::Vector2f siz){
+    normalColor = Theme::ButtonNormal;
+    hoverColor = Theme::ButtonHover;
+    Position = pos;
+
+    shape.setSize(siz);
+    shape.setFillColor(normalColor);
+    shape.setOutlineThickness(3.f);
+    shape.setOutlineColor(Theme::ButtonOutline);
+
+    buttonText.setString(text);
+    buttonText.setCharacterSize(siz.y/2.f);
+    buttonText.setFillColor(Theme::Text);
+
+    sf::FloatRect textRect = buttonText.getLocalBounds();
+    buttonText.setOrigin(textRect.left + textRect.width/2.f, textRect.top + textRect.height/2.f);
+    buttonText.setPosition(Position.x + shape.getSize().x / 2.f, Position.y + shape.getSize().y / 2.f);
 }
 
 // -------------------------------------
