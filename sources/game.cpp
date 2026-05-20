@@ -9,7 +9,7 @@
 //-------------------------------------------------------
 
 
-Game::Game() : player(textures), shop(textures,player), settings(textures, player){
+Game::Game() : player(textures), shop(textures,player,mouse), settings(textures, player, mouse){
     window_width = 800;
     window_height = 600;
     menuBackGround.setTexture(textures.getMenuBackGround());

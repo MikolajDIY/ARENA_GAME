@@ -6,7 +6,7 @@
 // CLASS SETTINGS
 // -------------------------------------
 
- Settings::Settings(TextureMenager& textures, Player& player){
+ Settings::Settings(TextureMenager& textures, Player& player, Utils::Mouse& m) : mouse(m), player(player){
     BackGround.setTexture(textures.getSettingsBackGround());
     buttons["BackToMenu"] = new Button("Menu", {10,10},textures.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     buttons["BackToMenu"]->ChangeSize(80,40);
@@ -26,10 +26,11 @@
 // -------------------------------------
 // WYSWIETLANIE USTAWIEN
 // -------------------------------------
-bool Settings::Update(Utils::Mouse& mouse){
-    if (buttons["BackToMenu"]->IsClicked(mouse)) {
+bool Settings::Update(Utils::Mouse& m){
+    if (buttons["BackToMenu"]->IsClicked(m)) {
         return false;
     }
+    mouse = m;
     return true;
  }
 

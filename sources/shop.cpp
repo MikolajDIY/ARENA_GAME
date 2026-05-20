@@ -3,7 +3,7 @@
 #include "theme.h"
 #include "utils.h"
 
-Shop::Shop(TextureMenager& textures, Player& player) : player(player){
+Shop::Shop(TextureMenager& textures, Player& player, Utils::Mouse& mouse) : player(player), mouse(mouse){
     BackGround.setTexture(textures.getShopBackGround());
     buttons["BackToMenu"] = new Button("Menu", {10,10},textures.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     buttons["BackToMenu"]->ChangeSize(80,40);
@@ -24,10 +24,11 @@ Shop::~Shop(){
 // -------------------------------------
 // RYSOWANIE SKLEPU
 // -------------------------------------
-bool Shop::Update(Utils::Mouse& mouse){
-    if (buttons["BackToMenu"]->IsClicked(mouse)) {
+bool Shop::Update(Utils::Mouse& m){
+    if (buttons["BackToMenu"]->IsClicked(m)) {
         return false;
     }
+    mouse = m;
     return true;
  }
 

@@ -4,6 +4,7 @@
 #include <map>
 #include "textureMenager.h"
 #include "utils.h"
+#include "player.h"
 
 class Button;
 class Player;
@@ -13,9 +14,12 @@ private:
     sf::Sprite BackGround;
     std::map<std::string, Button*> buttons;
     std::map<std::string, sf::Text> texts;
+    Utils::Mouse& mouse;
+
+    Player& player;
 
 public:
-    Settings(TextureMenager& textures, Player& player);
+    Settings(TextureMenager& textures, Player& player, Utils::Mouse& m);
     ~Settings();
 
     bool Update(Utils::Mouse& mouse);

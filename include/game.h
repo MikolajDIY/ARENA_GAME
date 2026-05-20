@@ -27,9 +27,6 @@ private:
 
     std::map<std::string, Button*> buttons;
 
-    bool isMouseClicked_Left = false;
-    bool isMouseClicked_Right = false;
-
     Utils::Mouse mouse;
 
     // Intor
