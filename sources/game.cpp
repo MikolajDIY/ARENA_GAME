@@ -48,31 +48,31 @@ void Game::Run(){
 
     while(window.isOpen()){
         sf::Event event;
-        isMouseClicked_Left = false;
-        isMouseClicked_Right = false;
+        mouse.clickedLeft = false;
+        mouse.clickedRight = false;
 
         while (window.pollEvent(event)){
             if(event.type == sf::Event::Closed){window.close();}
-            if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left){isMouseClicked_Left = true;}
-            if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right){isMouseClicked_Right = true;}
+            if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left){mouse.clickedLeft = true;}
+            if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Right){mouse.clickedRight = true;}
 
         }
         window.clear(sf::Color(30,30,30));
 
-        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+        mouse.pos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 
 
         if (MenuState == GameState::Arena) {
-            DisplayArena(window, textures ,MenuState,mousePos);
+            DisplayArena(window, textures, MenuState, mouse);
         }
         else if(MenuState == GameState::Shop){
-            DisplayShop(window, MenuState, mousePos);
+            DisplayShop(window, MenuState, mouse);
         }
         else if(MenuState == GameState::Settings){
-            DisplaySettings(window, MenuState,mousePos);
+            DisplaySettings(window, MenuState, mouse);
         }
         else if(MenuState == GameState::MainMenu){
-            DisplayMenu(window, MenuState, mousePos);
+            DisplayMenu(window, MenuState, mouse);
         }
         else if (MenuState == GameState::Intro) {
             DisplayIntro(window, MenuState);
@@ -85,7 +85,7 @@ void Game::Run(){
 // WYSWIETLANIE STANOW MENU
 // -------------------------------------
 // MENU
-void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos){
+void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& Mouse){
     sf::Text title("The Arena", textures.getMainFont(), 60);
     Utils::CenterTextOrigin(title);
     title.setOutlineColor(sf::Color::Black);
@@ -94,16 +94,16 @@ void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vect
     title.setPosition(400, 100);
 
 
-    if(buttons["btnStart"]->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+    if(buttons["btnStart"]->IsClicked(Mouse)){
         Menu_State = GameState::Arena;
     }
-    if(buttons["btnShop"]->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+    if(buttons["btnShop"]->IsClicked(Mouse)){
         Menu_State = GameState::Shop;
     }
-    if(buttons["btnSettings"]->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+    if(buttons["btnSettings"]->IsClicked(Mouse)){
         Menu_State = GameState::Settings;
     }
-    if(buttons["btnExit"]->IsClicked(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+    if(buttons["btnExit"]->IsClicked(Mouse)){
         window.close();
     }
 
@@ -115,12 +115,12 @@ void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vect
 
 }
 // ARENA
-void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos){
+void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, Utils::Mouse& mouse){
     if (currentArena == nullptr) {
                 currentArena = new Arena("Arena", textures, player);
         }
         // Sprawdzamy, czy arena chce kontynuować działanie
-        bool stayInArena = currentArena->Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left);
+        bool stayInArena = currentArena->Update(mouse);
 
         if (!stayInArena) {
             delete currentArena;
@@ -132,8 +132,8 @@ void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, Game
         }
 }
 
-void Game::DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos){
-    if(!settings.Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+void Game::DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse){
+    if(!settings.Update(mouse)){
         Menu_State = GameState::MainMenu;
     }
     else{
@@ -141,8 +141,8 @@ void Game::DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, sf::
     }
 }
 // SHOP
-void Game::DisplayShop(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos){
-    if(!shop.Update(Mouse_pos.x, Mouse_pos.y, isMouseClicked_Left)){
+void Game::DisplayShop(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse){
+    if(!shop.Update(mouse)){
         Menu_State = GameState::MainMenu;
     }
     else{

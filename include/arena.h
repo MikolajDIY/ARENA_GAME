@@ -26,7 +26,7 @@ public:
 
     void Fight();
 
-    bool Update(int mouseX, int mouseY, bool isClicked);
+    bool Update(Utils::Mouse& Mouse);
 
     void Draw(sf::RenderWindow& window);
 

@@ -6,6 +6,7 @@
 #include "shop.h"
 #include "button.h"
 #include "settings.h"
+#include "utils.h"
 class Arena;
 
 enum class GameState{MainMenu,Arena,Shop,GameOver, Settings, Intro};
@@ -29,6 +30,8 @@ private:
     bool isMouseClicked_Left = false;
     bool isMouseClicked_Right = false;
 
+    Utils::Mouse mouse;
+
     // Intor
     sf::Sprite introSprite;
     sf::Clock introClock;
@@ -42,9 +45,9 @@ public:
 
     void Run();
 
-    void DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplayShop(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos);
+    void DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse);
+    void DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, Utils::Mouse& mouse);
+    void DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse);
+    void DisplayShop(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse);
     void DisplayIntro(sf::RenderWindow& window, GameState& Menu_State);
 };

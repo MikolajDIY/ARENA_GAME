@@ -1,5 +1,6 @@
 #include "button.h"
 #include "theme.h"
+#include "utils.h"
 //-------------------------------------------------------
 //                  CLASS BUTTON
 //-------------------------------------------------------
@@ -51,9 +52,8 @@ Button::Button(std::string text, sf::Vector2f pos, sf::Vector2f siz){
 // -------------------------------------
 // SPRAWDZENIE CZY KLIKNIETY I RYSOWANIE
 // -------------------------------------
-bool Button::IsClicked(int mouseX, int mouseY, bool MouseClicked){
-    sf::Vector2f mousePos(static_cast<float>(mouseX), static_cast<float>(mouseY));
-    bool Hoverd = shape.getGlobalBounds().contains(mousePos);
+bool Button::IsClicked(Utils::Mouse& mouse){
+    bool Hoverd = shape.getGlobalBounds().contains(mouse.pos);
 
     if(Hoverd){
         shape.setFillColor(hoverColor);
@@ -61,7 +61,7 @@ bool Button::IsClicked(int mouseX, int mouseY, bool MouseClicked){
     else{
         shape.setFillColor(normalColor);
     }
-    return Hoverd && MouseClicked;
+    return Hoverd && mouse.clickedLeft;
 }
 
 void Button::Draw(sf::RenderWindow& window){

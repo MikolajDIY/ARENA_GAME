@@ -26,8 +26,8 @@
 // -------------------------------------
 // WYSWIETLANIE USTAWIEN
 // -------------------------------------
-bool Settings::Update(int mouseX, int mouseY, bool isClicked){
-    if (buttons["BackToMenu"]->IsClicked(mouseX, mouseY, isClicked)) {
+bool Settings::Update(Utils::Mouse& mouse){
+    if (buttons["BackToMenu"]->IsClicked(mouse)) {
         return false;
     }
     return true;

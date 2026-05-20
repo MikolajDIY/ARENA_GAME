@@ -12,7 +12,6 @@ Shop::Shop(TextureMenager& textures, Player& player) : player(player){
     Utils::CenterTextOrigin(texts["Shop"]);
     texts["Shop"].setPosition(400,40);
 
-
  }
 
 Shop::~Shop(){
@@ -25,8 +24,8 @@ Shop::~Shop(){
 // -------------------------------------
 // RYSOWANIE SKLEPU
 // -------------------------------------
-bool Shop::Update(int mouseX, int mouseY, bool isClicked){
-    if (buttons["BackToMenu"]->IsClicked(mouseX, mouseY, isClicked)) {
+bool Shop::Update(Utils::Mouse& mouse){
+    if (buttons["BackToMenu"]->IsClicked(mouse)) {
         return false;
     }
     return true;

@@ -30,8 +30,8 @@ void Arena::Fight(){
 // -------------------------------------
 // RYSOWANIE ARENY
 // -------------------------------------
-bool Arena::Update(int mouseX, int mouseY, bool isClicked) {
-    if (btnBackToMenu->IsClicked(mouseX, mouseY, isClicked)) {
+bool Arena::Update(Utils::Mouse& Mouse) {
+    if (btnBackToMenu->IsClicked(Mouse)) {
         return false;
     }
 

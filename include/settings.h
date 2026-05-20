@@ -3,6 +3,8 @@
 #include <string>
 #include <map>
 #include "textureMenager.h"
+#include "utils.h"
+
 class Button;
 class Player;
 
@@ -16,6 +18,6 @@ public:
     Settings(TextureMenager& textures, Player& player);
     ~Settings();
 
-    bool Update(int mouseX, int mouseY, bool isClicked);
+    bool Update(Utils::Mouse& mouse);
     void Draw(sf::RenderWindow& window);
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "theme.h"
 //--------------------------------------
 // FUNKCJE KTORE BEDZIEMY CZESTO UZYWAC
 //--------------------------------------
@@ -13,4 +14,10 @@ namespace Utils{
         text.setFillColor(Theme::Text);
         text.setOutlineThickness(3.f);
     }
+
+    struct Mouse{
+        sf::Vector2f pos;
+        bool clickedLeft = false;
+        bool clickedRight = false;
+    };
 }
