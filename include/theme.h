@@ -10,4 +10,7 @@ namespace Theme {
 
     // Kolory Textu
     const sf::Color Text(230, 220, 200);            // Pergaminowy napis
+
+    // Kolory
+    const sf::Color Grey(70,70,70, 230);              // Szary
 }

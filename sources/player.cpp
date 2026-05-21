@@ -5,9 +5,23 @@
 // -------------------------------------
 
 Player::Player(TextureMenager& textures) : textures(textures){
-    playerSprite.setTexture(textures.getPlayerTextureBasic());
-    swordSprite.setTexture(textures.getBasicSwordTexture());
     position = sf::Vector2f(120.f, 250.f);
+
+    unlockedSwords[SwordsTypes::Basic] = true;
+    unlockedSwords[SwordsTypes::Steel] = false;
+    unlockedSwords[SwordsTypes::Godness] = false;
+
+    unlockedArmors[ArmorsTypes::Basic] = true;
+    unlockedArmors[ArmorsTypes::Steel] = false;
+    unlockedArmors[ArmorsTypes::Godness] = false;
+
+    sword = SwordsTypes::Basic;
+    armor = ArmorsTypes::Basic;
+
+    setArmor(armor);
+    setSword(sword);
+
+    gold = 100000; // TEST
 }
 // -------------------------------------
 // RYSOWANIE GRACZA
@@ -29,9 +43,83 @@ void Player::Update(float x, float y){
 // -------------------------------------
 // SKLEP I USTAWIENIA - ZARZADZANIE EKWIPUNKIEM GRACZA
 // -------------------------------------
-void Player::setSword(SwordsTypes sword){
+// ustawienie miecza, pancerza i aktualizacja tekstur
+void Player::setSword(SwordsTypes newSword){
+    if(unlockedSwords[newSword] == false){return;}
+    sword = newSword;
+    switch(sword){
+    case SwordsTypes::Basic:
+        swordSprite.setTexture(textures.getBasicSwordTexture());
+        break;
 
+    case SwordsTypes::Steel:
+        swordSprite.setTexture(textures.getSteelSwordTexture());
+        break;
+
+    case SwordsTypes::Godness:
+        swordSprite.setTexture(textures.getGodnesSwordTexture());
+        break;
+    }
 }
-void Player::setArmor(PlayerType armor){
+void Player::setArmor(ArmorsTypes newArmor){
+    if(unlockedArmors[newArmor] == false){return;}
 
+    armor = newArmor;
+    switch(armor){
+    case ArmorsTypes::Basic:
+        playerSprite.setTexture(textures.getPlayerTextureBasic());
+        break;
+
+    case ArmorsTypes::Steel:
+        playerSprite.setTexture(textures.getPlayerTextureSteel());
+        break;
+
+    case ArmorsTypes::Godness:
+        playerSprite.setTexture(textures.getPlayerTextureGodnes());
+        break;
+    }
+}
+// Czy ma pancerz
+bool Player::hasSword(SwordsTypes sword) const{
+    return unlockedSwords.at(sword);
+}
+bool Player::hasArmor(ArmorsTypes armor) const{
+    return unlockedArmors.at(armor);
+}
+// Odblokowanie itemu
+void Player::unlockSword(SwordsTypes sword){
+    unlockedSwords[sword] = true;
+}
+void Player::unlockArmor(ArmorsTypes armor){
+    unlockedArmors[armor] = true;
+}
+// Zakup itemu
+bool Player::buySword(SwordsTypes sword, unsigned int price){
+    if(hasSword(sword)){
+        return false;
+    }
+    else if(gold<price){
+        return false;
+    }
+    else{
+        gold -= price;
+        unlockSword(sword);
+        setSword(sword);
+        return true;
+    }
+}
+
+bool Player::buyArmor(ArmorsTypes armor, unsigned int price){
+    if(hasArmor(armor)){
+        return false;
+    }
+    else if(gold<price){
+        return false;
+    }
+    else{
+        gold -= price;
+        unlockArmor(armor);
+        setArmor(armor);
+        return true;
+    }
 }

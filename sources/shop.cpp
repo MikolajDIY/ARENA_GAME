@@ -15,19 +15,20 @@ Shop::Shop(TextureMenager& textures, Player& player, Utils::Mouse& mouse) : mous
 Shop::~Shop(){
     buttons.clear();
     texts.clear();
-    items.clear();
+    armors.clear();
+    swords.clear();
  }
 
 void Shop::createItems(){
     switch(shopState){
     case ShopState::Armors:
-        items["SteelArmor"] = std::make_unique<Item>(textures.getPlayerTextureSteel(), textures.getMainFont(), sf::Vector2f(300,300), "Steel Armor", 100.0);
-        items["GoodnessArmor"] = std::make_unique<Item>(textures.getPlayerTextureGodnes(), textures.getMainFont(), sf::Vector2f(500,300), "Goodness Armor", 1000.0);
+        armors[ArmorsTypes::Steel] = std::make_unique<Item>(textures.getPlayerTextureSteel(), textures.getMainFont(), sf::Vector2f(300,300), "Steel Armor", 100.0);
+        armors[ArmorsTypes::Godness] = std::make_unique<Item>(textures.getPlayerTextureGodnes(), textures.getMainFont(), sf::Vector2f(500,300), "Goodness Armor", 1000.0);
         break;
 
     case ShopState::Swords:
-        items["SteelSword"] = std::make_unique<Item>(textures.getSteelSwordTexture(), textures.getMainFont(), sf::Vector2f(300,200), "Steel Sword", 100.0);
-        items["GoodnessSword"] = std::make_unique<Item>(textures.getGodnesSwordTexture(), textures.getMainFont(), sf::Vector2f(500,200), "Goodness Sword", 1000.0);
+        swords[SwordsTypes::Steel] = std::make_unique<Item>(textures.getSteelSwordTexture(), textures.getMainFont(), sf::Vector2f(300,200), "Steel Sword", 100.0);
+        swords[SwordsTypes::Godness] = std::make_unique<Item>(textures.getGodnesSwordTexture(), textures.getMainFont(), sf::Vector2f(500,200), "Goodness Sword", 1000.0);
         break;
 
     }
@@ -73,23 +74,13 @@ void Shop::changeMenu(ShopState state){
     shopState = state;
     buttons.clear();
     texts.clear();
-    items.clear();
+    swords.clear();
+    armors.clear();
 
     createButtons();
     createTexts();
     createItems();
 }
-
-void Shop::itemsClicked(){
-    std::string clicked = "";
-    for(auto& item : items){
-        if(item.second->IsClicked(mouse)){
-            clicked = item.first;
-        }
-    }
-    // Dokonywanie zakupu
-}
-
 void Shop::buttonsClicked(){
     std::string clicked ="";
     for(auto const& button : buttons){
@@ -105,6 +96,33 @@ void Shop::buttonsClicked(){
         changeMenu(ShopState::Swords);
     }
 }
+// ZAKUPY ITEMOW
+void Shop::itemsClicked(){
+    switch(shopState){
+    case ShopState::Armors:
+        for(auto& armor : armors){
+            if(armor.second->IsClicked(mouse, player.hasArmor(armor.first))){
+                player.buyArmor(armor.first, armor.second->getPrice());
+                break; // Trzeba dodac tutaj wyswietlanie tekstu "posiadane", lub "brak srodkow"
+            }          // Do przemyslenia
+        }
+        break;
+
+    case ShopState::Swords:
+        for(auto& sword : swords){
+            if(sword.second->IsClicked(mouse, player.hasSword(sword.first))){
+                player.buySword(sword.first, sword.second->getPrice());
+                break;
+            }
+        }
+        break;
+    }
+}
+
+void Shop::Buy(){
+
+}
+
 // -------------------------------------
 // RYSOWANIE SKLEPU
 // -------------------------------------
@@ -123,8 +141,11 @@ bool Shop::Update(Utils::Mouse& m){
 void Shop::Draw(sf::RenderWindow& window){
     window.draw(BackGround);
     // Itemy
-    for(auto const& item : items){
-        item.second->Draw(window);
+    for(auto const& sword : swords){
+        sword.second->Draw(window);
+    }
+    for(auto const& armor : armors){
+        armor.second->Draw(window);
     }
     // Przyciski
     for(auto const& button : buttons){

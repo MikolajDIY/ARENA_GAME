@@ -7,6 +7,9 @@
 //      OBECNIE ITEM JEST TYKO DLA SKLEPU
 //---------------------------------------------
 
+enum class SwordsTypes{Basic, Steel, Godness};
+enum class ArmorsTypes{Basic, Steel, Godness};
+
 class Item{
 private:
     sf::Sprite itemSprite;
@@ -14,11 +17,13 @@ private:
     sf::Text nameText;
     sf::Text priceText;
     bool isHovered = false;
-    bool isBought = false;
+
+    float price;
 
 public:
     Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string name, float price);
 
-    bool IsClicked(Utils::Mouse& mouse);
+    float getPrice();
+    bool IsClicked(Utils::Mouse& mouse, bool isBought);
     void Draw(sf::RenderWindow& window);
 };

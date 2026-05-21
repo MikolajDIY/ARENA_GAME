@@ -12,9 +12,12 @@ enum class ShopState{Armors,Swords};
 class Shop{
 private:
     sf::Sprite BackGround;
+
     std::map<std::string, std::unique_ptr<Button>> buttons;
-    std::map<std::string, std::unique_ptr<Item>> items;
+    std::map<ArmorsTypes, std::unique_ptr<Item>> armors;
+    std::map<SwordsTypes, std::unique_ptr<Item>> swords;
     std::map<std::string, sf::Text> texts;
+
     Utils::Mouse& mouse;
     TextureMenager& textures;
     ShopState shopState;
@@ -33,6 +36,9 @@ public:
     // Sprawdzenie czy przycisk klikniety
     void buttonsClicked();
     void itemsClicked();
+
+    // Sklep
+    void Buy();
 
     // Rysowanie sklepu
     bool Update(Utils::Mouse& mouse);

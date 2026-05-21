@@ -22,6 +22,7 @@ Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string n
     background.setOutlineColor(Theme::ButtonOutline);
 
     // Text Ceny
+    price = price;
     priceText.setFont(font);
     priceText.setString(std::to_string(price)+" G");
     Utils::CenterTextOrigin(priceText);
@@ -39,8 +40,18 @@ Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string n
 }
 
 // Animacja i sprawdzenie czy klikniety
-bool Item::IsClicked(Utils::Mouse& mouse){
+bool Item::IsClicked(Utils::Mouse& mouse, bool isBought){
     bool Hovered = background.getGlobalBounds().contains(mouse.pos);
+    if(isBought){
+        if(Hovered){
+            background.setFillColor(Theme::Grey);
+        }
+        else{
+            background.setFillColor(Theme::Grey);
+        }
+        return false;
+    }
+
     if(Hovered){
         background.setFillColor(Theme::ButtonHover);
     }
@@ -49,6 +60,8 @@ bool Item::IsClicked(Utils::Mouse& mouse){
     }
     return Hovered && mouse.clickedLeft;
 }
+
+float Item::getPrice(){return price;}
 
 // Rysowanie itemu
 void Item::Draw(sf::RenderWindow& window){

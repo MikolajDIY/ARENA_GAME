@@ -2,8 +2,7 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "textureMenager.h"
-enum class SwordsTypes{Basic, Steel, Godnes};
-enum class PlayerType{Basic, Steel, Godnes};
+#include "item.h"
 
 class Player{
 private:
@@ -14,13 +13,13 @@ private:
     sf::Vector2f position;
     TextureMenager& textures;
 
-    // Czym aktualnie jest gracz
-    SwordsTypes swordtype;
-    PlayerType playertype;
+    // Aktulany ekwipunek gracza
+    SwordsTypes sword;
+    ArmorsTypes armor;
 
     // Odblokowane przedmioty SKLEP I USTAWIENIA
     std::map<SwordsTypes, bool> unlockedSwords;
-    std::map<PlayerType, bool> unlockedSkins;
+    std::map<ArmorsTypes, bool> unlockedArmors;
     unsigned int gold;
     unsigned int points;
 
@@ -28,8 +27,17 @@ public:
     Player(TextureMenager& textures);
 
     // SKLEP I USTAWIENIA - ekwipunek
-    void setSword(SwordsTypes sword);
-    void setArmor(PlayerType armor);
+    void setSword(SwordsTypes newSword);
+    void setArmor(ArmorsTypes newArmor);
+
+    bool hasSword(SwordsTypes sword) const;
+    bool hasArmor(ArmorsTypes armor) const;
+
+    void unlockSword(SwordsTypes sword);
+    void unlockArmor(ArmorsTypes armor);
+
+    bool buySword(SwordsTypes sword, unsigned int price);
+    bool buyArmor(ArmorsTypes armor, unsigned int price);
 
     // Rysowanie Gracza
     void Update();
