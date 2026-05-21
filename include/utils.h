@@ -15,6 +15,16 @@ namespace Utils{
         text.setOutlineThickness(3.f);
     }
 
+    inline void CenterSpriteOrigin(sf::Sprite& sprite){
+        sf::FloatRect bounds = sprite.getLocalBounds();
+        sprite.setOrigin(bounds.left + bounds.width/2.f, bounds.top + bounds.height/2.f);
+    }
+
+    inline void CenterRectangleOrigin(sf::RectangleShape& shape){
+        sf::FloatRect bounds = shape.getLocalBounds();
+        shape.setOrigin(bounds.left + bounds.width/2.f, bounds.top + bounds.height/2.f);
+    }
+
     struct Mouse{
         sf::Vector2f pos;
         bool clickedLeft = false;

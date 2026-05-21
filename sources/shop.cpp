@@ -9,12 +9,30 @@ Shop::Shop(TextureMenager& textures, Player& player, Utils::Mouse& mouse) : mous
 
     createButtons();
     createTexts();
+    createItems();
  }
 
 Shop::~Shop(){
     buttons.clear();
     texts.clear();
+    items.clear();
  }
+
+void Shop::createItems(){
+    switch(shopState){
+    case ShopState::Armors:
+        items["SteelArmor"] = std::make_unique<Item>(textures.getPlayerTextureSteel(), textures.getMainFont(), sf::Vector2f(300,300), "Steel Armor", 100.0);
+        items["GoodnessArmor"] = std::make_unique<Item>(textures.getPlayerTextureGodnes(), textures.getMainFont(), sf::Vector2f(500,300), "Goodness Armor", 1000.0);
+        break;
+
+    case ShopState::Swords:
+        items["SteelSword"] = std::make_unique<Item>(textures.getSteelSwordTexture(), textures.getMainFont(), sf::Vector2f(300,200), "Steel Sword", 100.0);
+        items["GoodnessSword"] = std::make_unique<Item>(textures.getGodnesSwordTexture(), textures.getMainFont(), sf::Vector2f(500,200), "Goodness Sword", 1000.0);
+        break;
+
+    }
+}
+
 void Shop::createTexts(){
     texts["Shop"] = sf::Text("Shop",textures.getMainFont(), 40);
     Utils::CenterTextOrigin(texts["Shop"]);
@@ -55,9 +73,21 @@ void Shop::changeMenu(ShopState state){
     shopState = state;
     buttons.clear();
     texts.clear();
+    items.clear();
 
     createButtons();
     createTexts();
+    createItems();
+}
+
+void Shop::itemsClicked(){
+    std::string clicked = "";
+    for(auto& item : items){
+        if(item.second->IsClicked(mouse)){
+            clicked = item.first;
+        }
+    }
+    // Dokonywanie zakupu
 }
 
 void Shop::buttonsClicked(){
@@ -84,18 +114,24 @@ bool Shop::Update(Utils::Mouse& m){
     }
     mouse = m;
 
+    // Czy gracz cos klika
     buttonsClicked();
+    itemsClicked();
     return true;
  }
 
 void Shop::Draw(sf::RenderWindow& window){
     window.draw(BackGround);
-
-
+    // Itemy
+    for(auto const& item : items){
+        item.second->Draw(window);
+    }
+    // Przyciski
     for(auto const& button : buttons){
         button.second->Draw(window);
     }
-    for(auto const& button : texts){
-        window.draw(button.second);
+    // Text
+    for(auto const& text : texts){
+        window.draw(text.second);
     }
  }
