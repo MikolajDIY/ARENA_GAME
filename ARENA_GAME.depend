@@ -457,7 +457,7 @@
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
 
-1779282981 source:c:\psio\arena_game\sources\arena.cpp
+1779285638 source:c:\psio\arena_game\sources\arena.cpp
 	"arena.h"
 	"textureMenager.h"
 	"player.h"
@@ -467,13 +467,13 @@
 	"mage.h"
 	"boss.h"
 
-1779282981 c:\psio\arena_game\include\arena.h
+1779285638 c:\psio\arena_game\include\arena.h
 	<SFML/Graphics.hpp>
 	<string>
 	"game.h"
 	"enemy.h"
 
-1779284569 c:\psio\arena_game\include\game.h
+1779285638 c:\psio\arena_game\include\game.h
 	<SFML/Graphics.hpp>
 	<string>
 	"textureMenager.h"
@@ -492,7 +492,7 @@
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
 
-1779285422 source:c:\psio\arena_game\sources\game.cpp
+1779351397 source:c:\psio\arena_game\sources\game.cpp
 	"game.h"
 	"arena.h"
 	"textureMenager.h"
@@ -509,38 +509,39 @@
 1779095409 source:c:\psio\arena_game\sources\texturemenager.cpp
 	"textureMenager.h"
 
-1779285318 source:c:\psio\arena_game\sources\shop.cpp
+1779353674 source:c:\psio\arena_game\sources\shop.cpp
 	"shop.h"
 	"game.h"
 	"theme.h"
 	"utils.h"
 
-1779285202 c:\psio\arena_game\include\shop.h
+1779353488 c:\psio\arena_game\include\shop.h
 	<SFML/Graphics.hpp>
 	<string>
+	<memory>
 	"textureMenager.h"
 	"utils.h"
 
 1779095409 c:\psio\arena_game\include\theme.h
 	<SFML/Graphics.hpp>
 
-1779282917 c:\psio\arena_game\include\button.h
+1779351209 c:\psio\arena_game\include\button.h
 	<SFML/Graphics.hpp>
 	<string>
 	"utils.h"
 
-1779283873 source:c:\psio\arena_game\sources\button.cpp
+1779352605 source:c:\psio\arena_game\sources\button.cpp
 	"button.h"
 	"theme.h"
 	"utils.h"
 
-1779285111 source:c:\psio\arena_game\sources\settings.cpp
+1779285638 source:c:\psio\arena_game\sources\settings.cpp
 	"settings.h"
 	"button.h"
 	"theme.h"
 	"utils.h"
 
-1779285391 c:\psio\arena_game\include\settings.h
+1779285638 c:\psio\arena_game\include\settings.h
 	<SFML/Graphics.hpp>
 	<string>
 	<map>
@@ -548,7 +549,7 @@
 	"utils.h"
 	"player.h"
 
-1779282480 c:\psio\arena_game\include\utils.h
+1779285638 c:\psio\arena_game\include\utils.h
 	<SFML/Graphics.hpp>
 	"theme.h"
 

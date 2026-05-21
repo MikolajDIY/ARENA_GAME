@@ -30,18 +30,22 @@ Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color nor
 }
 
 // Konstruktor uproszczony - domyslna czcionka i kolory
-Button::Button(std::string text, sf::Vector2f pos, sf::Vector2f siz){
+Button::Button(std::string text,sf::Font& font, sf::Vector2f pos, sf::Vector2f siz){
     normalColor = Theme::ButtonNormal;
     hoverColor = Theme::ButtonHover;
     Position = pos;
+    fontSize = siz.y/2.3f;
 
     shape.setSize(siz);
+    shape.setPosition(pos);
     shape.setFillColor(normalColor);
+
     shape.setOutlineThickness(3.f);
     shape.setOutlineColor(Theme::ButtonOutline);
 
+    buttonText.setFont(font);
     buttonText.setString(text);
-    buttonText.setCharacterSize(siz.y/2.f);
+    buttonText.setCharacterSize(fontSize);
     buttonText.setFillColor(Theme::Text);
 
     sf::FloatRect textRect = buttonText.getLocalBounds();

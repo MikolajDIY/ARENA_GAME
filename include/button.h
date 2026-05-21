@@ -16,7 +16,7 @@ public:
     // Konstruktor domyslny
     Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color normalC, sf::Color hoverC);
     // Uproszczony - domysle kolory i czcionka
-    Button(std::string text, sf::Vector2f pos, sf::Vector2f siz);
+    Button(std::string text, sf::Font& font, sf::Vector2f pos, sf::Vector2f siz);
 
     bool IsClicked(Utils::Mouse& mouse);
 
