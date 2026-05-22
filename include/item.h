@@ -18,12 +18,12 @@ private:
     sf::Text priceText;
     bool isHovered = false;
 
-    float price;
+    int price;
 
 public:
-    Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string name, float price);
+    Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string name, int pricee);
 
-    float getPrice();
+    int getPrice();
     bool IsClicked(Utils::Mouse& mouse, bool isBought);
     void Draw(sf::RenderWindow& window);
 };

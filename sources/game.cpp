@@ -31,13 +31,6 @@ void Game::Run(){
     icon.loadFromFile("img/icons/game.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-
-    sf::Font font;
-    if (!font.loadFromFile("fonts/porkybold.otf")) {
-        // Zapasowy plan, gdyby PorkyBold sie nie chcial wczytac
-        font.loadFromFile("C:/Windows/Fonts/arial.ttf");
-    }
-
     GameState MenuState = GameState::Intro;
 
     buttons["btnStart"] = new Button("START", {275, 200}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
@@ -98,6 +91,7 @@ void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, Utils::M
         Menu_State = GameState::Arena;
     }
     if(buttons["btnShop"]->IsClicked(Mouse)){
+        shop.OnEnter(); // Ekran startowy z pancerzami - podobnie mozna zrobic w settings
         Menu_State = GameState::Shop;
     }
     if(buttons["btnSettings"]->IsClicked(Mouse)){
@@ -131,7 +125,7 @@ void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, Game
             currentArena->Draw(window);
         }
 }
-
+// USTAWIENIA
 void Game::DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse){
     if(!settings.Update(mouse)){
         Menu_State = GameState::MainMenu;

@@ -6,7 +6,7 @@
 //      OBECNIE ITEM JEST TYKO DLA SKLEPU
 //---------------------------------------------
 
-Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string name, float price){
+Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string name, int pricee){
     // Textuta Itemu
     itemSprite.setTexture(texture);
     Utils::CenterSpriteOrigin(itemSprite);
@@ -22,7 +22,7 @@ Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string n
     background.setOutlineColor(Theme::ButtonOutline);
 
     // Text Ceny
-    price = price;
+    price = pricee;
     priceText.setFont(font);
     priceText.setString(std::to_string(price)+" G");
     Utils::CenterTextOrigin(priceText);
@@ -61,7 +61,7 @@ bool Item::IsClicked(Utils::Mouse& mouse, bool isBought){
     return Hovered && mouse.clickedLeft;
 }
 
-float Item::getPrice(){return price;}
+int Item::getPrice(){return price;}
 
 // Rysowanie itemu
 void Item::Draw(sf::RenderWindow& window){

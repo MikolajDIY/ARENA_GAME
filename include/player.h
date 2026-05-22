@@ -20,13 +20,15 @@ private:
     // Odblokowane przedmioty SKLEP I USTAWIENIA
     std::map<SwordsTypes, bool> unlockedSwords;
     std::map<ArmorsTypes, bool> unlockedArmors;
-    unsigned int gold;
-    unsigned int points;
+    int gold;
+    int points;
 
 public:
     Player(TextureMenager& textures);
 
     // SKLEP I USTAWIENIA - ekwipunek
+    int getGold();
+
     void setSword(SwordsTypes newSword);
     void setArmor(ArmorsTypes newArmor);
 
@@ -36,8 +38,8 @@ public:
     void unlockSword(SwordsTypes sword);
     void unlockArmor(ArmorsTypes armor);
 
-    bool buySword(SwordsTypes sword, unsigned int price);
-    bool buyArmor(ArmorsTypes armor, unsigned int price);
+    bool buySword(SwordsTypes sword, int price);
+    bool buyArmor(ArmorsTypes armor, int price);
 
     // Rysowanie Gracza
     void Update();

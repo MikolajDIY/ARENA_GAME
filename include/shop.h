@@ -41,6 +41,7 @@ public:
     void Buy();
 
     // Rysowanie sklepu
+    void OnEnter();
     bool Update(Utils::Mouse& mouse);
     void Draw(sf::RenderWindow& window);
 };

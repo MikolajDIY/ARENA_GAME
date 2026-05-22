@@ -21,7 +21,7 @@ Player::Player(TextureMenager& textures) : textures(textures){
     setArmor(armor);
     setSword(sword);
 
-    gold = 100000; // TEST
+    gold = 200; // TEST
 }
 // -------------------------------------
 // RYSOWANIE GRACZA
@@ -43,6 +43,7 @@ void Player::Update(float x, float y){
 // -------------------------------------
 // SKLEP I USTAWIENIA - ZARZADZANIE EKWIPUNKIEM GRACZA
 // -------------------------------------
+int Player::getGold(){return gold;}
 // ustawienie miecza, pancerza i aktualizacja tekstur
 void Player::setSword(SwordsTypes newSword){
     if(unlockedSwords[newSword] == false){return;}
@@ -94,7 +95,7 @@ void Player::unlockArmor(ArmorsTypes armor){
     unlockedArmors[armor] = true;
 }
 // Zakup itemu
-bool Player::buySword(SwordsTypes sword, unsigned int price){
+bool Player::buySword(SwordsTypes sword, int price){
     if(hasSword(sword)){
         return false;
     }
@@ -109,7 +110,7 @@ bool Player::buySword(SwordsTypes sword, unsigned int price){
     }
 }
 
-bool Player::buyArmor(ArmorsTypes armor, unsigned int price){
+bool Player::buyArmor(ArmorsTypes armor, int price){
     if(hasArmor(armor)){
         return false;
     }
