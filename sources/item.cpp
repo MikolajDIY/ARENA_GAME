@@ -60,6 +60,12 @@ bool Item::IsClicked(Utils::Mouse& mouse, bool isBought){
     }
     return Hovered && mouse.clickedLeft;
 }
+// Zwykle info czy klikniety - dla SHOP
+bool Item::IsClicked(Utils::Mouse& mouse){
+    bool Hovered = background.getGlobalBounds().contains(mouse.pos);
+
+    return Hovered && mouse.clickedLeft;
+}
 
 int Item::getPrice(){return price;}
 

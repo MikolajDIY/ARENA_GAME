@@ -76,6 +76,9 @@ void Game::Run(){
         else if (MenuState == GameState::Intro) {
             DisplayIntro(window, MenuState);
         }
+
+        menagers.msg.update();
+        menagers.msg.Draw(window);
         window.display();
 
     }

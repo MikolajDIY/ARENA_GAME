@@ -9,6 +9,8 @@ enum class MessageType;
 // FUNKCJE KTORE BEDZIEMY CZESTO UZYWAC
 //--------------------------------------
 namespace Utils{
+    const float TimeOfMessage = 2.f;
+
     inline void CenterTextOrigin(sf::Text& text){
         sf::FloatRect bounds = text.getLocalBounds();
 

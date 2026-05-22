@@ -109,13 +109,18 @@ void Shop::itemsClicked(){
     switch(shopState){
     case ShopState::Armors:
         for(auto& armor : armors){
+            if(armor.second->IsClicked(mouse) && player.hasArmor(armor.first)){
+                 menagers.msg.add("You already bought this armor!", MessageType::Warning, Utils::TimeOfMessage);
+            }
             if(armor.second->IsClicked(mouse, player.hasArmor(armor.first))){
                 if(player.buyArmor(armor.first, armor.second->getPrice())){
                     texts["Gold"].setString("Gold: " + std::to_string(player.getGold())+ " G"); // Aktualizacaja stanu konta na ekranie;
+                    menagers.msg.add("Take and win!", MessageType::Success, Utils::TimeOfMessage);
                     break;
                 }
                 else{
                     // wyswietlenie bledu za malo golda
+                    menagers.msg.add("You have not enought gold to buy this armor!", MessageType::Error, Utils::TimeOfMessage);
                 }
                 // Trzeba dodac tutaj wyswietlanie tekstu "posiadane", lub "brak srodkow"
             }          // Do przemyslenia
@@ -124,22 +129,23 @@ void Shop::itemsClicked(){
 
     case ShopState::Swords:
         for(auto& sword : swords){
+            if(sword.second->IsClicked(mouse) && player.hasSword(sword.first)){
+                menagers.msg.add("You already bought this sword!", MessageType::Warning, Utils::TimeOfMessage);
+            }
             if(sword.second->IsClicked(mouse, player.hasSword(sword.first))){
                 if(player.buySword(sword.first, sword.second->getPrice())){
                     texts["Gold"].setString("Gold: " + std::to_string(player.getGold())+ " G");
+                    menagers.msg.add("Take and win!", MessageType::Success, Utils::TimeOfMessage);
                     break;
                 }
                 else{
                     // wyswietlenie bledu za malo golda
+                    menagers.msg.add("You have not enought gold to buy this sword!", MessageType::Error, 2.f);
                 }
             }
         }
         break;
     }
-}
-
-void Shop::Buy(){
-
 }
 
 // -------------------------------------

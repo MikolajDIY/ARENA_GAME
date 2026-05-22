@@ -25,5 +25,6 @@ public:
 
     int getPrice();
     bool IsClicked(Utils::Mouse& mouse, bool isBought);
+    bool IsClicked(Utils::Mouse& mouse); // Specjalne dla Shop - wyswietlenie komunikatu, ze juz posiada;
     void Draw(sf::RenderWindow& window);
 };

@@ -38,9 +38,6 @@ public:
     void buttonsClicked();
     void itemsClicked();
 
-    // Sklep
-    void Buy();
-
     // Rysowanie sklepu
     void OnEnter();
     bool Update(Utils::Mouse& mouse);

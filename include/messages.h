@@ -4,7 +4,7 @@
 #include "utils.h"
 #include "textureMenager.h"
 
-enum class MessageType{Error};
+enum class MessageType{Error, Warning, Success};
 
 class MessageMenager{
 private:
@@ -13,7 +13,7 @@ private:
 public:
     MessageMenager(TextureMenager& tex);
 
-    void add(std:: string, MessageType, float tim);
+    void add(std::string text, MessageType mtype, float tim);
     void update();
     void Draw(sf::RenderWindow& window);
 };
