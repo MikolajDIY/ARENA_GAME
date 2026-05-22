@@ -7,6 +7,7 @@
 #include "button.h"
 #include "settings.h"
 #include "utils.h"
+#include "messages.h"
 class Arena;
 
 enum class GameState{MainMenu,Arena,Shop,GameOver, Settings, Intro};
@@ -19,6 +20,10 @@ private:
     sf::RenderWindow window;
     sf::Sprite menuBackGround;
     TextureMenager textures;
+    MessageMenager msgs;
+
+    // Textury i Komunikaty - W paczce
+    Utils::Menagers menagers;
 
     Player player;
     Shop shop;

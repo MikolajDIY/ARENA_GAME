@@ -29,7 +29,7 @@ public:
     // SKLEP I USTAWIENIA - ekwipunek
     int getGold();
 
-    void setSword(SwordsTypes newSword);
+    void setSword(SwordsTypes newSword); // Te metody mog¹ tez zmieniac hp i demage gracza
     void setArmor(ArmorsTypes newArmor);
 
     bool hasSword(SwordsTypes sword) const;

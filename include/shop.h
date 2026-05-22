@@ -19,13 +19,14 @@ private:
     std::map<std::string, sf::Text> texts;
 
     Utils::Mouse& mouse;
-    TextureMenager& textures;
+    Utils::Menagers& menagers;
     ShopState shopState;
+    sf::Clock errClock;
 
     Player& player;
 
 public:
-    Shop(TextureMenager& textures, Player& player, Utils::Mouse& mouse);
+    Shop(Utils::Menagers& menagers, Player& player, Utils::Mouse& mouse);
     ~Shop();
     // Zmiany stanow Menu Sklepu
     void createButtons();

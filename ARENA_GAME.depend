@@ -473,7 +473,7 @@
 	"game.h"
 	"enemy.h"
 
-1779394204 c:\psio\arena_game\include\game.h
+1779470790 c:\psio\arena_game\include\game.h
 	<SFML/Graphics.hpp>
 	<string>
 	"textureMenager.h"
@@ -482,18 +482,19 @@
 	"button.h"
 	"settings.h"
 	"utils.h"
+	"messages.h"
 
 1779121922 c:\psio\arena_game\include\texturemenager.h
 	<SFML/Graphics.hpp>
 	<string>
 
-1779440959 c:\psio\arena_game\include\player.h
+1779452187 c:\psio\arena_game\include\player.h
 	<string>
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
 	"item.h"
 
-1779441987 source:c:\psio\arena_game\sources\game.cpp
+1779470341 source:c:\psio\arena_game\sources\game.cpp
 	"game.h"
 	"arena.h"
 	"textureMenager.h"
@@ -504,19 +505,19 @@
 	"game.h"
 	"arena.h"
 
-1779440925 source:c:\psio\arena_game\sources\player.cpp
+1779442377 source:c:\psio\arena_game\sources\player.cpp
 	"player.h"
 
 1779121922 source:c:\psio\arena_game\sources\texturemenager.cpp
 	"textureMenager.h"
 
-1779441937 source:c:\psio\arena_game\sources\shop.cpp
+1779470745 source:c:\psio\arena_game\sources\shop.cpp
 	"shop.h"
 	"game.h"
 	"theme.h"
 	"utils.h"
 
-1779441896 c:\psio\arena_game\include\shop.h
+1779470515 c:\psio\arena_game\include\shop.h
 	<SFML/Graphics.hpp>
 	<string>
 	<memory>
@@ -551,7 +552,7 @@
 	"utils.h"
 	"player.h"
 
-1779394204 c:\psio\arena_game\include\utils.h
+1779470056 c:\psio\arena_game\include\utils.h
 	<SFML/Graphics.hpp>
 	"theme.h"
 
@@ -589,13 +590,22 @@
 1779121922 c:\psio\arena_game\include\mage.h
 	"enemy.h"
 
-1779441203 c:\psio\arena_game\include\item.h
+1779442377 c:\psio\arena_game\include\item.h
 	<SFML/Graphics.hpp>
 	<string>
 	"utils.h"
 
-1779441203 source:c:\psio\arena_game\sources\item.cpp
+1779442377 source:c:\psio\arena_game\sources\item.cpp
 	"item.h"
 	"utils.h"
 	"theme.h"
+
+1779469493 c:\psio\arena_game\include\messages.h
+	<SFML/Graphics.hpp>
+	<vector>
+	"utils.h"
+	"textureMenager.h"
+
+1779469853 source:c:\psio\arena_game\sources\messages.cpp
+	"messages.h"
 

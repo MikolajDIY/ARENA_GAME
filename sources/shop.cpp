@@ -3,8 +3,12 @@
 #include "theme.h"
 #include "utils.h"
 
-Shop::Shop(TextureMenager& textures, Player& player, Utils::Mouse& mouse) : mouse(mouse), player(player), textures(textures){
-    BackGround.setTexture(textures.getShopBackGround());
+Shop::Shop(Utils::Menagers& menagers, Player& player, Utils::Mouse& mouse)
+    : mouse(mouse),
+     player(player),
+     menagers(menagers){
+
+    BackGround.setTexture(menagers.tex.getShopBackGround());
     shopState = ShopState::Armors;
 
     createButtons();
@@ -22,31 +26,31 @@ Shop::~Shop(){
 void Shop::createItems(){
     switch(shopState){
     case ShopState::Armors:
-        armors[ArmorsTypes::Steel] = std::make_unique<Item>(textures.getPlayerTextureSteel(), textures.getMainFont(), sf::Vector2f(300,300), "Steel Armor", 100);
-        armors[ArmorsTypes::Godness] = std::make_unique<Item>(textures.getPlayerTextureGodnes(), textures.getMainFont(), sf::Vector2f(500,300), "Goodness Armor", 1000);
+        armors[ArmorsTypes::Steel] = std::make_unique<Item>(menagers.tex.getPlayerTextureSteel(), menagers.tex.getMainFont(), sf::Vector2f(300,300), "Steel Armor", 100);
+        armors[ArmorsTypes::Godness] = std::make_unique<Item>(menagers.tex.getPlayerTextureGodnes(), menagers.tex.getMainFont(), sf::Vector2f(500,300), "Goodness Armor", 1000);
         break;
 
     case ShopState::Swords:
-        swords[SwordsTypes::Steel] = std::make_unique<Item>(textures.getSteelSwordTexture(), textures.getMainFont(), sf::Vector2f(300,200), "Steel Sword", 100);
-        swords[SwordsTypes::Godness] = std::make_unique<Item>(textures.getGodnesSwordTexture(), textures.getMainFont(), sf::Vector2f(500,200), "Goodness Sword", 1000);
+        swords[SwordsTypes::Steel] = std::make_unique<Item>(menagers.tex.getSteelSwordTexture(), menagers.tex.getMainFont(), sf::Vector2f(300,200), "Steel Sword", 100);
+        swords[SwordsTypes::Godness] = std::make_unique<Item>(menagers.tex.getGodnesSwordTexture(), menagers.tex.getMainFont(), sf::Vector2f(500,200), "Goodness Sword", 1000);
         break;
 
     }
 }
 
 void Shop::createTexts(){
-    texts["Shop"] = sf::Text("Shop",textures.getMainFont(), 40);
+    texts["Shop"] = sf::Text("Shop", menagers.tex.getMainFont(), 40);
     Utils::CenterTextOrigin(texts["Shop"]);
     texts["Shop"].setPosition(400,40);
 
-    texts["Gold"] = sf::Text("Gold: " + std::to_string(player.getGold()) + " G",textures.getMainFont(), 20);
+    texts["Gold"] = sf::Text("Gold: " + std::to_string(player.getGold()) + " G",menagers.tex.getMainFont(), 20);
     Utils::CenterTextOrigin(texts["Gold"]);
     texts["Gold"].setPosition(700,40);
 
     switch(shopState){
     case ShopState::Armors:
         // Text dla pancerzy
-        break;
+
 
     case ShopState::Swords:
         // Text dla mieczy
@@ -55,11 +59,11 @@ void Shop::createTexts(){
 }
 
 void Shop::createButtons(){
-    buttons["BackToMenu"] = std::make_unique<Button>("Menu", sf::Vector2f(10, 10), textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    buttons["BackToMenu"] = std::make_unique<Button>("Menu", sf::Vector2f(10, 10), menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     buttons["BackToMenu"]->ChangeSize(80, 40);
 
-    buttons["Armors"] = std::make_unique<Button>("Armors", textures.getMainFont(), sf::Vector2f(50, 200), sf::Vector2f(120, 50));
-    buttons["Swords"] = std::make_unique<Button>("Swords", textures.getMainFont(), sf::Vector2f(50, 300), sf::Vector2f(120, 50));
+    buttons["Armors"] = std::make_unique<Button>("Armors", menagers.tex.getMainFont(), sf::Vector2f(50, 200), sf::Vector2f(120, 50));
+    buttons["Swords"] = std::make_unique<Button>("Swords", menagers.tex.getMainFont(), sf::Vector2f(50, 300), sf::Vector2f(120, 50));
 
     switch(shopState){
     case ShopState::Armors:
@@ -106,9 +110,14 @@ void Shop::itemsClicked(){
     case ShopState::Armors:
         for(auto& armor : armors){
             if(armor.second->IsClicked(mouse, player.hasArmor(armor.first))){
-                player.buyArmor(armor.first, armor.second->getPrice());
-                texts["Gold"].setString("Gold: " + std::to_string(player.getGold())+ " G"); // Aktualizacaja stanu konta na ekranie;
-                break; // Trzeba dodac tutaj wyswietlanie tekstu "posiadane", lub "brak srodkow"
+                if(player.buyArmor(armor.first, armor.second->getPrice())){
+                    texts["Gold"].setString("Gold: " + std::to_string(player.getGold())+ " G"); // Aktualizacaja stanu konta na ekranie;
+                    break;
+                }
+                else{
+                    // wyswietlenie bledu za malo golda
+                }
+                // Trzeba dodac tutaj wyswietlanie tekstu "posiadane", lub "brak srodkow"
             }          // Do przemyslenia
         }
         break;
@@ -116,9 +125,13 @@ void Shop::itemsClicked(){
     case ShopState::Swords:
         for(auto& sword : swords){
             if(sword.second->IsClicked(mouse, player.hasSword(sword.first))){
-                player.buySword(sword.first, sword.second->getPrice());
-                texts["Gold"].setString("Gold: " + std::to_string(player.getGold())+ " G");
-                break;
+                if(player.buySword(sword.first, sword.second->getPrice())){
+                    texts["Gold"].setString("Gold: " + std::to_string(player.getGold())+ " G");
+                    break;
+                }
+                else{
+                    // wyswietlenie bledu za malo golda
+                }
             }
         }
         break;

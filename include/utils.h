@@ -1,6 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "theme.h"
+
+class TextureMenager;
+class MessageMenager;
+enum class MessageType;
 //--------------------------------------
 // FUNKCJE KTORE BEDZIEMY CZESTO UZYWAC
 //--------------------------------------
@@ -29,5 +33,19 @@ namespace Utils{
         sf::Vector2f pos;
         bool clickedLeft = false;
         bool clickedRight = false;
+    };
+
+    struct GameMessage{
+        MessageType type;
+        std::string info;
+        float timeOfLife;
+        sf::Clock clock;
+    };
+
+    struct Menagers{
+        TextureMenager& tex;
+        MessageMenager& msg;
+
+        Menagers(TextureMenager& t, MessageMenager& m) : tex(t), msg(m) {}
     };
 }

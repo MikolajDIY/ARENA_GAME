@@ -55,6 +55,7 @@
 		<Unit filename="include/game.h" />
 		<Unit filename="include/item.h" />
 		<Unit filename="include/mage.h" />
+		<Unit filename="include/messages.h" />
 		<Unit filename="include/player.h" />
 		<Unit filename="include/settings.h" />
 		<Unit filename="include/shop.h" />
@@ -76,6 +77,7 @@
 		<Unit filename="sources/item.cpp" />
 		<Unit filename="sources/mage.cpp" />
 		<Unit filename="sources/main.cpp" />
+		<Unit filename="sources/messages.cpp" />
 		<Unit filename="sources/player.cpp" />
 		<Unit filename="sources/settings.cpp" />
 		<Unit filename="sources/shop.cpp" />
