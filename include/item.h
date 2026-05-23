@@ -10,6 +10,11 @@
 enum class SwordsTypes{Basic, Steel, Godness};
 enum class ArmorsTypes{Basic, Steel, Godness};
 
+struct ItemStats{
+    int value; // Dla miecza, demage dla zbroji HP. Jezeli bedziecie chcieli mozna
+                // dodac punkty mocy lub cos tego typu
+};
+
 class Item{
 private:
     sf::Sprite itemSprite;
@@ -28,3 +33,18 @@ public:
     bool IsClicked(Utils::Mouse& mouse); // Specjalne dla Shop - wyswietlenie komunikatu, ze juz posiada;
     void Draw(sf::RenderWindow& window);
 };
+
+// STATYSTYKI ITEMOW - BITEWNE
+namespace Stats{
+    inline const std::map<ArmorsTypes, ItemStats> armor{
+        {ArmorsTypes::Basic,{10}},
+        {ArmorsTypes::Steel,{30}},
+        {ArmorsTypes::Godness,{100}}
+    };
+
+    inline const std::map<SwordsTypes, ItemStats> sword{
+        {SwordsTypes::Basic,{100}},
+        {SwordsTypes::Basic,{300}},
+        {SwordsTypes::Basic,{1000}}
+    };
+}

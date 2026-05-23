@@ -4,6 +4,11 @@
 #include "textureMenager.h"
 #include "item.h"
 
+struct PlayerStats{
+    int demage;
+    int health;
+};
+
 class Player{
 private:
     // Wyswietlanie gracza
@@ -22,6 +27,9 @@ private:
     std::map<ArmorsTypes, bool> unlockedArmors;
     int gold;
     int points;
+
+    // Statystyki bitewne gracza
+    PlayerStats stats;
 
 public:
     Player(TextureMenager& textures);

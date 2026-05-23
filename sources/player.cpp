@@ -7,10 +7,14 @@
 Player::Player(TextureMenager& textures) : textures(textures){
     position = sf::Vector2f(120.f, 250.f);
 
+// ODBLOKOWANE ITMEY - Do ubrania w ustawieniach
+//  Wczytanie danych gracza z pliku, bedzie oznaczaolo wyczyszczenie map 'unlockedSwords'
+//  oraz 'unlockesArmors' oraz wypelenie ich wartosciami w pliku.
+    // Miecze
     unlockedSwords[SwordsTypes::Basic] = true;
     unlockedSwords[SwordsTypes::Steel] = false;
     unlockedSwords[SwordsTypes::Godness] = false;
-
+    // Zbroje
     unlockedArmors[ArmorsTypes::Basic] = true;
     unlockedArmors[ArmorsTypes::Steel] = false;
     unlockedArmors[ArmorsTypes::Godness] = false;
@@ -18,6 +22,7 @@ Player::Player(TextureMenager& textures) : textures(textures){
     sword = SwordsTypes::Basic;
     armor = ArmorsTypes::Basic;
 
+    // Ustawia tekstury i statystyki
     setArmor(armor);
     setSword(sword);
 
@@ -48,6 +53,11 @@ int Player::getGold(){return gold;}
 void Player::setSword(SwordsTypes newSword){
     if(unlockedSwords[newSword] == false){return;}
     sword = newSword;
+
+    // Zmiana statystyk gracza
+    stats.demage = Stats::sword.at(sword).value;
+
+    // Podmiana tekstur miecza
     switch(sword){
     case SwordsTypes::Basic:
         swordSprite.setTexture(textures.getBasicSwordTexture());
@@ -64,8 +74,12 @@ void Player::setSword(SwordsTypes newSword){
 }
 void Player::setArmor(ArmorsTypes newArmor){
     if(unlockedArmors[newArmor] == false){return;}
-
     armor = newArmor;
+
+    // Zmiana statystyk gracza
+    stats.health = Stats::armor.at(armor).value;
+
+    // Zmiana statystyk gracza
     switch(armor){
     case ArmorsTypes::Basic:
         playerSprite.setTexture(textures.getPlayerTextureBasic());
