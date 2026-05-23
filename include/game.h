@@ -30,8 +30,9 @@ private:
     Settings settings;
     Arena* currentArena = nullptr;
 
+    // Zarzadzanie Menu
     std::map<std::string, Button*> buttons;
-
+    GameState MenuState;
     Utils::Mouse mouse;
 
     // Intor
@@ -47,9 +48,9 @@ public:
 
     void Run();
 
-    void DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse);
-    void DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, Utils::Mouse& mouse);
-    void DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse);
-    void DisplayShop(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse);
-    void DisplayIntro(sf::RenderWindow& window, GameState& Menu_State);
+    void DisplayMenu(sf::RenderWindow& window, Utils::Mouse& mouse);
+    void DisplayArena(sf::RenderWindow& window, Utils::Mouse& mouse);
+    void DisplaySettings(sf::RenderWindow& window, Utils::Mouse& mouse);
+    void DisplayShop(sf::RenderWindow& window, Utils::Mouse& mouse);
+    void DisplayIntro(sf::RenderWindow& window);
 };

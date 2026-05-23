@@ -7,15 +7,15 @@
 #include "mage.h"
 #include "boss.h"
 
-Arena::Arena(std::string arenaName, TextureMenager& textures, Player& mainPlayer) : textures(textures), player(mainPlayer){
+Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer) : menagers(menagers), player(mainPlayer){
     name = arenaName;
     currentState = TurnState::PlayerMove;
-    btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnBackToMenu = new Button("MENU", {10,10}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     btnBackToMenu->ChangeSize(90,40);
-    arenaBackGround.setTexture(textures.getArenaBackGround());
+    arenaBackGround.setTexture(menagers.tex.getArenaBackGround());
 
     // Przykladowo dodany wrog
-    enemies.push_back(new Zombie(textures)); // Moze lepiej trzymac ich w std::map ?
+    enemies.push_back(new Zombie(menagers.tex)); // Moze lepiej trzymac ich w std::map ?
     enemies[0]->Update(320,250);
 }
 

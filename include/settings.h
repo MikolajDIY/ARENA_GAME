@@ -15,11 +15,12 @@ private:
     std::map<std::string, Button*> buttons;
     std::map<std::string, sf::Text> texts;
     Utils::Mouse& mouse;
+    Utils::Menagers& menagers;
 
     Player& player;
 
 public:
-    Settings(TextureMenager& textures, Player& player, Utils::Mouse& m);
+    Settings(Utils::Menagers& menagers, Player& player, Utils::Mouse& m);
     ~Settings();
 
     bool Update(Utils::Mouse& mouse);

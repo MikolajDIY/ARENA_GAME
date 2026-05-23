@@ -44,7 +44,7 @@ namespace Stats{
 
     inline const std::map<SwordsTypes, ItemStats> sword{
         {SwordsTypes::Basic,{100}},
-        {SwordsTypes::Basic,{300}},
-        {SwordsTypes::Basic,{1000}}
+        {SwordsTypes::Steel,{300}},
+        {SwordsTypes::Godness,{1000}}
     };
 }

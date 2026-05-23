@@ -11,7 +11,7 @@ class Arena{
 private:
     std::string name;
     sf::Sprite arenaBackGround;
-    TextureMenager& textures;
+    Utils::Menagers& menagers;
     TurnState currentState;
     Player& player;
 
@@ -20,7 +20,7 @@ private:
     Button* btnBackToMenu = nullptr;
 
 public:
-    Arena(std::string arenaName, TextureMenager& textures, Player& mainPlayer);
+    Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer);
 
     ~Arena();
 

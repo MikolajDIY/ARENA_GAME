@@ -14,7 +14,7 @@ Game::Game()
      menagers(textures, msgs),
      player(textures),
      shop(menagers,player,mouse),
-     settings(textures, player, mouse)
+     settings(menagers, player, mouse)
     {
     window_width = 800;
     window_height = 600;
@@ -37,7 +37,7 @@ void Game::Run(){
     icon.loadFromFile("img/icons/game.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 
-    GameState MenuState = GameState::Intro;
+    MenuState = GameState::Intro;
 
     buttons["btnStart"] = new Button("START", {275, 200}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     buttons["btnMenu"] = new Button("MENU", {275, 300}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
@@ -62,19 +62,19 @@ void Game::Run(){
 
 
         if (MenuState == GameState::Arena) {
-            DisplayArena(window, textures, MenuState, mouse);
+            DisplayArena(window, mouse);
         }
         else if(MenuState == GameState::Shop){
-            DisplayShop(window, MenuState, mouse);
+            DisplayShop(window, mouse);
         }
         else if(MenuState == GameState::Settings){
-            DisplaySettings(window, MenuState, mouse);
+            DisplaySettings(window, mouse);
         }
         else if(MenuState == GameState::MainMenu){
-            DisplayMenu(window, MenuState, mouse);
+            DisplayMenu(window, mouse);
         }
         else if (MenuState == GameState::Intro) {
-            DisplayIntro(window, MenuState);
+            DisplayIntro(window);
         }
 
         menagers.msg.update();
@@ -87,7 +87,7 @@ void Game::Run(){
 // WYSWIETLANIE STANOW MENU
 // -------------------------------------
 // MENU
-void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& Mouse){
+void Game::DisplayMenu(sf::RenderWindow& window, Utils::Mouse& Mouse){
     sf::Text title("The Arena", textures.getMainFont(), 60);
     Utils::CenterTextOrigin(title);
     title.setOutlineColor(sf::Color::Black);
@@ -97,14 +97,14 @@ void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, Utils::M
 
 
     if(buttons["btnStart"]->IsClicked(Mouse)){
-        Menu_State = GameState::Arena;
+        MenuState = GameState::Arena;
     }
     if(buttons["btnShop"]->IsClicked(Mouse)){
         shop.OnEnter(); // Ekran startowy z pancerzami - podobnie mozna zrobic w settings
-        Menu_State = GameState::Shop;
+        MenuState = GameState::Shop;
     }
     if(buttons["btnSettings"]->IsClicked(Mouse)){
-        Menu_State = GameState::Settings;
+        MenuState = GameState::Settings;
     }
     if(buttons["btnExit"]->IsClicked(Mouse)){
         window.close();
@@ -118,9 +118,9 @@ void Game::DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, Utils::M
 
 }
 // ARENA
-void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, Utils::Mouse& mouse){
+void Game::DisplayArena(sf::RenderWindow& window, Utils::Mouse& mouse){
     if (currentArena == nullptr) {
-                currentArena = new Arena("Arena", textures, player);
+                currentArena = new Arena("Arena", menagers, player);
         }
         // Sprawdzamy, czy arena chce kontynuować działanie
         bool stayInArena = currentArena->Update(mouse);
@@ -128,32 +128,32 @@ void Game::DisplayArena(sf::RenderWindow& window, TextureMenager& textures, Game
         if (!stayInArena) {
             delete currentArena;
             currentArena = nullptr;
-            Menu_State = GameState::MainMenu;
+            MenuState = GameState::MainMenu;
         }
         else {
             currentArena->Draw(window);
         }
 }
 // USTAWIENIA
-void Game::DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse){
+void Game::DisplaySettings(sf::RenderWindow& window, Utils::Mouse& mouse){
     if(!settings.Update(mouse)){
-        Menu_State = GameState::MainMenu;
+        MenuState = GameState::MainMenu;
     }
     else{
         settings.Draw(window);
     }
 }
 // SHOP
-void Game::DisplayShop(sf::RenderWindow& window, GameState& Menu_State, Utils::Mouse& mouse){
+void Game::DisplayShop(sf::RenderWindow& window, Utils::Mouse& mouse){
     if(!shop.Update(mouse)){
-        Menu_State = GameState::MainMenu;
+        MenuState = GameState::MainMenu;
     }
     else{
         shop.Draw(window);
     }
 }
 // INTRO
-void Game::DisplayIntro(sf::RenderWindow& window, GameState& Menu_State){
+void Game::DisplayIntro(sf::RenderWindow& window){
     // Czas wyświetlania jednego ekranu w sekundach
     const float displayTime = 1.0f;
 
@@ -179,7 +179,7 @@ void Game::DisplayIntro(sf::RenderWindow& window, GameState& Menu_State){
         }
         else if (introStage == 2) {
             // Koniec intro, przełączamy stan gry na Menu Główne
-            Menu_State = GameState::MainMenu;
+            MenuState = GameState::MainMenu;
             introStage = 3;
         }
     }

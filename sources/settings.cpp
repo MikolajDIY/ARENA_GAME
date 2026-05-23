@@ -6,12 +6,16 @@
 // CLASS SETTINGS
 // -------------------------------------
 
- Settings::Settings(TextureMenager& textures, Player& player, Utils::Mouse& m) : mouse(m), player(player){
-    BackGround.setTexture(textures.getSettingsBackGround());
-    buttons["BackToMenu"] = new Button("Menu", {10,10},textures.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+ Settings::Settings(Utils::Menagers& menagers, Player& player, Utils::Mouse& m)
+  : mouse(m),
+   player(player),
+   menagers(menagers){
+
+    BackGround.setTexture(menagers.tex.getSettingsBackGround());
+    buttons["BackToMenu"] = new Button("Menu", {10,10},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     buttons["BackToMenu"]->ChangeSize(80,40);
 
-    texts["Settings"] = sf::Text("Settings",textures.getMainFont(), 40);
+    texts["Settings"] = sf::Text("Settings",menagers.tex.getMainFont(), 40);
     Utils::CenterTextOrigin(texts["Settings"]);
     texts["Settings"].setPosition(400,40);
  }
