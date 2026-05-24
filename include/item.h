@@ -34,17 +34,4 @@ public:
     void Draw(sf::RenderWindow& window);
 };
 
-// STATYSTYKI ITEMOW - BITEWNE
-namespace Stats{
-    inline const std::map<ArmorsTypes, ItemStats> armor{
-        {ArmorsTypes::Basic,{10}},
-        {ArmorsTypes::Steel,{30}},
-        {ArmorsTypes::Godness,{100}}
-    };
 
-    inline const std::map<SwordsTypes, ItemStats> sword{
-        {SwordsTypes::Basic,{100}},
-        {SwordsTypes::Steel,{300}},
-        {SwordsTypes::Godness,{1000}}
-    };
-}

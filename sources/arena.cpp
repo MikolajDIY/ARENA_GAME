@@ -17,10 +17,22 @@ Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlaye
     // Przykladowo dodany wrog
     enemies.push_back(new Zombie(menagers.tex)); // Moze lepiej trzymac ich w std::map ?
     enemies[0]->Update(320,250);
+
+    enemies.push_back(new Boss(menagers.tex));
+    enemies[1]->Update(520,220);
+
+    //enemies.push_back(new Mage(menagers.tex));
+    //enemies[0]->Update(320,250);
+
+    //enemies.push_back(new Skeleton(menagers.tex));
+    //enemies[1]->Update(320,250);
 }
 
 Arena::~Arena(){
     delete btnBackToMenu;
+    for(auto enemy : enemies){
+        delete enemy;
+    }
 }
 
 void Arena::Fight(){

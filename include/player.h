@@ -9,12 +9,21 @@ struct PlayerStats{
     int health;
 };
 
+struct PlayerDraw{
+    sf::Sprite PlayerSprite;
+    sf::Sprite SwordSprite;
+    sf::Text HpBar;
+    sf::Text Name;
+};
+
 class Player{
 private:
     // Wyswietlanie gracza
     std::string name;
-    sf::Sprite playerSprite;
-    sf::Sprite swordSprite;
+
+    // Zbior rzeczy skladajacych sie na wyswietlenie gracza
+    PlayerDraw playerDraw;
+
     sf::Vector2f position;
     TextureMenager& textures;
 
@@ -52,5 +61,6 @@ public:
     // Rysowanie Gracza
     void Update();
     void Update(float x, float y);
+    void HpBarUpdate();
     void Draw(sf::RenderWindow& window);
 };

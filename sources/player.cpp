@@ -1,15 +1,16 @@
 #include "player.h"
+#include "stats.h"
 
 // -------------------------------------
 //            CLASS PLAYER
 // -------------------------------------
 
 Player::Player(TextureMenager& textures) : textures(textures){
-    position = sf::Vector2f(120.f, 250.f);
+    position = sf::Vector2f(100.f, 250.f);
 
 // ODBLOKOWANE ITMEY - Do ubrania w ustawieniach
 //  Wczytanie danych gracza z pliku, bedzie oznaczaolo wyczyszczenie map 'unlockedSwords'
-//  oraz 'unlockesArmors' oraz wypelenie ich wartosciami w pliku.
+//  oraz 'unlockesArmors' oraz wypelenie ich wartosciami z pliku.
     // Miecze
     unlockedSwords[SwordsTypes::Basic] = true;
     unlockedSwords[SwordsTypes::Steel] = false;
@@ -19,12 +20,26 @@ Player::Player(TextureMenager& textures) : textures(textures){
     unlockedArmors[ArmorsTypes::Steel] = false;
     unlockedArmors[ArmorsTypes::Godness] = false;
 
+    // Wczytanie domyslnego ubioru na potrzeby testu - DOCELOWO MA BYC TU WYWOLANIE METODY ODCZYTUJACEJ EKWIPUNEK Z PLIKU
+    // I UBRANIE OSTATNIEGO ZAPISANEGO SETU.
     sword = SwordsTypes::Basic;
     armor = ArmorsTypes::Basic;
+    name = "Victoria";
 
-    // Ustawia tekstury i statystyki
+// Ustawia tekstury i statystyki
+    Utils::CenterSpriteOrigin(playerDraw.PlayerSprite);
+    Utils::CenterSpriteOrigin(playerDraw.SwordSprite);
     setArmor(armor);
     setSword(sword);
+    // Ustawienie Hp Bar
+    playerDraw.HpBar.setCharacterSize(15);
+    playerDraw.HpBar.setFont(textures.getMainFont());
+    Utils::CenterTextOrigin(playerDraw.HpBar);
+    // Ustawienie Name Bar
+    playerDraw.Name.setCharacterSize(15);
+    playerDraw.Name.setFont(textures.getMainFont());
+    Utils::CenterTextOrigin(playerDraw.Name);
+    playerDraw.Name.setString(name);
 
     gold = 200; // TEST
 }
@@ -32,18 +47,35 @@ Player::Player(TextureMenager& textures) : textures(textures){
 // RYSOWANIE GRACZA
 // -------------------------------------
 void Player::Draw(sf::RenderWindow& window){
-    window.draw(playerSprite);
-    window.draw(swordSprite);
+    Update();
+    window.draw(playerDraw.PlayerSprite);
+    window.draw(playerDraw.SwordSprite);
+    window.draw(playerDraw.HpBar);
+    window.draw(playerDraw.Name);
 }
 
-void Player::Update(){
-    playerSprite.setPosition(position);
-    swordSprite.setPosition(position + sf::Vector2f(15.f, 95.f));
+void Player::Update(){ // Wywolac po otrzymaniu ataku wykonaniu ataku, jezeli bedzi jakas 'mana' tu zaktualizowac
+    playerDraw.PlayerSprite.setPosition(position);
+    playerDraw.SwordSprite.setPosition(position + sf::Vector2f(15.f, 95.f));
+
+    playerDraw.Name.setPosition(position + sf::Vector2f(10.f, -35.f));
+    HpBarUpdate();
 }
 
-void Player::Update(float x, float y){
+void Player::Update(float x, float y){ // Wywolac przy zamianie pozycji gracza - jezeli bedzie trzeba
     position = sf::Vector2f(x,y);
-    playerSprite.setPosition(position);
+    Update();
+}
+// POKAZANIE HP
+void Player::HpBarUpdate(){
+    playerDraw.HpBar.setString(std::to_string(stats.health) + " Hp");
+    if(stats.health <= 0.2*Stats::armor.at(armor).value){
+        playerDraw.HpBar.setFillColor(sf::Color::Red);
+    }
+    else{
+        playerDraw.HpBar.setFillColor(sf::Color::Green);
+    }
+    playerDraw.HpBar.setPosition(position + sf::Vector2f(30.f, -20.f));
 }
 // -------------------------------------
 // SKLEP I USTAWIENIA - ZARZADZANIE EKWIPUNKIEM GRACZA
@@ -60,15 +92,15 @@ void Player::setSword(SwordsTypes newSword){
     // Podmiana tekstur miecza
     switch(sword){
     case SwordsTypes::Basic:
-        swordSprite.setTexture(textures.getBasicSwordTexture());
+        playerDraw.SwordSprite.setTexture(textures.getBasicSwordTexture());
         break;
 
     case SwordsTypes::Steel:
-        swordSprite.setTexture(textures.getSteelSwordTexture());
+        playerDraw.SwordSprite.setTexture(textures.getSteelSwordTexture());
         break;
 
     case SwordsTypes::Godness:
-        swordSprite.setTexture(textures.getGodnesSwordTexture());
+        playerDraw.SwordSprite.setTexture(textures.getGodnesSwordTexture());
         break;
     }
 }
@@ -82,15 +114,15 @@ void Player::setArmor(ArmorsTypes newArmor){
     // Zmiana statystyk gracza
     switch(armor){
     case ArmorsTypes::Basic:
-        playerSprite.setTexture(textures.getPlayerTextureBasic());
+        playerDraw.PlayerSprite.setTexture(textures.getPlayerTextureBasic());
         break;
 
     case ArmorsTypes::Steel:
-        playerSprite.setTexture(textures.getPlayerTextureSteel());
+        playerDraw.PlayerSprite.setTexture(textures.getPlayerTextureSteel());
         break;
 
     case ArmorsTypes::Godness:
-        playerSprite.setTexture(textures.getPlayerTextureGodnes());
+        playerDraw.PlayerSprite.setTexture(textures.getPlayerTextureGodnes());
         break;
     }
 }
