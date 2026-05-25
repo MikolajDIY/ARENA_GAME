@@ -488,7 +488,7 @@
 	<SFML/Graphics.hpp>
 	<string>
 
-1779624618 c:\psio\arena_game\include\player.h
+1779632996 c:\psio\arena_game\include\player.h
 	<string>
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
@@ -564,7 +564,7 @@
 	"utils.h"
 	"stats.h"
 
-1779631356 c:\psio\arena_game\include\enemy.h
+1779734079 c:\psio\arena_game\include\enemy.h
 	<string>
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
@@ -597,7 +597,7 @@
 1779629765 c:\psio\arena_game\include\mage.h
 	"enemy.h"
 
-1779628269 c:\psio\arena_game\include\item.h
+1779632996 c:\psio\arena_game\include\item.h
 	<SFML/Graphics.hpp>
 	<string>
 	"utils.h"

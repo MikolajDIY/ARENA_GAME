@@ -29,8 +29,8 @@ protected:
     EnemyStats stats;
     EnemyTypes type;
 
-    unsigned int gold; // ile zlota daje jego smierc
-    unsigned int points; // ile punktow daje jego smierc
+    int gold; // ile zlota daje jego smierc
+    int points; // ile punktow daje jego smierc
     bool isDeath; // tego nie uzywam ale moze sie wam przyda...
 
 public:
