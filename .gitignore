@@ -73,3 +73,6 @@ Testing/
 bin/
 obj/
 ext/
+
+# Dokumentacja
+documentation_PL/
