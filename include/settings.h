@@ -18,7 +18,10 @@ private:
     Utils::Menagers& menagers;
 
     Player& player;
-
+    int difficulty;
+    void saveGame();
+    void loadGame();
+    void setDifficulty();
 public:
     Settings(Utils::Menagers& menagers, Player& player, Utils::Mouse& m);
     ~Settings();
