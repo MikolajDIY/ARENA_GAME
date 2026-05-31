@@ -130,6 +130,17 @@ void Player::Hit(Enemy& target, AttackType attackType) {
     target.TakeDamage(finalDamage);
 }
 
+void Player::Heal(int amount) {
+    stats.health += amount;
+    int baseArmorValue = Stats::armor.at(this->armor).value;
+    int maxHealth = static_cast<int>(baseArmorValue * 1.3f);
+
+    if (stats.health > maxHealth)
+        stats.health = maxHealth;
+
+    HpBarUpdate();
+}
+
 // -------------------------------------
 // SKLEP I USTAWIENIA - ZARZADZANIE EKWIPUNKIEM GRACZA
 // -------------------------------------

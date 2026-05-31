@@ -37,6 +37,7 @@ protected:
 public:
     Enemy(TextureMenager& textures);
     virtual ~Enemy(){};
+    const sf::Sprite& getSprite() const { return enemyDraw.EnemySprite; }
 
     // Metody walki
     void TakeDamage(int amount);

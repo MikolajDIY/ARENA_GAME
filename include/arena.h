@@ -18,6 +18,14 @@ private:
     std::vector<Enemy*> enemies;
 
     Button* btnBackToMenu = nullptr;
+    Button* btnAttackBasic = nullptr;
+    Button* btnAttackReckless = nullptr;
+    Button* btnAttackRisky = nullptr;
+    Button* btnAttackCombo = nullptr;
+    Button* btnHeal = nullptr;
+
+    Enemy* selectedEnemy = nullptr;
+    bool isPlayerSelected = false;
 
 public:
     Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer);
