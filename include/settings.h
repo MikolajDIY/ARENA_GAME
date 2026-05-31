@@ -5,6 +5,7 @@
 #include "textureMenager.h"
 #include "utils.h"
 #include "player.h"
+#include <fstream>
 
 class Button;
 class Player;

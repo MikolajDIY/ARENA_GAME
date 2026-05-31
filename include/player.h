@@ -42,7 +42,12 @@ private:
 
 public:
     Player(TextureMenager& textures);
-
+    std::string getname();
+    SwordsTypes getSword();
+    ArmorsTypes getArmor();
+    std::map<SwordsTypes, bool> getUnlockedSwords();
+    std::map<ArmorsTypes, bool> getUnlockedArmors();
+    int getPoints();
     // SKLEP I USTAWIENIA - ekwipunek
     int getGold();
 

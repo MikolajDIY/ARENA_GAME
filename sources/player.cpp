@@ -170,3 +170,9 @@ bool Player::buyArmor(ArmorsTypes armor, int price){
         return true;
     }
 }
+int Player::getPoints(){return points;}
+std::string Player::getname(){return name;}
+SwordsTypes Player::getSword(){return sword;}
+ArmorsTypes Player::getArmor(){return armor;}
+std::map<ArmorsTypes, bool> Player::getUnlockedArmors(){return unlockedArmors;}
+std::map<SwordsTypes, bool> Player::getUnlockedSwords(){return unlockedSwords;}
