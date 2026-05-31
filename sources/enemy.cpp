@@ -54,4 +54,10 @@ void Enemy::HpBarUpdate(){
     }
 }
 
+void Enemy::TakeDamage(int amount) {
+    stats.health -= amount;
+    if (stats.health < 0)
+        stats.health = 0;
+}
+
 
