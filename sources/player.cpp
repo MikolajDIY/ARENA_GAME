@@ -176,3 +176,8 @@ SwordsTypes Player::getSword(){return sword;}
 ArmorsTypes Player::getArmor(){return armor;}
 std::map<ArmorsTypes, bool> Player::getUnlockedArmors(){return unlockedArmors;}
 std::map<SwordsTypes, bool> Player::getUnlockedSwords(){return unlockedSwords;}
+void Player::setGold(int n){gold=n;}
+void Player::setPoints(int n){points=n;}
+void Player::setName(std::string n){name=n;}
+void Player::setUnlockedArmors(ArmorsTypes which,bool status){unlockedArmors[which]=status;}
+void Player::setUnlockedSwords(SwordsTypes which,bool status){unlockedSwords[which]=status;}

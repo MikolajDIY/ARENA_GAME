@@ -48,6 +48,11 @@ public:
     std::map<SwordsTypes, bool> getUnlockedSwords();
     std::map<ArmorsTypes, bool> getUnlockedArmors();
     int getPoints();
+    void setName(std::string n);
+    void setUnlockedSwords(SwordsTypes which,bool status);
+    void setUnlockedArmors(ArmorsTypes which,bool status);
+    void setPoints(int n);
+    void setGold(int n);
     // SKLEP I USTAWIENIA - ekwipunek
     int getGold();
 

@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "player.h"
 #include <fstream>
+#include <sstream>
 
 class Button;
 class Player;
@@ -15,14 +16,16 @@ private:
     sf::Sprite BackGround;
     std::map<std::string, Button*> buttons;
     std::map<std::string, sf::Text> texts;
-    std::map<std::string, Button*> slots;
+    std::map<std::string, Button*> save_slots;
+    std::map<std::string, Button*> load_slots;
     Utils::Mouse& mouse;
     Utils::Menagers& menagers;
-    bool SlotsVisible;
+    bool SaveSlotsVisible;
+    bool LoadSlotsVisible;
     Player& player;
     int difficulty;
     void saveGame(Slots slot);
-    void loadGame();
+    void loadGame(Slots slot);
     void setDifficulty();
 public:
     Settings(Utils::Menagers& menagers, Player& player, Utils::Mouse& m);
