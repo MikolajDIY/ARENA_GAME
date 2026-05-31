@@ -21,12 +21,19 @@
     buttons["Load"]->ChangeSize(250,80);
     buttons["Difficulty"] = new Button("Difficulty",{280,400},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     buttons["Difficulty"]->ChangeSize(250,80);
+    slots["Slot1"] = new Button("Game save 1",{550,200},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    slots["Slot1"]->ChangeSize(140,40);
+    slots["Slot2"] = new Button("Game save 2",{550,250},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    slots["Slot2"]->ChangeSize(140,40);
+    slots["Slot3"] = new Button("Game save 3",{550,300},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    slots["Slot3"]->ChangeSize(140,40);
 
 
     texts["Settings"] = sf::Text("Settings",menagers.tex.getMainFont(), 40);
     Utils::CenterTextOrigin(texts["Settings"]);
     texts["Settings"].setPosition(400,40);
     difficulty=1;
+    SlotsVisible=false;
  }
 
  Settings::~Settings(){
@@ -34,7 +41,12 @@
         delete button.second;
     }
     buttons.clear();
+    for (auto const& button : slots){
+        delete button.second;
+    }
+    slots.clear();
  }
+
 
 
 
@@ -47,7 +59,7 @@ bool Settings::Update(Utils::Mouse& m){
     }
     if (buttons["Save"]->IsClicked(m))
     {
-        saveGame();
+        SlotsVisible=!SlotsVisible;
     }
     if (buttons["Load"]->IsClicked(m))
     {
@@ -56,6 +68,21 @@ bool Settings::Update(Utils::Mouse& m){
     if (buttons["Difficulty"]->IsClicked(m))
     {
         menagers.msg.add("[TEST] kliknieto difficulty",MessageType::Success,Utils::TimeOfMessage);
+    }
+    if(SlotsVisible){
+        if(slots["Slot1"]->IsClicked(m))
+        {
+            saveGame(Slots::Slot1);
+        }
+        if(slots["Slot2"]->IsClicked(m))
+        {
+            saveGame(Slots::Slot2);
+        }
+        if(slots["Slot3"]->IsClicked(m))
+        {
+            saveGame(Slots::Slot3);
+        }
+
     }
     mouse = m;
     return true;
@@ -70,10 +97,19 @@ void Settings::Draw(sf::RenderWindow& window){
     for(auto const& button : texts){
         window.draw(button.second);
     }
+    if(SlotsVisible)
+    {
+        for(auto const& button : slots){
+        button.second->Draw(window);
+    }
+    }
+
  }
-void Settings::saveGame()
+
+void Settings::saveGame(Slots slot)
 {
-    std::ofstream file("Save.txt");
+    std::string filename = "Save_" + std::to_string(static_cast<int>(slot))+".txt";
+    std::ofstream file(filename);
     if(!file.is_open())
     {
         menagers.msg.add("Failed to create save",MessageType::Error,Utils::TimeOfMessage);
@@ -102,3 +138,4 @@ void Settings::saveGame()
     file.close();
     menagers.msg.add("Game saved",MessageType::Success,Utils::TimeOfMessage);
 }
+
