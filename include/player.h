@@ -2,37 +2,65 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "textureMenager.h"
-enum class SwordsTypes{Basic, Steel, Godnes};
-enum class PlayerType{Basic, Steel, Godnes};
+#include "item.h"
+
+struct PlayerStats{
+    int demage;
+    int health;
+};
+
+struct PlayerDraw{
+    sf::Sprite PlayerSprite;
+    sf::Sprite SwordSprite;
+    sf::Text HpBar;
+    sf::Text Name;
+};
 
 class Player{
 private:
     // Wyswietlanie gracza
     std::string name;
-    sf::Sprite playerSprite;
-    sf::Sprite swordSprite;
+
+    // Zbior rzeczy skladajacych sie na wyswietlenie gracza
+    PlayerDraw playerDraw;
+
     sf::Vector2f position;
     TextureMenager& textures;
 
-    // Czym aktualnie jest gracz
-    SwordsTypes swordtype;
-    PlayerType playertype;
+    // Aktulany ekwipunek gracza
+    SwordsTypes sword;
+    ArmorsTypes armor;
 
     // Odblokowane przedmioty SKLEP I USTAWIENIA
     std::map<SwordsTypes, bool> unlockedSwords;
-    std::map<PlayerType, bool> unlockedSkins;
-    unsigned int gold;
-    unsigned int points;
+    std::map<ArmorsTypes, bool> unlockedArmors;
+    int gold;
+    int points;
+
+    // Statystyki bitewne gracza
+    PlayerStats stats;
 
 public:
     Player(TextureMenager& textures);
 
     // SKLEP I USTAWIENIA - ekwipunek
-    void setSword(SwordsTypes sword);
-    void setArmor(PlayerType armor);
+    int getGold();
+
+    void setSword(SwordsTypes newSword); // Te metody mog¹ tez zmieniac hp i demage gracza
+    void setArmor(ArmorsTypes newArmor);
+
+    bool hasSword(SwordsTypes sword) const;
+    bool hasArmor(ArmorsTypes armor) const;
+
+    void unlockSword(SwordsTypes sword);
+    void unlockArmor(ArmorsTypes armor);
+
+    bool buySword(SwordsTypes sword, int price);
+    bool buyArmor(ArmorsTypes armor, int price);
 
     // Rysowanie Gracza
     void Update();
     void Update(float x, float y);
+    void HpBarUpdate();
     void Draw(sf::RenderWindow& window);
 };

@@ -457,7 +457,7 @@
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
 
-1779121922 source:c:\psio\arena_game\sources\arena.cpp
+1779632996 source:c:\psio\arena_game\sources\arena.cpp
 	"arena.h"
 	"textureMenager.h"
 	"player.h"
@@ -467,13 +467,13 @@
 	"mage.h"
 	"boss.h"
 
-1779121922 c:\psio\arena_game\include\arena.h
+1779525703 c:\psio\arena_game\include\arena.h
 	<SFML/Graphics.hpp>
 	<string>
 	"game.h"
 	"enemy.h"
 
-1779121992 c:\psio\arena_game\include\game.h
+1779525703 c:\psio\arena_game\include\game.h
 	<SFML/Graphics.hpp>
 	<string>
 	"textureMenager.h"
@@ -481,17 +481,20 @@
 	"shop.h"
 	"button.h"
 	"settings.h"
+	"utils.h"
+	"messages.h"
 
 1779121922 c:\psio\arena_game\include\texturemenager.h
 	<SFML/Graphics.hpp>
 	<string>
 
-1779121922 c:\psio\arena_game\include\player.h
+1779632996 c:\psio\arena_game\include\player.h
 	<string>
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
+	"item.h"
 
-1779025669 source:c:\psio\arena_game\sources\game.cpp
+1779525703 source:c:\psio\arena_game\sources\game.cpp
 	"game.h"
 	"arena.h"
 	"textureMenager.h"
@@ -502,83 +505,99 @@
 	"game.h"
 	"arena.h"
 
-1779121922 source:c:\psio\arena_game\sources\player.cpp
+1779632996 source:c:\psio\arena_game\sources\player.cpp
 	"player.h"
+	"stats.h"
 
 1779121922 source:c:\psio\arena_game\sources\texturemenager.cpp
 	"textureMenager.h"
 
-1779121922 source:c:\psio\arena_game\sources\shop.cpp
+1779474184 source:c:\psio\arena_game\sources\shop.cpp
 	"shop.h"
 	"game.h"
 	"theme.h"
 	"utils.h"
 
-1779121922 c:\psio\arena_game\include\shop.h
+1779474184 c:\psio\arena_game\include\shop.h
 	<SFML/Graphics.hpp>
 	<string>
+	<memory>
 	"textureMenager.h"
+	"item.h"
+	"utils.h"
 
-1779121922 c:\psio\arena_game\include\theme.h
+1779394204 c:\psio\arena_game\include\theme.h
 	<SFML/Graphics.hpp>
 
-1779121922 c:\psio\arena_game\include\button.h
+1779394204 c:\psio\arena_game\include\button.h
 	<SFML/Graphics.hpp>
 	<string>
+	"utils.h"
 
-1779121922 source:c:\psio\arena_game\sources\button.cpp
+1779394204 source:c:\psio\arena_game\sources\button.cpp
 	"button.h"
 	"theme.h"
+	"utils.h"
 
-1779121922 source:c:\psio\arena_game\sources\settings.cpp
+1779525703 source:c:\psio\arena_game\sources\settings.cpp
 	"settings.h"
 	"button.h"
 	"theme.h"
 	"utils.h"
 
-1779121922 c:\psio\arena_game\include\settings.h
+1779525703 c:\psio\arena_game\include\settings.h
 	<SFML/Graphics.hpp>
 	<string>
 	<map>
 	"textureMenager.h"
+	"utils.h"
+	"player.h"
 
-1779121922 c:\psio\arena_game\include\utils.h
+1779474184 c:\psio\arena_game\include\utils.h
 	<SFML/Graphics.hpp>
+	"theme.h"
 
 1779121922 source:c:\psio\arena_game\resources.rc
 
-1779121922 source:c:\psio\arena_game\sources\enemy.cpp
+1779632996 source:c:\psio\arena_game\sources\enemy.cpp
 	"enemy.h"
+	"utils.h"
+	"stats.h"
 
-1779121922 c:\psio\arena_game\include\enemy.h
+1779734285 c:\psio\arena_game\include\enemy.h
 	<string>
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
 
-1779121922 source:c:\psio\arena_game\sources\skeleton.cpp
+1779632996 source:c:\psio\arena_game\sources\skeleton.cpp
 	"skeleton.h"
+	"stats.h"
 
-1779121922 c:\psio\arena_game\include\skeleton.h
+1779632996 c:\psio\arena_game\include\skeleton.h
 	"enemy.h"
 
-1779121922 source:c:\psio\arena_game\sources\boss.cpp
+1779632996 source:c:\psio\arena_game\sources\boss.cpp
 	"boss.h"
+	"stats.h"
 
-1779121922 c:\psio\arena_game\include\boss.h
+1779632996 c:\psio\arena_game\include\boss.h
 	"enemy.h"
 
-1779121922 source:c:\psio\arena_game\sources\zombie.cpp
+1779632996 source:c:\psio\arena_game\sources\zombie.cpp
 	"zombie.h"
+	"stats.h"
 
-1779121922 c:\psio\arena_game\include\zombie.h
+1779632996 c:\psio\arena_game\include\zombie.h
 	"enemy.h"
 
-1779121922 source:c:\psio\arena_game\sources\mage.cpp
+1779632996 source:c:\psio\arena_game\sources\mage.cpp
 	"mage.h"
+	"stats.h"
 
-1779121922 c:\psio\arena_game\include\mage.h
+1779632996 c:\psio\arena_game\include\mage.h
 	"enemy.h"
 
+<<<<<<< HEAD
 1779127019 source:c:\users\48535\arena_game\resources.rc
 
 1779127019 source:c:\users\48535\arena_game\sources\arena.cpp
@@ -1118,4 +1137,28 @@
 
 1779127019 source:c:\users\48535\arena_game\sources\zombie.cpp
 	"zombie.h"
+=======
+1779632996 c:\psio\arena_game\include\item.h
+	<SFML/Graphics.hpp>
+	<string>
+	"utils.h"
+
+1779474184 source:c:\psio\arena_game\sources\item.cpp
+	"item.h"
+	"utils.h"
+	"theme.h"
+
+1779474184 c:\psio\arena_game\include\messages.h
+	<SFML/Graphics.hpp>
+	<vector>
+	"utils.h"
+	"textureMenager.h"
+
+1779474184 source:c:\psio\arena_game\sources\messages.cpp
+	"messages.h"
+
+1779632996 c:\psio\arena_game\include\stats.h
+	"enemy.h"
+	"item.h"
+>>>>>>> 6c2d238b64ae25593be25ce88e81fc6a4e5eae46
 

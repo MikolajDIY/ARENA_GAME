@@ -1,10 +1,11 @@
 #include "button.h"
 #include "theme.h"
+#include "utils.h"
 //-------------------------------------------------------
 //                  CLASS BUTTON
 //-------------------------------------------------------
 
-
+// Konstruktor glowny
 Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color normalC, sf::Color hoverC){
     normalColor = normalC;
     hoverColor = hoverC;
@@ -16,7 +17,7 @@ Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color nor
 
     // Obramowanie przycisku
     shape.setOutlineThickness(3.f);
-    shape.setOutlineColor(sf::Color(100, 70, 50));
+    shape.setOutlineColor(Theme::ButtonOutline);
 
     buttonText.setFont(font);
     buttonText.setString(text);
@@ -24,16 +25,39 @@ Button::Button(std::string text, sf::Vector2f pos, sf::Font& font, sf::Color nor
     buttonText.setFillColor(Theme::Text);
 
     sf::FloatRect textRect = buttonText.getLocalBounds();
-    buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-    buttonText.setPosition(Position.x + shape.getSize().x / 2.0f, Position.y + shape.getSize().y / 2.0f);
+    buttonText.setOrigin(textRect.left + textRect.width / 2.f, textRect.top + textRect.height / 2.f);
+    buttonText.setPosition(Position.x + shape.getSize().x / 2.f, Position.y + shape.getSize().y / 2.f);
+}
+
+// Konstruktor uproszczony - domyslna czcionka i kolory
+Button::Button(std::string text,sf::Font& font, sf::Vector2f pos, sf::Vector2f siz){
+    normalColor = Theme::ButtonNormal;
+    hoverColor = Theme::ButtonHover;
+    Position = pos;
+    fontSize = siz.y/2.3f;
+
+    shape.setSize(siz);
+    shape.setPosition(pos);
+    shape.setFillColor(normalColor);
+
+    shape.setOutlineThickness(3.f);
+    shape.setOutlineColor(Theme::ButtonOutline);
+
+    buttonText.setFont(font);
+    buttonText.setString(text);
+    buttonText.setCharacterSize(fontSize);
+    buttonText.setFillColor(Theme::Text);
+
+    sf::FloatRect textRect = buttonText.getLocalBounds();
+    buttonText.setOrigin(textRect.left + textRect.width/2.f, textRect.top + textRect.height/2.f);
+    buttonText.setPosition(Position.x + shape.getSize().x / 2.f, Position.y + shape.getSize().y / 2.f);
 }
 
 // -------------------------------------
 // SPRAWDZENIE CZY KLIKNIETY I RYSOWANIE
 // -------------------------------------
-bool Button::IsClicked(int mouseX, int mouseY, bool MouseClicked){
-    sf::Vector2f mousePos(static_cast<float>(mouseX), static_cast<float>(mouseY));
-    bool Hoverd = shape.getGlobalBounds().contains(mousePos);
+bool Button::IsClicked(Utils::Mouse& mouse){
+    bool Hoverd = shape.getGlobalBounds().contains(mouse.pos);
 
     if(Hoverd){
         shape.setFillColor(hoverColor);
@@ -41,7 +65,7 @@ bool Button::IsClicked(int mouseX, int mouseY, bool MouseClicked){
     else{
         shape.setFillColor(normalColor);
     }
-    return Hoverd && MouseClicked;
+    return Hoverd && mouse.clickedLeft;
 }
 
 void Button::Draw(sf::RenderWindow& window){

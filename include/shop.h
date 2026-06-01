@@ -1,23 +1,46 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <memory> // Mo¿e z³apiemy wiêcej punktów (inteligentne wskaŸniki)
 #include "textureMenager.h"
+#include "item.h"
+#include "utils.h"
 class Button;
 class Player;
 
+enum class ShopState{Armors,Swords};
 class Shop{
 private:
     sf::Sprite BackGround;
-    std::map<std::string, Button*> buttons;
+
+    std::map<std::string, std::unique_ptr<Button>> buttons;
+    std::map<ArmorsTypes, std::unique_ptr<Item>> armors;
+    std::map<SwordsTypes, std::unique_ptr<Item>> swords;
     std::map<std::string, sf::Text> texts;
+
+    Utils::Mouse& mouse;
+    Utils::Menagers& menagers;
+    ShopState shopState;
+    sf::Clock errClock;
 
     Player& player;
 
 public:
-    Shop(TextureMenager& textures, Player& player);
+    Shop(Utils::Menagers& menagers, Player& player, Utils::Mouse& mouse);
     ~Shop();
+    // Zmiany stanow Menu Sklepu
+    void createButtons();
+    void createTexts();
+    void createItems();
+    void changeMenu(ShopState state);
 
-    bool Update(int mouseX, int mouseY, bool isClicked);
+    // Sprawdzenie czy przycisk klikniety
+    void buttonsClicked();
+    void itemsClicked();
+
+    // Rysowanie sklepu
+    void OnEnter();
+    bool Update(Utils::Mouse& mouse);
     void Draw(sf::RenderWindow& window);
 };
 

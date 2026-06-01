@@ -6,6 +6,8 @@
 #include "shop.h"
 #include "button.h"
 #include "settings.h"
+#include "utils.h"
+#include "messages.h"
 class Arena;
 
 enum class GameState{MainMenu,Arena,Shop,GameOver, Settings, Intro};
@@ -18,16 +20,20 @@ private:
     sf::RenderWindow window;
     sf::Sprite menuBackGround;
     TextureMenager textures;
+    MessageMenager msgs;
+
+    // Textury i Komunikaty - W paczce
+    Utils::Menagers menagers;
 
     Player player;
     Shop shop;
     Settings settings;
     Arena* currentArena = nullptr;
 
+    // Zarzadzanie Menu
     std::map<std::string, Button*> buttons;
-
-    bool isMouseClicked_Left = false;
-    bool isMouseClicked_Right = false;
+    GameState MenuState;
+    Utils::Mouse mouse;
 
     // Intor
     sf::Sprite introSprite;
@@ -42,9 +48,9 @@ public:
 
     void Run();
 
-    void DisplayMenu(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplayArena(sf::RenderWindow& window, TextureMenager& textures, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplaySettings(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplayShop(sf::RenderWindow& window, GameState& Menu_State, sf::Vector2i& Mouse_pos);
-    void DisplayIntro(sf::RenderWindow& window, GameState& Menu_State);
+    void DisplayMenu(sf::RenderWindow& window, Utils::Mouse& mouse);
+    void DisplayArena(sf::RenderWindow& window, Utils::Mouse& mouse);
+    void DisplaySettings(sf::RenderWindow& window, Utils::Mouse& mouse);
+    void DisplayShop(sf::RenderWindow& window, Utils::Mouse& mouse);
+    void DisplayIntro(sf::RenderWindow& window);
 };

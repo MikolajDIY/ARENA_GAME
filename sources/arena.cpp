@@ -7,20 +7,32 @@
 #include "mage.h"
 #include "boss.h"
 
-Arena::Arena(std::string arenaName, TextureMenager& textures, Player& mainPlayer) : textures(textures), player(mainPlayer){
+Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer) : menagers(menagers), player(mainPlayer){
     name = arenaName;
     currentState = TurnState::PlayerMove;
-    btnBackToMenu = new Button("MENU", {10,10}, textures.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnBackToMenu = new Button("MENU", {10,10}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     btnBackToMenu->ChangeSize(90,40);
-    arenaBackGround.setTexture(textures.getArenaBackGround());
+    arenaBackGround.setTexture(menagers.tex.getArenaBackGround());
 
     // Przykladowo dodany wrog
-    enemies.push_back(new Zombie(textures)); // Moze lepiej trzymac ich w std::map ?
+    enemies.push_back(new Zombie(menagers.tex)); // Moze lepiej trzymac ich w std::map ?
     enemies[0]->Update(320,250);
+
+    enemies.push_back(new Boss(menagers.tex));
+    enemies[1]->Update(520,220);
+
+    //enemies.push_back(new Mage(menagers.tex));
+    //enemies[0]->Update(320,250);
+
+    //enemies.push_back(new Skeleton(menagers.tex));
+    //enemies[1]->Update(320,250);
 }
 
 Arena::~Arena(){
     delete btnBackToMenu;
+    for(auto enemy : enemies){
+        delete enemy;
+    }
 }
 
 void Arena::Fight(){
@@ -30,8 +42,8 @@ void Arena::Fight(){
 // -------------------------------------
 // RYSOWANIE ARENY
 // -------------------------------------
-bool Arena::Update(int mouseX, int mouseY, bool isClicked) {
-    if (btnBackToMenu->IsClicked(mouseX, mouseY, isClicked)) {
+bool Arena::Update(Utils::Mouse& Mouse) {
+    if (btnBackToMenu->IsClicked(Mouse)) {
         return false;
     }
 
