@@ -10,6 +10,9 @@
 Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer) : menagers(menagers), player(mainPlayer){
     name = arenaName;
     currentState = TurnState::PlayerMove;
+    msgManager = new MessageMenager(menagers.tex);
+    msgManager->add("Rozpoczeto walke na " + name, MessageType::Success, 2.5f); //przykladowa wartosc
+
     btnBackToMenu = new Button("MENU", {10,10}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     btnBackToMenu->ChangeSize(90,40);
     arenaBackGround.setTexture(menagers.tex.getArenaBackGround());
@@ -57,6 +60,7 @@ Arena::~Arena(){
     delete btnAttackRisky;
     delete btnAttackCombo;
     delete btnHeal;
+    delete msgManager;
     for(auto enemy : enemies){
         delete enemy;
     }
@@ -75,9 +79,18 @@ void Arena::Fight(){
             break;
 
         case TurnState::EnemiesTurn:
+            if (turnDelayClock.getElapsedTime().asSeconds() < 3.0f) //przykladowa wartosc opoznienia
+            return;
+
             for (Enemy* enemy : enemies) {
                 enemy->Attack(player);
+                msgManager->add("Przeciwnik zadaje Ci obrazenia!", MessageType::Error, 2.0f);
             }
+            if (player.getHealth() <= 0) {
+            msgManager->add("PORAZKA...", MessageType::Error, 15.0f);
+            currentState = TurnState::GameOver;
+            return;
+        }
             currentTurn++;
             currentState = TurnState::PlayerMove;
             break;
@@ -88,12 +101,16 @@ void Arena::Fight(){
 // RYSOWANIE ARENY
 // -------------------------------------
 bool Arena::Update(Utils::Mouse& Mouse) {
+    msgManager->update();
+
     if (btnBackToMenu->IsClicked(Mouse)) {
         return false;
     }
-
+    if (currentState == TurnState::GameOver) {
+        return true;
+    }
     //Warunki konca gry
-    if(player.getHealth() <= 0) {
+   /* if(player.getHealth() <= 0) {
         return false;
     }
     if(enemies.empty()) {
@@ -101,7 +118,7 @@ bool Arena::Update(Utils::Mouse& Mouse) {
     }
     if (currentTurn > maxTurns) {
         return false;
-    }
+    } */
 
     if(currentState == TurnState::PlayerMove) {
     sf::Vector2f mouseCoord = Mouse.pos;
@@ -126,38 +143,64 @@ bool Arena::Update(Utils::Mouse& Mouse) {
             if(btnAttackBasic->IsClicked(Mouse)) {
                 player.Hit(*selectedEnemy, AttackType::Basic);
                 if(selectedEnemy->isDead()) {
+                    msgManager->add("Przeciwnik zostal pokonany!", MessageType::Success, 3.0f);
                     enemies.erase(std::remove(enemies.begin(), enemies.end(), selectedEnemy), enemies.end());
                     delete selectedEnemy;
+                    if (enemies.empty()) {
+                    msgManager->add("ZWYCIESTWO! Pokonano wszystkich wrogow!", MessageType::Success, 15.0f);
+                    currentState = TurnState::GameOver;
+                    }
                 }
                 selectedEnemy = nullptr;
                 currentState = TurnState::EnemiesTurn;
+                turnDelayClock.restart();
             }
             else if(btnAttackReckless->IsClicked(Mouse)) {
                 player.Hit(*selectedEnemy, AttackType::Reckless);
                 if(selectedEnemy->isDead()) {
+                    msgManager->add("Przeciwnik zostal pokonany!", MessageType::Success, 3.0f);
                     enemies.erase(std::remove(enemies.begin(), enemies.end(), selectedEnemy), enemies.end());
                     delete selectedEnemy;
+                    if (enemies.empty()) {
+                    msgManager->add("ZWYCIESTWO! Pokonano wszystkich wrogow!", MessageType::Success, 15.0f);
+                    currentState = TurnState::GameOver;
+                    }
                 }
                 selectedEnemy = nullptr;
                 currentState = TurnState::EnemiesTurn;
+                turnDelayClock.restart();
             }
             else if(btnAttackRisky->IsClicked(Mouse)) {
                 player.Hit(*selectedEnemy, AttackType::Risky);
                 if(selectedEnemy->isDead()) {
+                    msgManager->add("Przeciwnik zostal pokonany!", MessageType::Success, 3.0f);
                     enemies.erase(std::remove(enemies.begin(), enemies.end(), selectedEnemy), enemies.end());
                     delete selectedEnemy;
+                    if (enemies.empty()) {
+                    msgManager->add("ZWYCIESTWO! Pokonano wszystkich wrogow!", MessageType::Success, 15.0f);
+                    currentState = TurnState::GameOver;
+                    }
                 }
                 selectedEnemy = nullptr;
                 currentState = TurnState::EnemiesTurn;
+                turnDelayClock.restart();
             }
             else if(btnAttackCombo->IsClicked(Mouse)) {
                 player.Hit(*selectedEnemy, AttackType::Combo);
                 if(selectedEnemy->isDead()) {
+                    msgManager->add("Przeciwnik zostal pokonany!", MessageType::Success, 3.0f);
                     enemies.erase(std::remove(enemies.begin(), enemies.end(), selectedEnemy), enemies.end());
                     delete selectedEnemy;
+                    if (enemies.empty()) {
+                    msgManager->add("ZWYCIESTWO! Pokonano wszystkich wrogow!", MessageType::Success, 15.0f);
+                    currentState = TurnState::GameOver;
+                    }
                 }
+                if (currentState != TurnState::GameOver) {
                 selectedEnemy = nullptr;
                 currentState = TurnState::EnemiesTurn;
+                turnDelayClock.restart();
+                }
             }
         }
 
@@ -198,6 +241,7 @@ void Arena::Draw(sf::RenderWindow& window){
     if (isPlayerSelected) {
         btnHeal->Draw(window);
     }
+    msgManager->Draw(window);
 }
 
 

@@ -5,7 +5,7 @@
 #include "enemy.h"
 inline sf::Font font;
 
-enum class TurnState{PlayerMove, PlayerAttack, EnemiesTurn};
+enum class TurnState{PlayerMove, PlayerAttack, EnemiesTurn, GameOver};
 
 class Arena{
 private:
@@ -28,6 +28,9 @@ private:
 
     Enemy* selectedEnemy = nullptr;
     bool isPlayerSelected = false;
+
+    MessageMenager* msgManager = nullptr;
+    sf::Clock turnDelayClock;
 
 public:
     Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer);
