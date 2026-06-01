@@ -101,7 +101,6 @@ void Player::Hit(Enemy& target, AttackType attackType) {
             finalDamage = stats.demage * 2;
             int hpLoss = (rand() % 11) + 5; //przykladowa wartosc
             stats.health -= hpLoss;
-            //dodac zabezpieczenie zeby gracz sam sie nie wyeliminowal
             break;
         }
 

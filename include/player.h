@@ -49,6 +49,8 @@ public:
     Player(TextureMenager& textures);
     const sf::Sprite& getSprite() const { return playerDraw.PlayerSprite; }
 
+    int getHealth() const { return stats.health; }
+
     // METODY WALKI
     void TakeDamage(int amount);
     void Hit(Enemy& target, AttackType attackType);

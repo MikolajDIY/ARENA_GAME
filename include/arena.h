@@ -16,6 +16,8 @@ private:
     Player& player;
 
     std::vector<Enemy*> enemies;
+    int currentTurn;
+    int maxTurns;
 
     Button* btnBackToMenu = nullptr;
     Button* btnAttackBasic = nullptr;
