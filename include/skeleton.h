@@ -5,4 +5,5 @@ class Skeleton : public Enemy{
 public:
     Skeleton(TextureMenager& textures);
     void HpBarUpdate() override;
+    void Attack(Player& target) override;
 };

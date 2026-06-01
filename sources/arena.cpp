@@ -14,6 +14,22 @@ Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlaye
     btnBackToMenu->ChangeSize(90,40);
     arenaBackGround.setTexture(menagers.tex.getArenaBackGround());
 
+    //Przyciski ataku
+    float btnWidth = 160.f, btnHeight = 45.f, Y_Position = 520.f;
+
+    btnAttackBasic    = new Button("Basic",    {58.f, Y_Position},  menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnAttackReckless = new Button("Reckless", {233.f, Y_Position}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnAttackRisky    = new Button("Risky",    {408.f, Y_Position}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnAttackCombo    = new Button("Combo",    {583.f, Y_Position}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+
+    btnAttackBasic->ChangeSize(btnWidth, btnHeight);
+    btnAttackReckless->ChangeSize(btnWidth, btnHeight);
+    btnAttackRisky->ChangeSize(btnWidth, btnHeight);
+    btnAttackCombo->ChangeSize(btnWidth, btnHeight);
+
+    btnHeal = new Button("Heal", {320.f, Y_Position}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
+    btnHeal->ChangeSize(btnWidth, btnHeight);
+
     // Przykladowo dodany wrog
     enemies.push_back(new Zombie(menagers.tex)); // Moze lepiej trzymac ich w std::map ?
     enemies[0]->Update(320,250);
@@ -30,6 +46,11 @@ Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlaye
 
 Arena::~Arena(){
     delete btnBackToMenu;
+    delete btnAttackBasic;
+    delete btnAttackReckless;
+    delete btnAttackRisky;
+    delete btnAttackCombo;
+    delete btnHeal;
     for(auto enemy : enemies){
         delete enemy;
     }
@@ -47,6 +68,52 @@ bool Arena::Update(Utils::Mouse& Mouse) {
         return false;
     }
 
+    sf::Vector2f mouseCoord = Mouse.pos;
+    if(Mouse.clickedLeft) {
+        // Klikniêcie w samego gracza - leczenie
+        if (player.getSprite().getGlobalBounds().contains(mouseCoord)) {
+        isPlayerSelected = true;
+        selectedEnemy = nullptr;
+        }
+        // Klikniêcie w przeciwnika - atak
+        else {
+            for(Enemy* enemy : enemies) {
+                if(enemy->getSprite().getGlobalBounds().contains(mouseCoord)) {
+                    selectedEnemy = enemy;
+                    isPlayerSelected = false;
+                    break;
+                }
+            }
+        }
+    }
+        if(selectedEnemy != nullptr) {
+            if(btnAttackBasic->IsClicked(Mouse)) {
+                player.Hit(*selectedEnemy, AttackType::Basic);
+                selectedEnemy = nullptr;
+                // currentState = TurnState::EnemiesTurn;
+            }
+            else if(btnAttackReckless->IsClicked(Mouse)) {
+                player.Hit(*selectedEnemy, AttackType::Reckless);
+                selectedEnemy = nullptr;
+                // currentState = TurnState::EnemiesTurn;
+            }
+            else if(btnAttackRisky->IsClicked(Mouse)) {
+                player.Hit(*selectedEnemy, AttackType::Risky);
+                selectedEnemy = nullptr;
+                // currentState = TurnState::EnemiesTurn;
+            }
+            else if(btnAttackCombo->IsClicked(Mouse)) {
+                player.Hit(*selectedEnemy, AttackType::Combo);
+                selectedEnemy = nullptr;
+                // currentState = TurnState::EnemiesTurn;
+            }
+        }
+
+        if(isPlayerSelected && btnHeal->IsClicked(Mouse)) {
+            player.Heal(10); //przykladowa wartosc
+            isPlayerSelected = false;
+            // currentState = TurnState::EnemiesTurn;
+        }
     Fight(); // Logika walki
     return true;
 }
@@ -64,6 +131,19 @@ void Arena::Draw(sf::RenderWindow& window){
 
     //Rysowanie Przyciskow
     btnBackToMenu->Draw(window);
+
+    //Rysowanie przyciskow atakow
+    if (selectedEnemy != nullptr) {
+        btnAttackBasic->Draw(window);
+        btnAttackReckless->Draw(window);
+        btnAttackRisky->Draw(window);
+        btnAttackCombo->Draw(window);
+    }
+
+    // Rysowanie przycisku leczenia
+    if (isPlayerSelected) {
+        btnHeal->Draw(window);
+    }
 }
 
 
