@@ -42,6 +42,9 @@ namespace Utils{
         std::string info;
         float timeOfLife;
         sf::Clock clock;
+        sf::Color textColor;
+        sf::Vector2f position;
+        float size;
     };
 
     struct Menagers{

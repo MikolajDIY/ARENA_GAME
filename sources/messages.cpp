@@ -6,12 +6,15 @@
 MessageMenager::MessageMenager(TextureMenager& tex) : textures(tex){}
 
 // DODAWANIE KOMUNIKATOW DO WYSWIETLANIA
-void MessageMenager::add(std::string name, MessageType mtype, float tim){
+void MessageMenager::add(std::string name, MessageType mtype, float tim, sf::Color color, sf::Vector2f pos, float siz){
     Utils::GameMessage msg;
     msg.type = mtype;
     msg.info = name;
     msg.timeOfLife = tim;
     msg.clock.restart();
+    msg.textColor = color;
+    msg.position = pos;
+    msg.size = siz;
 
     messagess.push_back(msg);
 }
@@ -24,9 +27,21 @@ void MessageMenager::update(){
 // RYSOWANIE
 void MessageMenager::Draw(sf::RenderWindow& window){
     int number = 0;
+    int numberSpecial =0;
+    float lastSize = 0;
+    float lastSizeSpecial =0;
     for(auto& msg : messagess){
-        sf::Text text(msg.info, textures.getMainFont(), 15);
+        sf::Text text(msg.info, textures.getMainFont(), msg.size);
+        if(msg.type == MessageType::GameIfno){
+                text.setFont(textures.getGameFont());
+                text.setCharacterSize(msg.size);
+        }
+
+        if(number == 0){lastSize = msg.size;}
+        if(numberSpecial == 0){lastSizeSpecial = msg.size;}
+
         Utils::CenterTextOrigin(text);
+
         switch(msg.type){
         case MessageType::Error:
             text.setFillColor(sf::Color::Red);
@@ -41,7 +56,16 @@ void MessageMenager::Draw(sf::RenderWindow& window){
             break;
         }
 
-        text.setPosition(400 ,500 + (number*15));
+        if(msg.type == MessageType::GameIfno){
+            text.setFillColor(msg.textColor);
+            text.setPosition(msg.position + sf::Vector2f(0.0f, 1.1f * numberSpecial * lastSizeSpecial));
+            lastSizeSpecial = msg.size;
+            numberSpecial ++;
+        }
+        else{
+            text.setPosition(400 ,500 + (number * lastSize));
+            lastSize = msg.size;
+        }
 
         window.draw(text);
         number ++;

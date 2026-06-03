@@ -3,6 +3,8 @@
 
 // Kolory dla Interfejsu
 namespace Theme {
+    const sf::Vector2f CenterOfScreen(400,300);
+
     // Przyciski Menu
     const sf::Color ButtonNormal(30, 30, 30, 220);  // Grafit
     const sf::Color ButtonHover(45, 80, 45, 240);   // Toksyczna zieleñ

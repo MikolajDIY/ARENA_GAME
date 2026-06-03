@@ -1,6 +1,7 @@
 #pragma once
 #include "zombie.h"
 #include "stats.h"
+#include "player.h"
 
 Zombie::Zombie(TextureMenager& textures) : Enemy(textures){
     enemyDraw.EnemySprite.setTexture(textures.getZombie());
@@ -24,3 +25,8 @@ void Zombie::HpBarUpdate(){
     enemyDraw.Name.setPosition(position + sf::Vector2f(80.f, -25.f));
     enemyDraw.HpBar.setPosition(position + sf::Vector2f(80.f, -5.f));
 }
+
+void Zombie::Attack(Player& target) {
+    target.TakeDamage(this->stats.damage);
+}
+

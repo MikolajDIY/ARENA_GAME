@@ -5,7 +5,7 @@
 #include "enemy.h"
 inline sf::Font font;
 
-enum class TurnState{PlayerMove, PlayerAttack, EnemiesTurn};
+enum class TurnState{PlayerMove, PlayerAttack, EnemiesTurn, GameOver};
 
 class Arena{
 private:
@@ -16,8 +16,21 @@ private:
     Player& player;
 
     std::vector<Enemy*> enemies;
+    int currentTurn;
+    int maxTurns;
 
     Button* btnBackToMenu = nullptr;
+    Button* btnAttackBasic = nullptr;
+    Button* btnAttackReckless = nullptr;
+    Button* btnAttackRisky = nullptr;
+    Button* btnAttackCombo = nullptr;
+    Button* btnHeal = nullptr;
+
+    Enemy* selectedEnemy = nullptr;
+    bool isPlayerSelected = false;
+
+    MessageMenager* msgManager = nullptr;
+    sf::Clock turnDelayClock;
 
 public:
     Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer);

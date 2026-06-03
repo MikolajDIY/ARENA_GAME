@@ -9,6 +9,8 @@ TextureMenager::TextureMenager(){
     if (!mainFont.loadFromFile("fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf")) {
         mainFont.loadFromFile("C:/Windows/Fonts/arial.ttf"); // Gdyby sie nie wczytalo
     }
+    gameFont.loadFromFile("fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf"); // TYMCZASOWO - DO PODMIANY NA COS FAJNEGO
+
     // WCZYTANIE TLA
     menuBackGround.loadFromFile("img/backgrounds/menu.png");
     arenaBackGround.loadFromFile("img/backgrounds/arena.png");
@@ -36,8 +38,11 @@ TextureMenager::TextureMenager(){
 TextureMenager::~TextureMenager(){
 
 }
-// GETERY TLA
+// GETERY CZCIONEK
 sf::Font& TextureMenager::getMainFont(){return mainFont;}
+sf::Font& TextureMenager::getGameFont(){return gameFont;}
+
+// GETERY TLA
 sf::Texture& TextureMenager::getGameName(){return gameName;}
 sf::Texture& TextureMenager::getStudio(){return studio;}
 sf::Texture& TextureMenager::getMenuBackGround(){return menuBackGround;}

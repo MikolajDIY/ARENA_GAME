@@ -6,6 +6,7 @@ class TextureMenager{
 private:
     // Czcionki
     sf::Font mainFont;
+    sf::Font gameFont;
 
     // Textury tla
     sf::Texture arenaBackGround;
@@ -38,6 +39,7 @@ public:
 
     // Gettery
     sf::Font& getMainFont();
+    sf::Font& getGameFont();
     // TLA
     sf::Texture& getStudio();
     sf::Texture& getGameName();
