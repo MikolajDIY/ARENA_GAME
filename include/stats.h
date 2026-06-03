@@ -3,8 +3,16 @@
 #include "item.h"
 
 // STATYSTYKI BITEWNE - Przykladowe
-namespace Stats{
 
+enum class Difficulties{easy,medium,hard};
+namespace Stats{
+    inline Difficulties difficulty= Difficulties::medium;
+
+    inline const std::map<Difficulties,float> difMultipliers{
+    {Difficulties::easy,0.75},
+    {Difficulties::medium,1},
+    {Difficulties::hard,1.5}
+    };
     inline const std::map<ArmorsTypes, ItemStats> armor{
         {ArmorsTypes::Basic,{10}},
         {ArmorsTypes::Steel,{30}},

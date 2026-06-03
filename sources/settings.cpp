@@ -3,6 +3,7 @@
 #include "game.h"
 #include "theme.h"
 #include "utils.h"
+#include "stats.h"
 // -------------------------------------
 // CLASS SETTINGS
 // -------------------------------------
@@ -15,32 +16,37 @@
     BackGround.setTexture(menagers.tex.getSettingsBackGround());
     buttons["BackToMenu"] = new Button("Menu", {10,10},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     buttons["BackToMenu"]->ChangeSize(80,40);
-    buttons["Save"] = new Button("Save",{280,200},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    buttons["Save"]->ChangeSize(250,80);
-    buttons["Load"] = new Button("Load",{280,300},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    buttons["Load"]->ChangeSize(250,80);
-    buttons["Difficulty"] = new Button("Difficulty",{280,400},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    buttons["Difficulty"]->ChangeSize(250,80);
-    save_slots["Slot1"] = new Button("Game save 1",{550,200},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    buttons["Save"] = new Button("Save",{50,200},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    buttons["Save"]->ChangeSize(200,80);
+    buttons["Load"] = new Button("Load",{300,200},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    buttons["Load"]->ChangeSize(200,80);
+    buttons["Difficulty"] = new Button("Difficulty",{550,200},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    buttons["Difficulty"]->ChangeSize(200,80);
+    save_slots["Slot1"] = new Button("Game save 1",{80,290},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     save_slots["Slot1"]->ChangeSize(140,40);
-    save_slots["Slot2"] = new Button("Game save 2",{550,250},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    save_slots["Slot2"] = new Button("Game save 2",{80,340},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     save_slots["Slot2"]->ChangeSize(140,40);
-    save_slots["Slot3"] = new Button("Game save 3",{550,300},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    save_slots["Slot3"] = new Button("Game save 3",{80,390},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     save_slots["Slot3"]->ChangeSize(140,40);
-    load_slots["Slot1"] = new Button("Game save 1",{550,300},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    load_slots["Slot1"] = new Button("Game save 1",{330,290},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     load_slots["Slot1"]->ChangeSize(140,40);
-    load_slots["Slot2"] = new Button("Game save 2",{550,350},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    load_slots["Slot2"] = new Button("Game save 2",{330,340},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     load_slots["Slot2"]->ChangeSize(140,40);
-    load_slots["Slot3"] = new Button("Game save 3",{550,400},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    load_slots["Slot3"] = new Button("Game save 3",{330,390},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     load_slots["Slot3"]->ChangeSize(140,40);
-
+    DifficultyButtons["Easy"] = new Button("Easy",{580,290},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    DifficultyButtons["Easy"]->ChangeSize(140,40);
+    DifficultyButtons["Medium"] = new Button("Medium",{580,340},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    DifficultyButtons["Medium"]->ChangeSize(140,40);
+    DifficultyButtons["Hard"] = new Button("Hard",{580,390},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    DifficultyButtons["Hard"]->ChangeSize(140,40);
 
     texts["Settings"] = sf::Text("Settings",menagers.tex.getMainFont(), 40);
     Utils::CenterTextOrigin(texts["Settings"]);
     texts["Settings"].setPosition(400,40);
-    difficulty=1;
     SaveSlotsVisible=false;
     LoadSlotsVisible=false;
+    DiffButtonsVisible=false;
  }
 
  Settings::~Settings(){
@@ -56,6 +62,10 @@
         delete button.second;
     }
     load_slots.clear();
+    for (auto const& button : DifficultyButtons){
+        delete button.second;
+    }
+    DifficultyButtons.clear();
  }
 
 
@@ -78,7 +88,7 @@ bool Settings::Update(Utils::Mouse& m){
     }
     if (buttons["Difficulty"]->IsClicked(m))
     {
-        menagers.msg.add("[TEST] kliknieto difficulty",MessageType::Success,Utils::TimeOfMessage);
+        DiffButtonsVisible=!DiffButtonsVisible;
     }
     if(SaveSlotsVisible){
         if(save_slots["Slot1"]->IsClicked(m))
@@ -116,6 +126,23 @@ bool Settings::Update(Utils::Mouse& m){
         }
 
     }
+    if(DiffButtonsVisible){
+        if(DifficultyButtons["Easy"]->IsClicked(m))
+        {
+            setDifficulty(Difficulties::easy);
+            DiffButtonsVisible=!DiffButtonsVisible;
+        }
+        if(DifficultyButtons["Medium"]->IsClicked(m))
+        {
+            setDifficulty(Difficulties::medium);
+            DiffButtonsVisible=!DiffButtonsVisible;
+        }
+        if(DifficultyButtons["Hard"]->IsClicked(m))
+        {
+            setDifficulty(Difficulties::hard);
+            DiffButtonsVisible=!DiffButtonsVisible;
+        }
+    }
     mouse = m;
     return true;
  }
@@ -141,6 +168,12 @@ void Settings::Draw(sf::RenderWindow& window){
         button.second->Draw(window);
     }
     }
+    if(DiffButtonsVisible)
+    {
+        for(auto const& button : DifficultyButtons){
+        button.second->Draw(window);
+    }
+    }
 
  }
 
@@ -156,7 +189,7 @@ void Settings::saveGame(Slots slot)
     file<<player.getname()<<'\n';
     file<<player.getGold()<<'\n';
     file<<player.getPoints()<<'\n';
-    file<<difficulty<<'\n';
+    file<<static_cast<int>(Stats::difficulty)<<'\n';
 
     auto swords = player.getUnlockedSwords();
     auto armors = player.getUnlockedArmors();
@@ -195,7 +228,7 @@ void Settings::loadGame(Slots slot)
     player.setPoints(std::stoi(line));
 
     std::getline(file,line);
-    difficulty=std::stoi(line);
+    Stats::difficulty=static_cast<Difficulties>(std::stoi(line));
 
 
 
@@ -225,4 +258,14 @@ void Settings::loadGame(Slots slot)
     std::getline(file,line);
     player.setArmor(static_cast<ArmorsTypes>(std::stoi(line)));
     menagers.msg.add("Save loaded succesfully",MessageType::Success,Utils::TimeOfMessage);
+}
+
+void Settings::setDifficulty(Difficulties difficulty)
+{
+    Stats::difficulty=difficulty;
+    std::string message = "Difficulty changed to ";
+    if(difficulty==Difficulties::easy){message+="easy";}
+    else if (difficulty==Difficulties::medium){message+="medium";}
+    else if (difficulty==Difficulties::hard){message+="hard";}
+    menagers.msg.add(message,MessageType::Warning,Utils::TimeOfMessage);
 }
