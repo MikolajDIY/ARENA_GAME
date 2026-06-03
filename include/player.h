@@ -16,6 +16,11 @@ struct PlayerDraw{
     sf::Text Name;
 };
 
+enum class AttackType {
+    Basic, Reckless, Risky, Combo
+};
+
+class Enemy;
 class Player{
 private:
     // Wyswietlanie gracza
@@ -42,6 +47,14 @@ private:
 
 public:
     Player(TextureMenager& textures);
+    const sf::Sprite& getSprite() const { return playerDraw.PlayerSprite; }
+
+    int getHealth() const { return stats.health; }
+
+    // METODY WALKI
+    void TakeDamage(int amount);
+    void Hit(Enemy& target, AttackType attackType);
+    void Heal(int amount);
 
     // SKLEP I USTAWIENIA - ekwipunek
     int getGold();

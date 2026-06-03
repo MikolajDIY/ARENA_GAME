@@ -17,6 +17,7 @@ struct EnemyStats{
 
 enum class EnemyTypes{Skeleton, Zombie, Mage, Boss};
 
+class Player;
 class Enemy{
 protected:
     // Wyswietlanie Enemy
@@ -36,6 +37,12 @@ protected:
 public:
     Enemy(TextureMenager& textures);
     virtual ~Enemy(){};
+    const sf::Sprite& getSprite() const { return enemyDraw.EnemySprite; }
+    bool isDead() const { return stats.health <= 0; }
+
+    // Metody walki
+    void TakeDamage(int amount);
+    virtual void Attack(Player& target)=0;
 
     // Rysowanie Przeciwnika
     void Update();

@@ -6,5 +6,6 @@ public:
     Boss(TextureMenager& textures);
     void HpBarUpdate() override;
     void Draw(sf::RenderWindow& window) override;
+    void Attack(Player& target) override;
 };
 

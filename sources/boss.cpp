@@ -1,6 +1,7 @@
 #pragma once
 #include "boss.h"
 #include "stats.h"
+#include "player.h"
 
 Boss::Boss(TextureMenager& textures) : Enemy(textures){
     enemyDraw.EnemySprite.setTexture(textures.getBoss());
@@ -35,4 +36,8 @@ void Boss::HpBarUpdate(){
 void Boss::Draw(sf::RenderWindow& window){
     Enemy::Draw(window);
     window.draw(enemyDraw.Name2);
+}
+
+void Boss::Attack(Player& target) {
+    target.TakeDamage(this->stats.damage);
 }

@@ -77,6 +77,69 @@ void Player::HpBarUpdate(){
     }
     playerDraw.HpBar.setPosition(position + sf::Vector2f(30.f, -20.f));
 }
+
+// -------------------------------------
+// METODY WALKI
+// -------------------------------------
+void Player::TakeDamage(int amount){
+    this->stats.health -= amount;
+
+    if (this->stats.health < 0)
+        this->stats.health = 0;
+}
+
+void Player::Hit(Enemy& target, AttackType attackType) {
+    int finalDamage = 0;
+
+    switch(attackType) {
+        case AttackType::Basic:
+            finalDamage = stats.demage;
+            break;
+
+        case AttackType::Reckless: //podwojne obrazenia dla wroga, ale gracz traci hp
+        {
+            finalDamage = stats.demage * 2;
+            int hpLoss = (rand() % 11) + 5; //przykladowa wartosc
+            stats.health -= hpLoss;
+            break;
+        }
+
+        case AttackType::Risky: // atak zadaje duze obrazenia, ale ma tylko 60% szans na trafienie
+        {
+            if((rand() % 100) < 60) {
+                finalDamage = static_cast<int>(stats.demage * 2.0f);
+            }
+            else {
+                finalDamage = 0;
+            }
+            break;
+        }
+        case AttackType::Combo: // 3 s³absze uderzenia, dla kazdego osobno losuje sie szansa na trafienie
+        {
+            finalDamage = 0;
+            int singleHitDamage = static_cast<int>(stats.demage * 0.4f); //przyk³adowa wartosc 40% obrazen
+
+            for(int i = 0; i < 3; i++) {
+                if ((rand() % 100) < 70)  // przyk³adowa wartosc 70% szans na trafienie
+                    finalDamage += singleHitDamage;
+            }
+            break;
+        }
+    }
+    target.TakeDamage(finalDamage);
+}
+
+void Player::Heal(int amount) {
+    stats.health += amount;
+    int baseArmorValue = Stats::armor.at(this->armor).value;
+    int maxHealth = static_cast<int>(baseArmorValue * 1.3f);
+
+    if (stats.health > maxHealth)
+        stats.health = maxHealth;
+
+    HpBarUpdate();
+}
+
 // -------------------------------------
 // SKLEP I USTAWIENIA - ZARZADZANIE EKWIPUNKIEM GRACZA
 // -------------------------------------
