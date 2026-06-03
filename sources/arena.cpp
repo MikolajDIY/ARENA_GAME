@@ -147,7 +147,10 @@ bool Arena::Update(Utils::Mouse& Mouse) {
                     enemies.erase(std::remove(enemies.begin(), enemies.end(), selectedEnemy), enemies.end());
                     delete selectedEnemy;
                     if (enemies.empty()) {
-                    msgManager->add("ZWYCIESTWO! Pokonano wszystkich wrogow!", MessageType::Success, 15.0f);
+                            // ------------ PROPOZYCJA ZMIANY WYSWIETLANIA ----------------------------------------
+                    msgManager->add("ZWYCIESTWO!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
+                    msgManager->add("Pokonano wszystkich wrogow!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);
+                        // ----------------------------------------------------------------------------------------
                     currentState = TurnState::GameOver;
                     }
                 }
