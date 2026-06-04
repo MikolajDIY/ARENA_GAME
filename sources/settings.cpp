@@ -13,33 +13,35 @@
    player(player),
    menagers(menagers){
 
+    sf::Vector2f slotSize(140,40);
+
     BackGround.setTexture(menagers.tex.getSettingsBackGround());
     buttons["BackToMenu"] = new Button("Menu", {10,10},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
     buttons["BackToMenu"]->ChangeSize(80,40);
-    buttons["Save"] = new Button("Save",{50,200},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    buttons["Save"]->ChangeSize(200,80);
-    buttons["Load"] = new Button("Load",{300,200},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    buttons["Load"]->ChangeSize(200,80);
-    buttons["Difficulty"] = new Button("Difficulty",{550,200},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    buttons["Difficulty"]->ChangeSize(200,80);
+    buttons["Save"] = new Button("Save",{50,220},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    buttons["Save"]->ChangeSize(200,60);
+    buttons["Load"] = new Button("Load",{300,220},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    buttons["Load"]->ChangeSize(200,60);
+    buttons["Difficulty"] = new Button("Difficulty",{550,220},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
+    buttons["Difficulty"]->ChangeSize(200,60);
     save_slots["Slot1"] = new Button("Game save 1",{80,290},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    save_slots["Slot1"]->ChangeSize(140,40);
+    save_slots["Slot1"]->ChangeSize(slotSize);
     save_slots["Slot2"] = new Button("Game save 2",{80,340},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    save_slots["Slot2"]->ChangeSize(140,40);
+    save_slots["Slot2"]->ChangeSize(slotSize);
     save_slots["Slot3"] = new Button("Game save 3",{80,390},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    save_slots["Slot3"]->ChangeSize(140,40);
+    save_slots["Slot3"]->ChangeSize(slotSize);
     load_slots["Slot1"] = new Button("Game save 1",{330,290},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    load_slots["Slot1"]->ChangeSize(140,40);
+    load_slots["Slot1"]->ChangeSize(slotSize);
     load_slots["Slot2"] = new Button("Game save 2",{330,340},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    load_slots["Slot2"]->ChangeSize(140,40);
+    load_slots["Slot2"]->ChangeSize(slotSize);
     load_slots["Slot3"] = new Button("Game save 3",{330,390},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    load_slots["Slot3"]->ChangeSize(140,40);
+    load_slots["Slot3"]->ChangeSize(slotSize);
     DifficultyButtons["Easy"] = new Button("Easy",{580,290},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    DifficultyButtons["Easy"]->ChangeSize(140,40);
+    DifficultyButtons["Easy"]->ChangeSize(slotSize);
     DifficultyButtons["Medium"] = new Button("Medium",{580,340},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    DifficultyButtons["Medium"]->ChangeSize(140,40);
+    DifficultyButtons["Medium"]->ChangeSize(slotSize);
     DifficultyButtons["Hard"] = new Button("Hard",{580,390},menagers.tex.getMainFont(),Theme::ButtonNormal,Theme::ButtonHover);
-    DifficultyButtons["Hard"]->ChangeSize(140,40);
+    DifficultyButtons["Hard"]->ChangeSize(slotSize);
 
     texts["Settings"] = sf::Text("Settings",menagers.tex.getMainFont(), 40);
     Utils::CenterTextOrigin(texts["Settings"]);

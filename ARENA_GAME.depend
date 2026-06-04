@@ -457,7 +457,7 @@
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
 
-1780499337 source:c:\psio\arena_game\sources\arena.cpp
+1780499922 source:c:\psio\arena_game\sources\arena.cpp
 	"arena.h"
 	"textureMenager.h"
 	"player.h"
@@ -484,11 +484,11 @@
 	"utils.h"
 	"messages.h"
 
-1780498704 c:\psio\arena_game\include\texturemenager.h
+1780499922 c:\psio\arena_game\include\texturemenager.h
 	<SFML/Graphics.hpp>
 	<string>
 
-1780498272 c:\psio\arena_game\include\player.h
+1780511183 c:\psio\arena_game\include\player.h
 	<string>
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
@@ -505,11 +505,11 @@
 	"game.h"
 	"arena.h"
 
-1780498272 source:c:\psio\arena_game\sources\player.cpp
+1780511183 source:c:\psio\arena_game\sources\player.cpp
 	"player.h"
 	"stats.h"
 
-1780499417 source:c:\psio\arena_game\sources\texturemenager.cpp
+1780499922 source:c:\psio\arena_game\sources\texturemenager.cpp
 	"textureMenager.h"
 
 1780336713 source:c:\psio\arena_game\sources\shop.cpp
@@ -526,35 +526,38 @@
 	"item.h"
 	"utils.h"
 
-1780499189 c:\psio\arena_game\include\theme.h
+1780499922 c:\psio\arena_game\include\theme.h
 	<SFML/Graphics.hpp>
 
-1780336713 c:\psio\arena_game\include\button.h
+1780569763 c:\psio\arena_game\include\button.h
 	<SFML/Graphics.hpp>
 	<string>
 	"utils.h"
 
-1780336713 source:c:\psio\arena_game\sources\button.cpp
+1780569767 source:c:\psio\arena_game\sources\button.cpp
 	"button.h"
 	"theme.h"
 	"utils.h"
 
-1780498261 source:c:\psio\arena_game\sources\settings.cpp
+1780569831 source:c:\psio\arena_game\sources\settings.cpp
 	"settings.h"
 	"button.h"
 	"game.h"
 	"theme.h"
 	"utils.h"
+	"stats.h"
 
-1780498261 c:\psio\arena_game\include\settings.h
+1780511183 c:\psio\arena_game\include\settings.h
 	<SFML/Graphics.hpp>
 	<string>
 	<map>
 	"textureMenager.h"
 	"utils.h"
 	"player.h"
+	<fstream>
+	<sstream>
 
-1780498508 c:\psio\arena_game\include\utils.h
+1780499922 c:\psio\arena_game\include\utils.h
 	<SFML/Graphics.hpp>
 	"theme.h"
 
@@ -1450,16 +1453,16 @@
 	"utils.h"
 	"theme.h"
 
-1780498563 c:\psio\arena_game\include\messages.h
+1780499922 c:\psio\arena_game\include\messages.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"utils.h"
 	"textureMenager.h"
 
-1780499743 source:c:\psio\arena_game\sources\messages.cpp
+1780499922 source:c:\psio\arena_game\sources\messages.cpp
 	"messages.h"
 
-1780336713 c:\psio\arena_game\include\stats.h
+1780511183 c:\psio\arena_game\include\stats.h
 	"enemy.h"
 	"item.h"
 

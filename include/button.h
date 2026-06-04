@@ -23,5 +23,6 @@ public:
     void Draw(sf::RenderWindow& window);
     void ChangePosition(float x, float y);
     void ChangeSize(float x, float y);
+    void ChangeSize(sf::Vector2f siz);
     void ChangeTextColor(sf::Color color);
 };

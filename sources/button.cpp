@@ -102,6 +102,23 @@ void Button::ChangeSize(float x, float y){
     );
 }
 
+void Button::ChangeSize(sf::Vector2f siz){
+    shape.setSize(siz);
+    fontSize = siz.y/2;
+    buttonText.setCharacterSize(fontSize);
+    // Zmiana rozmiaru tekstu
+    int fontSize = static_cast<int>(siz.y / 2);
+    buttonText.setCharacterSize(fontSize);
+    // Obliczenie nowego srodka tekstu
+    sf::FloatRect textRect = buttonText.getLocalBounds();
+    buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+
+    buttonText.setPosition(
+        Position.x + (shape.getSize().x / 2.0f),
+        Position.y + (shape.getSize().y / 2.0f)
+    );
+}
+
 void Button::ChangeTextColor(sf::Color color){
     buttonText.setFillColor(color);
 }
