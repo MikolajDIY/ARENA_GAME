@@ -609,7 +609,7 @@
 
 1779127019 source:c:\users\48535\arena_game\resources.rc
 
-1780601081 source:c:\users\48535\arena_game\sources\arena.cpp
+1780603894 source:c:\users\48535\arena_game\sources\arena.cpp
 	"arena.h"
 	"textureMenager.h"
 	"player.h"
@@ -618,10 +618,12 @@
 	"zombie.h"
 	"mage.h"
 	"boss.h"
+	"stats.h"
 
-1780597629 c:\users\48535\arena_game\include\arena.h
+1780602793 c:\users\48535\arena_game\include\arena.h
 	<SFML/Graphics.hpp>
 	<string>
+	<random>
 	"game.h"
 	"enemy.h"
 
@@ -1338,7 +1340,7 @@
 	"item.h"
 	"utils.h"
 
-1780334074 c:\users\48535\arena_game\include\button.h
+1780601663 c:\users\48535\arena_game\include\button.h
 	<SFML/Graphics.hpp>
 	<string>
 	"utils.h"
@@ -1378,7 +1380,7 @@
 	"stats.h"
 	"player.h"
 
-1780334074 source:c:\users\48535\arena_game\sources\button.cpp
+1780601663 source:c:\users\48535\arena_game\sources\button.cpp
 	"button.h"
 	"theme.h"
 	"utils.h"
@@ -1414,7 +1416,7 @@
 	"player.h"
 	"stats.h"
 
-1780512739 source:c:\users\48535\arena_game\sources\settings.cpp
+1780601663 source:c:\users\48535\arena_game\sources\settings.cpp
 	"settings.h"
 	"button.h"
 	"game.h"

@@ -6,6 +6,7 @@
 #include "zombie.h"
 #include "mage.h"
 #include "boss.h"
+#include "stats.h"
 
 Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer) : menagers(menagers), player(mainPlayer){
     name = arenaName;
@@ -47,10 +48,11 @@ Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlaye
     //enemies.push_back(new Mage(menagers.tex));
     //enemies[0]->Update(320,250);
 
-    enemies.push_back(new Skeleton(menagers.tex));
-    enemies[0]->Update(320,250);
-    enemies.push_back(new Skeleton(menagers.tex));
-    enemies[1]->Update(520,250);
+    //enemies.push_back(new Skeleton(menagers.tex));
+    //enemies[0]->Update(320,250);
+    //enemies.push_back(new Skeleton(menagers.tex));
+    //enemies[1]->Update(520,250);
+    SpawnEnemies();
 }
 
 Arena::~Arena(){
@@ -63,6 +65,73 @@ Arena::~Arena(){
     delete msgManager;
     for(auto enemy : enemies){
         delete enemy;
+    }
+}
+//GENEROWANIE PRZECIWNIKOW
+void Arena::SpawnEnemies() {
+    static std::mt19937 gen(static_cast<unsigned long>(std::time(nullptr)));
+
+    int minEnemies = 1;
+    int maxEnemies = 3;
+    std::vector<EnemyTypes> availableTypes;
+
+    Difficulties diff = Stats::difficulty;
+
+    if (diff == Difficulties::easy) {
+        minEnemies = 1;
+        maxEnemies = 2;
+        availableTypes = { EnemyTypes::Skeleton, EnemyTypes::Zombie };
+    }
+    else if (diff == Difficulties::medium) {
+        minEnemies = 2;
+        maxEnemies = 3;
+        availableTypes = { EnemyTypes::Skeleton, EnemyTypes::Zombie, EnemyTypes::Mage };
+    }
+    else if (diff == Difficulties::hard) {
+        minEnemies = 3;
+        maxEnemies = 4;
+        availableTypes = { EnemyTypes::Skeleton, EnemyTypes::Zombie, EnemyTypes::Mage, EnemyTypes::Boss };
+    }
+    std::uniform_int_distribution<int> countDist(minEnemies, maxEnemies);
+    int enemiesToSpawn = countDist(gen);
+
+    std::uniform_int_distribution<int> typeDist(0, availableTypes.size() - 1);
+    for (int i = 0; i < enemiesToSpawn; i++) {
+        int randomIndex = typeDist(gen);
+        EnemyTypes chosenType = availableTypes[randomIndex];
+        Enemy* newEnemy = nullptr;
+
+        switch (chosenType) {
+            case EnemyTypes::Skeleton:
+                newEnemy = new Skeleton(menagers.tex);
+                break;
+            case EnemyTypes::Zombie:
+                newEnemy = new Zombie(menagers.tex);
+                break;
+            case EnemyTypes::Mage:
+                newEnemy = new Mage(menagers.tex);
+                break;
+            case EnemyTypes::Boss:
+                newEnemy = new Boss(menagers.tex);
+                break;
+        }
+
+        if (newEnemy != nullptr) {
+            enemies.push_back(newEnemy);
+        }
+    }
+    //zmodyfikowac pozycje
+    float startX = 310.f, spacingX = 130.f;
+
+    for (size_t i = 0; i < enemies.size(); i++) {
+        float currentX = startX + (i * spacingX);
+        float currentY = 250.f;
+        if (i % 2 == 0)
+            currentY -= 20.f;
+        else {
+            currentY += 30.f;
+        }
+        enemies[i]->Update(currentX, currentY);
     }
 }
 
@@ -107,21 +176,21 @@ void Arena::Fight(){
 
 // WARUNKI KONCA GRY
 bool Arena::CheckGameOverConditions() {
-    // Gracz straci³ ca³e HP
+    // Gracz stracil cale HP
     if (player.getHealth() <= 0) {
         msgManager->add("DEFEAT!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
         msgManager->add("Victoria  has   fallen...", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);
         currentState = TurnState::GameOver;
         return true;
     }
-    // Brak wrogów na arenie
+    // Brak wrogow na arenie
     if (enemies.empty()) {
         msgManager->add("VICTORY!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
         msgManager->add("All  enemies  vanquished!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);
         currentState = TurnState::GameOver;
         return true;
     }
-    // Skoñczy³y siê tury
+    // Skonczyly sie tury
     if (currentTurn > maxTurns) {
         msgManager->add("DEFEAT!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
         msgManager->add("You ran out of time! Max turns reached.", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);

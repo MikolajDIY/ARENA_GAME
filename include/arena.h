@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <random>
 #include "game.h"
 #include "enemy.h"
 inline sf::Font font;
@@ -37,6 +38,7 @@ private:
     void ExecuteAttack(AttackType attackType);
     void HandleEnemyDefeat();
     bool CheckGameOverConditions();
+    void SpawnEnemies();
 
 public:
     Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer);
