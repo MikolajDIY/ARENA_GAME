@@ -33,7 +33,7 @@ void MessageMenager::Draw(sf::RenderWindow& window){
     for(auto& msg : messagess){
         sf::Text text(msg.info, textures.getMainFont(), msg.size);
         if(msg.type == MessageType::GameIfno){
-                text.setFont(textures.getGameFont());
+                text.setFont(textures.getGameOverFont());
                 text.setCharacterSize(msg.size);
         }
 

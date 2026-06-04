@@ -39,7 +39,7 @@ public:
     virtual ~Enemy(){};
     const sf::Sprite& getSprite() const { return enemyDraw.EnemySprite; }
     bool isDead() const { return stats.health <= 0; }
-
+    int getHealth() const { return stats.health; }
     // Metody walki
     void TakeDamage(int amount);
     virtual void Attack(Player& target)=0;

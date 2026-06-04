@@ -606,7 +606,7 @@
 
 1779127019 source:c:\users\48535\arena_game\resources.rc
 
-1780341689 source:c:\users\48535\arena_game\sources\arena.cpp
+1780601081 source:c:\users\48535\arena_game\sources\arena.cpp
 	"arena.h"
 	"textureMenager.h"
 	"player.h"
@@ -616,7 +616,7 @@
 	"mage.h"
 	"boss.h"
 
-1780342293 c:\users\48535\arena_game\include\arena.h
+1780597629 c:\users\48535\arena_game\include\arena.h
 	<SFML/Graphics.hpp>
 	<string>
 	"game.h"
@@ -1317,13 +1317,11 @@
 	"utils.h"
 	"messages.h"
 
-1779127019 c:\users\48535\arena_game\include\texturemenager.h
-	<SFML/Graphics.hpp>
-	<string>
+1780513589 c:\users\48535\arena_game\include\texturemenager.h
 	<SFML/Graphics.hpp>
 	<string>
 
-1780337683 c:\users\48535\arena_game\include\player.h
+1780512739 c:\users\48535\arena_game\include\player.h
 	<string>
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
@@ -1342,20 +1340,22 @@
 	<string>
 	"utils.h"
 
-1780334074 c:\users\48535\arena_game\include\settings.h
+1780512739 c:\users\48535\arena_game\include\settings.h
 	<SFML/Graphics.hpp>
 	<string>
 	<map>
 	"textureMenager.h"
 	"utils.h"
 	"player.h"
+	<fstream>
+	<sstream>
 
-1780336629 c:\users\48535\arena_game\include\enemy.h
+1780515862 c:\users\48535\arena_game\include\enemy.h
 	<string>
 	<SFML/Graphics.hpp>
 	"textureMenager.h"
 
-1780334074 c:\users\48535\arena_game\include\theme.h
+1780512739 c:\users\48535\arena_game\include\theme.h
 	<SFML/Graphics.hpp>
 
 1780334700 c:\users\48535\arena_game\include\skeleton.h
@@ -1392,7 +1392,7 @@
 	"theme.h"
 	"utils.h"
 
-1780334074 c:\users\48535\arena_game\include\utils.h
+1780514021 c:\users\48535\arena_game\include\utils.h
 	<SFML/Graphics.hpp>
 	"theme.h"
 
@@ -1407,15 +1407,17 @@
 	"game.h"
 	"arena.h"
 
-1780339705 source:c:\users\48535\arena_game\sources\player.cpp
+1780512739 source:c:\users\48535\arena_game\sources\player.cpp
 	"player.h"
 	"stats.h"
 
-1780334074 source:c:\users\48535\arena_game\sources\settings.cpp
+1780512739 source:c:\users\48535\arena_game\sources\settings.cpp
 	"settings.h"
 	"button.h"
+	"game.h"
 	"theme.h"
 	"utils.h"
+	"stats.h"
 
 1780334074 source:c:\users\48535\arena_game\sources\shop.cpp
 	"shop.h"
@@ -1428,8 +1430,7 @@
 	"stats.h"
 	"player.h"
 
-1779127019 source:c:\users\48535\arena_game\sources\texturemenager.cpp
-	"textureMenager.h"
+1780514111 source:c:\users\48535\arena_game\sources\texturemenager.cpp
 	"textureMenager.h"
 
 1780334700 source:c:\users\48535\arena_game\sources\zombie.cpp
@@ -1469,7 +1470,7 @@
 	<string>
 	"utils.h"
 
-1780334074 c:\users\48535\arena_game\include\messages.h
+1780512739 c:\users\48535\arena_game\include\messages.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"utils.h"
@@ -1480,10 +1481,10 @@
 	"utils.h"
 	"theme.h"
 
-1780334074 source:c:\users\48535\arena_game\sources\messages.cpp
+1780514021 source:c:\users\48535\arena_game\sources\messages.cpp
 	"messages.h"
 
-1780339963 c:\users\48535\arena_game\include\stats.h
+1780512739 c:\users\48535\arena_game\include\stats.h
 	"enemy.h"
 	"item.h"
 

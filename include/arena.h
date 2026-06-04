@@ -32,6 +32,12 @@ private:
     MessageMenager* msgManager = nullptr;
     sf::Clock turnDelayClock;
 
+    void HandleTargetSelection(const sf::Vector2f& mouseCoord);
+    void HandlePlayerAttacks(Utils::Mouse& Mouse);
+    void ExecuteAttack(AttackType attackType);
+    void HandleEnemyDefeat();
+    bool CheckGameOverConditions();
+
 public:
     Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer);
 

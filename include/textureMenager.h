@@ -7,6 +7,7 @@ private:
     // Czcionki
     sf::Font mainFont;
     sf::Font gameFont;
+    sf::Font gameOverFont;
 
     // Textury tla
     sf::Texture arenaBackGround;
@@ -40,6 +41,7 @@ public:
     // Gettery
     sf::Font& getMainFont();
     sf::Font& getGameFont();
+    sf::Font& getGameOverFont();
     // TLA
     sf::Texture& getStudio();
     sf::Texture& getGameName();

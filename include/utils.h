@@ -15,7 +15,7 @@ namespace Utils{
         sf::FloatRect bounds = text.getLocalBounds();
 
         text.setOrigin(bounds.left + bounds.width/2.f, bounds.top + bounds.height/2.f);
-        // PONIEWAZ DOMYSLNIE UZYWAMY ZLOTEJ CZCIONKI TKA USTAWIMY
+        // PONIEWAZ DOMYSLNIE UZYWAMY ZLOTEJ CZCIONKI TAKA USTAWIMY
         text.setOutlineColor(sf::Color::Black);
         text.setFillColor(Theme::Text);
         text.setOutlineThickness(3.f);

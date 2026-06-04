@@ -10,6 +10,7 @@ TextureMenager::TextureMenager(){
         mainFont.loadFromFile("C:/Windows/Fonts/arial.ttf"); // Gdyby sie nie wczytalo
     }
     gameFont.loadFromFile("fonts/Cinzel_Decorative/CinzelDecorative-Bold.ttf"); // TYMCZASOWO - DO PODMIANY NA COS FAJNEGO
+    gameOverFont.loadFromFile("fonts/Almendra_SC/AlmendraSC-Regular.ttf");
 
     // WCZYTANIE TLA
     menuBackGround.loadFromFile("img/backgrounds/menu.png");
@@ -41,6 +42,7 @@ TextureMenager::~TextureMenager(){
 // GETERY CZCIONEK
 sf::Font& TextureMenager::getMainFont(){return mainFont;}
 sf::Font& TextureMenager::getGameFont(){return gameFont;}
+sf::Font& TextureMenager::getGameOverFont(){return gameOverFont;}
 
 // GETERY TLA
 sf::Texture& TextureMenager::getGameName(){return gameName;}
