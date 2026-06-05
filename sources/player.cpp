@@ -140,6 +140,10 @@ void Player::Heal(int amount) {
     HpBarUpdate();
 }
 
+void Player::setHp(int value){
+    stats.health = value;
+}
+
 // -------------------------------------
 // SKLEP I USTAWIENIA - ZARZADZANIE EKWIPUNKIEM GRACZA
 // -------------------------------------
