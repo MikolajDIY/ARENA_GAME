@@ -23,6 +23,9 @@ Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlaye
     btnBackToMenu->ChangeSize(90,40);
     arenaBackGround.setTexture(menagers.tex.getArenaBackGround());
 
+    // Prygotowanie gracza
+    player.setHp(Stats::armor.at(player.getArmor()).value);
+
     //Przyciski ataku
     float btnWidth = 160.f, btnHeight = 45.f, Y_Position = 520.f;
 

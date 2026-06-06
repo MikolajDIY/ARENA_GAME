@@ -69,6 +69,8 @@ public:
     void Hit(Enemy& target, AttackType attackType);
     void Heal(int amount);
 
+    void setHp(int value); // Kalibracja gracza przed walka
+
     // SKLEP I USTAWIENIA - ekwipunek
     int getGold();
 
