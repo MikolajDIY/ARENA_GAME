@@ -114,13 +114,13 @@ void Player::Hit(Enemy& target, AttackType attackType) {
             }
             break;
         }
-        case AttackType::Combo: // 3 s³absze uderzenia, dla kazdego osobno losuje sie szansa na trafienie
+        case AttackType::Combo: // 3 slabsze uderzenia, dla kazdego osobno losuje sie szansa na trafienie
         {
             finalDamage = 0;
-            int singleHitDamage = static_cast<int>(stats.demage * 0.4f); //przyk³adowa wartosc 40% obrazen
+            int singleHitDamage = static_cast<int>(stats.demage * 0.4f); //przykladowa wartosc 40% obrazen
 
             for(int i = 0; i < 3; i++) {
-                if ((rand() % 100) < 70)  // przyk³adowa wartosc 70% szans na trafienie
+                if ((rand() % 100) < 70)  // przykladowa wartosc 70% szans na trafienie
                     finalDamage += singleHitDamage;
             }
             break;

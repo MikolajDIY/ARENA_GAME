@@ -127,20 +127,38 @@ void Arena::SpawnEnemies() {
         }
     }
     //zmodyfikowac pozycje
-    float startX = 320.f, spacingX = 130.f;
+    float startX = 270.f, baseFloorY = 320.f, spacingX = 120.f, rightBoundary = arenaBackGround.getTexture()->getSize().x;
 
-    for (size_t i = 0; i < enemies.size(); i++) {
-        float currentX = startX + (i * spacingX);
-        float currentY = 250.f;
-        if (i % 2 == 0)
-            currentY -= 20.f;
-        else {
-            currentY += 25.f;
+    for (int i = 0; i < enemies.size(); ++i) {
+        float posX = startX + (i * spacingX);
+        float posY = (i % 2 == 0) ? (baseFloorY - 20.f) : (baseFloorY + 20.f);
+        enemies[i]->Update(posX, posY);
+    }
+    bool moved = true;
+    int maxIterations = 5;
+    while (moved && maxIterations > 0) {
+        moved = false;
+        for (int i = 0; i < enemies.size(); ++i) {
+                sf::FloatRect bounds = enemies[i]->getSprite().getGlobalBounds();
+            if (bounds.left + bounds.width > rightBoundary) {
+                enemies[i]->Update(rightBoundary - bounds.width, bounds.top);
+            }
+            for (int j = i + 1; j < enemies.size(); ++j) {
+                sf::FloatRect rect1 = enemies[i]->getSprite().getGlobalBounds();
+                sf::FloatRect rect2 = enemies[j]->getSprite().getGlobalBounds();
+
+                if (rect1.intersects(rect2)) {
+                    float overlap = (rect1.left + rect1.width) - rect2.left;
+                    float pushAmount = overlap / 2.f + 5.f;
+                    enemies[i]->Update(enemies[i]->getSprite().getPosition().x - pushAmount,
+                                       enemies[i]->getSprite().getPosition().y);
+                    enemies[j]->Update(enemies[j]->getSprite().getPosition().x + pushAmount,
+                                       enemies[j]->getSprite().getPosition().y);
+                    moved = true;
+                }
+            }
         }
-        if (enemies[i]->getSprite().getGlobalBounds().height > 100.f) {
-            currentY = 220.f;
-        }
-        enemies[i]->Update(currentX, currentY);
+        maxIterations--;
     }
 }
 
@@ -210,13 +228,14 @@ void Arena::HandleTargetSelection(const sf::Vector2f& mouseCoord) {
     }
     // Klikniecie w przeciwnika - atak
     else {
-        for (Enemy* enemy : enemies) {
-            if (enemy->getSprite().getGlobalBounds().contains(mouseCoord)) {
-                selectedEnemy = enemy;
+        auto it = std::find_if(enemies.begin(), enemies.end(), [&](Enemy* e) {
+            return e->getSprite().getGlobalBounds().contains(mouseCoord);
+            });
+
+            if (it != enemies.end()) {
+                selectedEnemy = *it;
                 isPlayerSelected = false;
-                break;
             }
-        }
     }
 }
 
