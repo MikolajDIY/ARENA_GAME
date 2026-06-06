@@ -18,7 +18,8 @@ private:
 
     std::vector<Enemy*> enemies;
     int currentTurn;
-    int maxTurns;
+    int maxWaves;
+    int currentWave;
 
     Button* btnBackToMenu = nullptr;
     Button* btnAttackBasic = nullptr;
@@ -32,6 +33,8 @@ private:
 
     MessageMenager* msgManager = nullptr;
     sf::Clock turnDelayClock;
+    sf::Clock introClock;
+    bool introFinished = false;
 
     void HandleTargetSelection(const sf::Vector2f& mouseCoord);
     void HandlePlayerAttacks(Utils::Mouse& Mouse);

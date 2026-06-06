@@ -8,11 +8,16 @@
 #include "boss.h"
 #include "stats.h"
 
-Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer) : menagers(menagers), player(mainPlayer){
+Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlayer) : menagers(menagers), player(mainPlayer), currentWave(1) {
     name = arenaName;
     currentState = TurnState::PlayerMove;
     msgManager = new MessageMenager(menagers.tex);
-    msgManager->add("Rozpoczeto walke na " + name, MessageType::Success, 2.5f); //przykladowa wartosc
+
+    msgManager->add("The battle has begun", MessageType::GameIfno, 3.0f, Theme::Text, Theme::CenterOfScreen, 60);
+    introClock.restart();
+
+    maxWaves = static_cast<int>(5 * Stats::difMultipliers.at(Stats::difficulty)); //przykladowa wartosc (dla 5 - max 7)
+    if (maxWaves < 1) maxWaves = 1;
 
     btnBackToMenu = new Button("MENU", {10,10}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     btnBackToMenu->ChangeSize(90,40);
@@ -34,24 +39,6 @@ Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlaye
     btnHeal = new Button("Heal", {320.f, Y_Position}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
     btnHeal->ChangeSize(btnWidth, btnHeight);
 
-    //licznik tur
-    currentTurn = 1;
-    maxTurns = 10; //przykladowa wartosc
-
-    // Przykladowo dodany wrog
-    //enemies.push_back(new Zombie(menagers.tex)); // Moze lepiej trzymac ich w std::map ?
-    //enemies[0]->Update(320,250);
-
-   // enemies.push_back(new Boss(menagers.tex));
-    //enemies[1]->Update(520,220);
-
-    //enemies.push_back(new Mage(menagers.tex));
-    //enemies[0]->Update(320,250);
-
-    //enemies.push_back(new Skeleton(menagers.tex));
-    //enemies[0]->Update(320,250);
-    //enemies.push_back(new Skeleton(menagers.tex));
-    //enemies[1]->Update(520,250);
     SpawnEnemies();
 }
 
@@ -69,6 +56,8 @@ Arena::~Arena(){
 }
 //GENEROWANIE PRZECIWNIKOW
 void Arena::SpawnEnemies() {
+    if (msgManager != nullptr && currentWave > 1)
+        msgManager->add("Wave " + std::to_string(currentWave) + " starts!", MessageType::Success, 2.5f);
     static std::mt19937 gen(static_cast<unsigned long>(std::time(nullptr)));
 
     int minEnemies = 1;
@@ -92,13 +81,25 @@ void Arena::SpawnEnemies() {
         maxEnemies = 4;
         availableTypes = { EnemyTypes::Skeleton, EnemyTypes::Zombie, EnemyTypes::Mage, EnemyTypes::Boss };
     }
+
+    int waveBonus = (currentWave - 1) / 2; //mnoznik fali (nie wiem czy zostawic)
+    minEnemies += waveBonus;
+    maxEnemies += waveBonus;
+    if (maxEnemies > 4) maxEnemies = 4;
+    if (minEnemies > maxEnemies) minEnemies = maxEnemies;
+
     std::uniform_int_distribution<int> countDist(minEnemies, maxEnemies);
     int enemiesToSpawn = countDist(gen);
 
     std::uniform_int_distribution<int> typeDist(0, availableTypes.size() - 1);
+    bool bossAlreadySpawned = false;
+
     for (int i = 0; i < enemiesToSpawn; i++) {
         int randomIndex = typeDist(gen);
         EnemyTypes chosenType = availableTypes[randomIndex];
+
+        if (chosenType == EnemyTypes::Boss && bossAlreadySpawned)
+            chosenType = EnemyTypes::Mage;
         Enemy* newEnemy = nullptr;
 
         switch (chosenType) {
@@ -113,15 +114,17 @@ void Arena::SpawnEnemies() {
                 break;
             case EnemyTypes::Boss:
                 newEnemy = new Boss(menagers.tex);
+                bossAlreadySpawned = true;
                 break;
         }
 
         if (newEnemy != nullptr) {
+            newEnemy->ScaleStats(Stats::difMultipliers.at(Stats::difficulty));
             enemies.push_back(newEnemy);
         }
     }
     //zmodyfikowac pozycje
-    float startX = 310.f, spacingX = 130.f;
+    float startX = 320.f, spacingX = 130.f;
 
     for (size_t i = 0; i < enemies.size(); i++) {
         float currentX = startX + (i * spacingX);
@@ -129,7 +132,10 @@ void Arena::SpawnEnemies() {
         if (i % 2 == 0)
             currentY -= 20.f;
         else {
-            currentY += 30.f;
+            currentY += 25.f;
+        }
+        if (enemies[i]->getSprite().getGlobalBounds().height > 100.f) {
+            currentY = 220.f;
         }
         enemies[i]->Update(currentX, currentY);
     }
@@ -163,7 +169,6 @@ void Arena::Fight(){
             msgManager->add("You took " + std::to_string(totalDamageTaken) + " damage!", MessageType::Error, 2.0f);
             }
 
-            currentTurn++;
             if(!CheckGameOverConditions()) {
                 currentState = TurnState::PlayerMove;
             }
@@ -190,24 +195,17 @@ bool Arena::CheckGameOverConditions() {
         currentState = TurnState::GameOver;
         return true;
     }
-    // Skonczyly sie tury
-    if (currentTurn > maxTurns) {
-        msgManager->add("DEFEAT!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
-        msgManager->add("You ran out of time! Max turns reached.", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);
-        currentState = TurnState::GameOver;
-        return true;
-    }
     return false;
 }
 
 // METODY POMOCNICZE DO Arena::Update
 void Arena::HandleTargetSelection(const sf::Vector2f& mouseCoord) {
-    // Klikniêcie w samego gracza - leczenie
+    // Klikniecie w samego gracza - leczenie
     if (player.getSprite().getGlobalBounds().contains(mouseCoord)) {
         isPlayerSelected = true;
         selectedEnemy = nullptr;
     }
-    // Klikniêcie w przeciwnika - atak
+    // Klikniecie w przeciwnika - atak
     else {
         for (Enemy* enemy : enemies) {
             if (enemy->getSprite().getGlobalBounds().contains(mouseCoord)) {
@@ -245,8 +243,14 @@ void Arena::HandleEnemyDefeat() {
     enemies.erase(std::remove(enemies.begin(), enemies.end(), selectedEnemy), enemies.end());
     delete selectedEnemy;
     selectedEnemy = nullptr;
-
-    if(!CheckGameOverConditions()) {
+    if (CheckGameOverConditions()) {
+        return;
+    }
+    if (enemies.empty()) {
+        currentWave++;
+        SpawnEnemies();
+        currentState = TurnState::PlayerMove;
+    } else {
         currentState = TurnState::EnemiesTurn;
         turnDelayClock.restart();
     }
@@ -264,7 +268,14 @@ void Arena::HandlePlayerAttacks(Utils::Mouse& Mouse) {
 // -------------------------------------
 bool Arena::Update(Utils::Mouse& Mouse) {
     msgManager->update();
-
+    if (introClock.getElapsedTime().asSeconds() < 3.0f) {
+        Mouse.clickedLeft = false;
+        return true;
+    }
+    if (!introFinished) {
+        introFinished = true;
+        msgManager->add("Wave " + std::to_string(currentWave) + " starts!", MessageType::Success, 2.5f);
+    }
     if (btnBackToMenu->IsClicked(Mouse)) {
         return false;
     }

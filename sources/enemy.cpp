@@ -23,6 +23,12 @@ Enemy::Enemy(TextureMenager& textures) : textures(textures){
 
     isDeath = false;
 }
+// Zmiana statstyk przeciwnikow
+void Enemy::ScaleStats(float multiplier) {
+    stats.health = static_cast<int>(stats.health * multiplier);
+    stats.damage = static_cast<int>(stats.damage * multiplier);
+    HpBarUpdate();
+}
 // -------------------------------------
 // RYSOWANIE PRZECIWNIKA
 // -------------------------------------
