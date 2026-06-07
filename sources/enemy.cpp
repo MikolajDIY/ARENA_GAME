@@ -24,10 +24,15 @@ Enemy::Enemy(TextureMenager& textures) : textures(textures){
     isDeath = false;
 }
 // Zmiana statstyk przeciwnikow
-void Enemy::ScaleStats(float multiplier) {
+Enemy& Enemy::operator*=(float multiplier) {
     stats.health = static_cast<int>(stats.health * multiplier);
     stats.damage = static_cast<int>(stats.damage * multiplier);
+
+    points = std::max(1, static_cast<int>(stats.health * 1.25f));
+    gold   = std::max(1, static_cast<int>(stats.health * 0.75f));
+
     HpBarUpdate();
+    return *this;
 }
 // -------------------------------------
 // RYSOWANIE PRZECIWNIKA

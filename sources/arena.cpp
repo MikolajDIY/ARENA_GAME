@@ -122,7 +122,7 @@ void Arena::SpawnEnemies() {
         }
 
         if (newEnemy != nullptr) {
-            newEnemy->ScaleStats(Stats::difMultipliers.at(Stats::difficulty));
+            *newEnemy *= Stats::difMultipliers.at(Stats::difficulty);
             enemies.push_back(newEnemy);
         }
     }
@@ -209,7 +209,7 @@ bool Arena::CheckGameOverConditions() {
         return true;
     }
     // Brak wrogow na arenie
-    if (enemies.empty()) {
+    if (enemies.empty() && currentWave >= maxWaves) {
         msgManager->add("VICTORY!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
         msgManager->add("All  enemies  vanquished!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);
         currentState = TurnState::GameOver;
@@ -259,23 +259,34 @@ void Arena::ExecuteAttack(AttackType attackType) {
 }
 
 void Arena::HandleEnemyDefeat() {
-    msgManager->add("Enemy defeated!", MessageType::Success, 3.0f);
+    auto firstDead = std::stable_partition(enemies.begin(), enemies.end(), [](Enemy* enemy) {
+        return !enemy->isDead();
+    });
+    std::for_each(firstDead, enemies.end(), [this](Enemy* deadEnemy) {
+        int earnedPoints = deadEnemy->getPoints();
+        battlePointsForHeal += earnedPoints;
 
-    EnemyTypes deadEnemyType = selectedEnemy->getType();
-    float difficultyMultiplier = Stats::difMultipliers.at(Stats::difficulty);
-    int enemyMaxHp = static_cast<int>(Stats::enemy.at(deadEnemyType).health * difficultyMultiplier);
+        EnemyTypes deadEnemyType = deadEnemy->getType();
+        float difficultyMultiplier = Stats::difMultipliers.at(Stats::difficulty);
+        int enemyMaxHp = static_cast<int>(Stats::enemy.at(deadEnemyType).health * difficultyMultiplier);
 
-    int earnedBattlePoints = static_cast<int>(enemyMaxHp * 1.25f);
-    if (earnedBattlePoints < 20) earnedBattlePoints = 20;
+        int earnedBattlePoints = static_cast<int>(enemyMaxHp * 1.25f);
+        if (earnedBattlePoints < 20) earnedBattlePoints = 20;
+        battlePointsForHeal += earnedBattlePoints;
 
-    battlePointsForHeal += earnedBattlePoints;
+        player.setGold(player.getGold() + deadEnemy->getGold());
+        msgManager->add("Enemy defeated! +" + std::to_string(earnedPoints) + " Points", MessageType::Success, 2.0f);
+        if (deadEnemy == selectedEnemy) {
+            selectedEnemy = nullptr;
+        }
+        delete deadEnemy;
+    });
+    enemies.erase(firstDead, enemies.end());
 
-    enemies.erase(std::remove(enemies.begin(), enemies.end(), selectedEnemy), enemies.end());
-    delete selectedEnemy;
-    selectedEnemy = nullptr;
     if (CheckGameOverConditions()) {
         return;
     }
+
     if (enemies.empty()) {
         currentWave++;
         SpawnEnemies();
@@ -371,20 +382,30 @@ void Arena::Draw(sf::RenderWindow& window){
         btnHeal->Draw(window);
     }
 
+    float rightEdge = arenaBackGround.getTexture() ? arenaBackGround.getTexture()->getSize().x : 800.f;
+
+     //Rysowanie licznika zlota
+    sf::Text goldText;
+    goldText.setFont(menagers.tex.getMainFont());
+    goldText.setCharacterSize(20);
+    Utils::ObjectFormatter<sf::Text>::formatText(goldText);
+    goldText.setString("Gold: " + std::to_string(player.getGold()) + " G");
+
+    float goldWidth = goldText.getLocalBounds().width;
+    goldText.setPosition(rightEdge - goldWidth - 20.f, 30.f);
+    window.draw(goldText);
+
     //Rysowanie licznika punktow
     int neededPoints = static_cast<int>(200 * Stats::difMultipliers.at(Stats::difficulty));
 
     sf::Text pointsText;
     pointsText.setFont(menagers.tex.getMainFont());
+    pointsText.setCharacterSize(20);
     Utils::ObjectFormatter<sf::Text>::formatText(pointsText);
     pointsText.setString("Points: " + std::to_string(battlePointsForHeal) + " / " + std::to_string(neededPoints));
-    pointsText.setCharacterSize(20);
 
-    float rightEdge = arenaBackGround.getTexture() ? arenaBackGround.getTexture()->getSize().x : 800.f;
-    float textWidth = pointsText.getLocalBounds().width;
-
-    pointsText.setPosition(rightEdge - textWidth - 20.f, 20.f);
-
+    float pointsWidth = pointsText.getLocalBounds().width;
+    pointsText.setPosition(rightEdge - pointsWidth - 20.f, 65.f);
     window.draw(pointsText);
 
     msgManager->Draw(window);

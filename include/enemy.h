@@ -38,12 +38,15 @@ public:
     Enemy(TextureMenager& textures);
     virtual ~Enemy(){};
 
+    Enemy& operator*=(float multiplier);
+
+    int getGold() const { return gold; }
+    int getPoints() const { return points; }
     const sf::Sprite& getSprite() const { return enemyDraw.EnemySprite; }
     bool isDead() const { return stats.health <= 0; }
     int getHealth() const { return stats.health; }
     EnemyTypes getType() const { return type; }
 
-    void ScaleStats(float multiplier);
     // Metody walki
     void TakeDamage(int amount);
     virtual void Attack(Player& target)=0;
