@@ -37,9 +37,11 @@ protected:
 public:
     Enemy(TextureMenager& textures);
     virtual ~Enemy(){};
+
     const sf::Sprite& getSprite() const { return enemyDraw.EnemySprite; }
     bool isDead() const { return stats.health <= 0; }
     int getHealth() const { return stats.health; }
+    EnemyTypes getType() const { return type; }
 
     void ScaleStats(float multiplier);
     // Metody walki

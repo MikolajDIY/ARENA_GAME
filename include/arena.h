@@ -21,6 +21,8 @@ private:
     int maxWaves;
     int currentWave;
 
+    int battlePointsForHeal = 0;
+
     Button* btnBackToMenu = nullptr;
     Button* btnAttackBasic = nullptr;
     Button* btnAttackReckless = nullptr;

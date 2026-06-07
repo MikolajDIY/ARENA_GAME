@@ -126,8 +126,7 @@ void Arena::SpawnEnemies() {
             enemies.push_back(newEnemy);
         }
     }
-    //zmodyfikowac pozycje
-    float startX = 270.f, baseFloorY = 320.f, spacingX = 120.f, rightBoundary = arenaBackGround.getTexture()->getSize().x;
+    float startX = 270.f, baseFloorY = 260.f, spacingX = 120.f, rightBoundary = arenaBackGround.getTexture()->getSize().x;
 
     for (int i = 0; i < enemies.size(); ++i) {
         float posX = startX + (i * spacingX);
@@ -262,6 +261,15 @@ void Arena::ExecuteAttack(AttackType attackType) {
 void Arena::HandleEnemyDefeat() {
     msgManager->add("Enemy defeated!", MessageType::Success, 3.0f);
 
+    EnemyTypes deadEnemyType = selectedEnemy->getType();
+    float difficultyMultiplier = Stats::difMultipliers.at(Stats::difficulty);
+    int enemyMaxHp = static_cast<int>(Stats::enemy.at(deadEnemyType).health * difficultyMultiplier);
+
+    int earnedBattlePoints = static_cast<int>(enemyMaxHp * 1.25f);
+    if (earnedBattlePoints < 20) earnedBattlePoints = 20;
+
+    battlePointsForHeal += earnedBattlePoints;
+
     enemies.erase(std::remove(enemies.begin(), enemies.end(), selectedEnemy), enemies.end());
     delete selectedEnemy;
     selectedEnemy = nullptr;
@@ -310,17 +318,25 @@ bool Arena::Update(Utils::Mouse& Mouse) {
         HandleTargetSelection(Mouse.pos);
     }
         if(selectedEnemy != nullptr) {
-                HandlePlayerAttacks(Mouse);
+            HandlePlayerAttacks(Mouse);
         }
         if (isPlayerSelected && btnHeal->IsClicked(Mouse)) {
+            int neededPoints = static_cast<int>(200 * Stats::difMultipliers.at(Stats::difficulty));
+        if (battlePointsForHeal >= neededPoints) {
             int hpBefore = player.getHealth();
-            player.Heal(10);
+            player.Heal(10); //nie wiem czy nie zmienic
             int healedAmount = player.getHealth() - hpBefore;
-            msgManager->add("Healed for " + std::to_string(healedAmount) + " HP!", MessageType::Success, 2.0f);
+            msgManager->add("Healed for " + std::to_string(healedAmount) + " HP", MessageType::Success, 2.0f);
 
+            battlePointsForHeal -= neededPoints;
             isPlayerSelected = false;
             currentState = TurnState::EnemiesTurn;
             turnDelayClock.restart();
+    } else {
+        int missingPoints = neededPoints - battlePointsForHeal;
+        msgManager->add("Need " + std::to_string(missingPoints) + " more Battle Points", MessageType::Error, 2.0f);
+        isPlayerSelected = false;
+    }
         }
     }
     Fight(); // Logika walki
@@ -354,6 +370,23 @@ void Arena::Draw(sf::RenderWindow& window){
     if (isPlayerSelected) {
         btnHeal->Draw(window);
     }
+
+    //Rysowanie licznika punktow
+    int neededPoints = static_cast<int>(200 * Stats::difMultipliers.at(Stats::difficulty));
+
+    sf::Text pointsText;
+    pointsText.setFont(menagers.tex.getMainFont());
+    Utils::ObjectFormatter<sf::Text>::formatText(pointsText);
+    pointsText.setString("Points: " + std::to_string(battlePointsForHeal) + " / " + std::to_string(neededPoints));
+    pointsText.setCharacterSize(20);
+
+    float rightEdge = arenaBackGround.getTexture() ? arenaBackGround.getTexture()->getSize().x : 800.f;
+    float textWidth = pointsText.getLocalBounds().width;
+
+    pointsText.setPosition(rightEdge - textWidth - 20.f, 20.f);
+
+    window.draw(pointsText);
+
     msgManager->Draw(window);
 }
 
