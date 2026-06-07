@@ -10,16 +10,16 @@ Enemy::Enemy(TextureMenager& textures) : textures(textures){
     gold =0;
     points=0;
 
-    Utils::CenterSpriteOrigin(enemyDraw.EnemySprite);
+    Utils::ObjectFormatter<sf::Sprite>::centerOrigin(enemyDraw.EnemySprite);
 
     enemyDraw.HpBar.setString(std::to_string(stats.health) + " Hp");
     enemyDraw.HpBar.setFont(textures.getMainFont());
     enemyDraw.HpBar.setCharacterSize(15);
-    Utils::CenterTextOrigin(enemyDraw.HpBar);
+    Utils::ObjectFormatter<sf::Text>::formatText(enemyDraw.HpBar);
 
     enemyDraw.Name.setFont(textures.getMainFont());
     enemyDraw.Name.setCharacterSize(15);
-    Utils::CenterTextOrigin(enemyDraw.Name);
+    Utils::ObjectFormatter<sf::Text>::formatText(enemyDraw.Name);
 
     isDeath = false;
 }
@@ -51,7 +51,7 @@ void Enemy::Update(float x, float y){
 // POKAZANIE HP
 void Enemy::HpBarUpdate(){
     enemyDraw.HpBar.setString(std::to_string(stats.health) + " Hp");
-    Utils::CenterTextOrigin(enemyDraw.HpBar);
+    Utils::ObjectFormatter<sf::Text>::formatText(enemyDraw.HpBar);
     if(stats.health <= 0.2*Stats::enemy.at(type).health){
         enemyDraw.HpBar.setFillColor(sf::Color::Red);
     }

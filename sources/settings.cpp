@@ -44,7 +44,7 @@
     DifficultyButtons["Hard"]->ChangeSize(slotSize);
 
     texts["Settings"] = sf::Text("Settings",menagers.tex.getMainFont(), 40);
-    Utils::CenterTextOrigin(texts["Settings"]);
+    Utils::ObjectFormatter<sf::Text>::formatText(texts["Settings"]);
     texts["Settings"].setPosition(400,40);
     SaveSlotsVisible=false;
     LoadSlotsVisible=false;

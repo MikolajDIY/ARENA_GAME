@@ -27,18 +27,18 @@ Player::Player(TextureMenager& textures) : textures(textures){
     name = "Victoria";
 
 // Ustawia tekstury i statystyki
-    Utils::CenterSpriteOrigin(playerDraw.PlayerSprite);
-    Utils::CenterSpriteOrigin(playerDraw.SwordSprite);
+    Utils::ObjectFormatter<sf::Sprite>::centerOrigin(playerDraw.PlayerSprite);
+    Utils::ObjectFormatter<sf::Sprite>::centerOrigin(playerDraw.SwordSprite);
     setArmor(armor);
     setSword(sword);
     // Ustawienie Hp Bar
     playerDraw.HpBar.setCharacterSize(15);
     playerDraw.HpBar.setFont(textures.getMainFont());
-    Utils::CenterTextOrigin(playerDraw.HpBar);
+    Utils::ObjectFormatter<sf::Text>::formatText(playerDraw.HpBar);
     // Ustawienie Name Bar
     playerDraw.Name.setCharacterSize(15);
     playerDraw.Name.setFont(textures.getMainFont());
-    Utils::CenterTextOrigin(playerDraw.Name);
+    Utils::ObjectFormatter<sf::Text>::formatText(playerDraw.Name);
     playerDraw.Name.setString(name);
 
     gold = 200; // TEST

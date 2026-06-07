@@ -89,7 +89,7 @@ void Game::Run(){
 // MENU
 void Game::DisplayMenu(sf::RenderWindow& window, Utils::Mouse& Mouse){
     sf::Text title("The Arena", textures.getMainFont(), 60);
-    Utils::CenterTextOrigin(title);
+    Utils::ObjectFormatter<sf::Text>::formatText(title);
     title.setOutlineColor(sf::Color::Black);
     title.setFillColor(Theme::Text);
     title.setOutlineThickness(3.f);

@@ -40,7 +40,7 @@ void MessageMenager::Draw(sf::RenderWindow& window){
         if(number == 0){lastSize = msg.size;}
         if(numberSpecial == 0){lastSizeSpecial = msg.size;}
 
-        Utils::CenterTextOrigin(text);
+        Utils::ObjectFormatter<sf::Text>::formatText(text);
 
         switch(msg.type){
         case MessageType::Error:

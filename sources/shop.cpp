@@ -40,11 +40,11 @@ void Shop::createItems(){
 
 void Shop::createTexts(){
     texts["Shop"] = sf::Text("Shop", menagers.tex.getMainFont(), 40);
-    Utils::CenterTextOrigin(texts["Shop"]);
+    Utils::ObjectFormatter<sf::Text>::formatText(texts["Shop"]);
     texts["Shop"].setPosition(400,40);
 
     texts["Gold"] = sf::Text("Gold: " + std::to_string(player.getGold()) + " G",menagers.tex.getMainFont(), 20);
-    Utils::CenterTextOrigin(texts["Gold"]);
+    Utils::ObjectFormatter<sf::Text>::formatText(texts["Gold"]);
     texts["Gold"].setPosition(700,40);
 
     switch(shopState){

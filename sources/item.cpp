@@ -9,13 +9,13 @@
 Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string name, int pricee){
     // Textuta Itemu
     itemSprite.setTexture(texture);
-    Utils::CenterSpriteOrigin(itemSprite);
+    Utils::ObjectFormatter<sf::Sprite>::centerOrigin(itemSprite);
     itemSprite.setPosition(pos);
 
     // Tlo
     sf::Vector2f siz(itemSprite.getLocalBounds().width + 15, itemSprite.getLocalBounds().height +15);
     background.setSize(siz);
-    Utils::CenterRectangleOrigin(background);
+    Utils::ObjectFormatter<sf::Shape>::centerOrigin(background);
     background.setPosition(pos);
     background.setFillColor(Theme::ButtonNormal);
     background.setOutlineThickness(3.f);
@@ -25,7 +25,7 @@ Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string n
     price = pricee;
     priceText.setFont(font);
     priceText.setString(std::to_string(price)+" G");
-    Utils::CenterTextOrigin(priceText);
+    Utils::ObjectFormatter<sf::Text>::formatText(priceText);
     priceText.setCharacterSize(15);
     priceText.setFillColor(Theme::Text);
     priceText.setPosition(pos.x + priceText.getLocalBounds().width/2.f, pos.y + background.getLocalBounds().height/2.f + 50);
@@ -33,7 +33,7 @@ Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string n
     // Text Nazwy
     nameText.setFont(font);
     nameText.setString(name);
-    Utils::CenterTextOrigin(nameText);
+    Utils::ObjectFormatter<sf::Text>::formatText(nameText);
     nameText.setCharacterSize(15);
     nameText.setFillColor(Theme::Text);
     nameText.setPosition(pos.x + nameText.getLocalBounds().width/2.f, pos.y + background.getLocalBounds().height/2.f +20);

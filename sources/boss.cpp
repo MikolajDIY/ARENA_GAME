@@ -8,13 +8,13 @@ Boss::Boss(TextureMenager& textures) : Enemy(textures){
     name = "THE UNDYING EMPEROR";
     type = EnemyTypes::Boss;
     enemyDraw.Name.setString("The Undying");
-    Utils::CenterTextOrigin(enemyDraw.Name);
+    Utils::ObjectFormatter<sf::Text>::formatText(enemyDraw.Name);
 
     // Inicjalizacja Name2 - za dlugie na jedna linie
     enemyDraw.Name2.setString("Emperor");
     enemyDraw.Name2.setCharacterSize(15);
     enemyDraw.Name2.setFont(textures.getMainFont());
-    Utils::CenterTextOrigin(enemyDraw.Name2);
+    Utils::ObjectFormatter<sf::Text>::formatText(enemyDraw.Name2);
 
     // Staty na potrzeby testu - do balansu
     stats.health = Stats::enemy.at(type).health;

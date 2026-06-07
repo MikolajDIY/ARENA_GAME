@@ -8,7 +8,7 @@ Mage::Mage(TextureMenager& textures) : Enemy(textures){
     name = "Mage";
     type = EnemyTypes::Mage;
     enemyDraw.Name.setString(name);
-    Utils::CenterTextOrigin(enemyDraw.Name);
+    Utils::ObjectFormatter<sf::Text>::formatText(enemyDraw.Name);
 
     // Staty na potrzeby testu - do balansu
     stats.health = Stats::enemy.at(type).health;
