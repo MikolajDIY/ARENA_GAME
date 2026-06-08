@@ -41,6 +41,7 @@ public:
     // Rysowanie sklepu
     void OnEnter();
     bool Update(Utils::Mouse& mouse);
+    void UpdateGold();
     void Draw(sf::RenderWindow& window);
 };
 
