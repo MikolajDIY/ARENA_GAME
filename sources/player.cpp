@@ -1,5 +1,6 @@
 #include "player.h"
 #include "stats.h"
+#include "utils.h"
 
 // -------------------------------------
 //            CLASS PLAYER
@@ -58,7 +59,9 @@ void Player::Update(){ // Wywolac po otrzymaniu ataku wykonaniu ataku, jezeli be
     playerDraw.PlayerSprite.setPosition(position);
     playerDraw.SwordSprite.setPosition(position + sf::Vector2f(15.f, 95.f));
 
-    playerDraw.Name.setPosition(position + sf::Vector2f(10.f, -35.f));
+    playerDraw.Name.setString(name);
+    Utils::ObjectFormatter<sf::Text>::formatText(playerDraw.Name);
+    playerDraw.Name.setPosition(position + sf::Vector2f(50.f, -35.f));
     HpBarUpdate();
 }
 
@@ -171,6 +174,7 @@ void Player::setSword(SwordsTypes newSword){
         break;
     }
 }
+
 void Player::setArmor(ArmorsTypes newArmor){
     if(unlockedArmors[newArmor] == false){return;}
     armor = newArmor;
