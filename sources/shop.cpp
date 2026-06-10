@@ -110,12 +110,12 @@ void Shop::itemsClicked(){
     case ShopState::Armors:
         for(auto& armor : armors){
             if(armor.second->IsClicked(mouse) && player.hasArmor(armor.first)){
-                 menagers.msg.add("Armor has been changed!", MessageType::Success, Utils::TimeOfMessage);
+                 menagers.msg.add("The Armor has been changed!", MessageType::Success, Utils::TimeOfMessage);
                  player.setArmor(armor.first);
             }
             if(armor.second->IsClicked(mouse, player.hasArmor(armor.first))){
                 if(player.buyArmor(armor.first, armor.second->getPrice())){
-                    UpdateGold();
+                    UpdateGold(); // Aktualizacaja stanu konta na ekranie;
                     menagers.msg.add("Take and win!", MessageType::Success, Utils::TimeOfMessage);
                     break;
                 }
@@ -131,7 +131,7 @@ void Shop::itemsClicked(){
     case ShopState::Swords:
         for(auto& sword : swords){
             if(sword.second->IsClicked(mouse) && player.hasSword(sword.first)){
-                menagers.msg.add("Sword has been changed!", MessageType::Success, Utils::TimeOfMessage);
+                menagers.msg.add("The Sword has been changed!", MessageType::Warning, Utils::TimeOfMessage);
                 player.setSword(sword.first);
             }
             if(sword.second->IsClicked(mouse, player.hasSword(sword.first))){
@@ -158,6 +158,10 @@ void Shop::OnEnter(){
     UpdateGold();
 }
 
+void Shop::UpdateGold(){
+    texts["Gold"].setString("Gold: " + std::to_string(player.getGold())+ " G");
+}
+
 bool Shop::Update(Utils::Mouse& m){
     if (buttons.find("BackToMenu") != buttons.end() && buttons["BackToMenu"]->IsClicked(m)) {
         return false;
@@ -168,10 +172,6 @@ bool Shop::Update(Utils::Mouse& m){
     buttonsClicked();
     itemsClicked();
     return true;
- }
-
-void Shop::UpdateGold(){
-    texts["Gold"].setString("Gold: " + std::to_string(player.getGold())+ " G");
  }
 
 void Shop::Draw(sf::RenderWindow& window){
