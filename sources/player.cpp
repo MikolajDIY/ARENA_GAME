@@ -182,7 +182,7 @@ void Player::setArmor(ArmorsTypes newArmor){
     // Zmiana statystyk gracza
     stats.health = Stats::armor.at(armor).value;
 
-    // Zmiana statystyk gracza
+    // Zmiana textury gracza
     switch(armor){
     case ArmorsTypes::Basic:
         playerDraw.PlayerSprite.setTexture(textures.getPlayerTextureBasic());

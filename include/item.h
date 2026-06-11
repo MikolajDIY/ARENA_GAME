@@ -9,6 +9,7 @@
 
 enum class SwordsTypes{Basic, Steel, Godness};
 enum class ArmorsTypes{Basic, Steel, Godness};
+enum class ItemState{Euiped, Blocked, Aviable};
 
 struct ItemStats{
     int value; // Dla miecza, demage dla zbroji HP. Jezeli bedziecie chcieli mozna
@@ -22,6 +23,7 @@ private:
     sf::Text nameText;
     sf::Text priceText;
     bool isHovered = false;
+    ItemState itemState;
 
     int price;
 
@@ -32,6 +34,8 @@ public:
     bool IsClicked(Utils::Mouse& mouse, bool isBought);
     bool IsClicked(Utils::Mouse& mouse); // Specjalne dla Shop - wyswietlenie komunikatu, ze juz posiada;
     void Draw(sf::RenderWindow& window);
+    void setState(const ItemState state);
+    void Update();
 };
 
 

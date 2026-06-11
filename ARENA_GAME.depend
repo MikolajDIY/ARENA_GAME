@@ -576,20 +576,20 @@
 	"game.h"
 	"arena.h"
 
-1781075154 source:c:\psio\arena_game\sources\player.cpp
+1781165926 source:c:\psio\arena_game\sources\player.cpp
 	"player.h"
 	"stats.h"
 	"utils.h"
 
 1780928871 source:c:\psio\arena_game\sources\texturemenager.cpp
 
-1781075472 source:c:\psio\arena_game\sources\shop.cpp
+1781166567 source:c:\psio\arena_game\sources\shop.cpp
 	"shop.h"
 	"game.h"
 	"theme.h"
 	"utils.h"
 
-1781075398 c:\psio\arena_game\include\shop.h
+1781166226 c:\psio\arena_game\include\shop.h
 	<SFML/Graphics.hpp>
 	<string>
 	<memory>
@@ -1477,9 +1477,15 @@
 
 1779127019 
 
-1780928871 c:\psio\arena_game\include\item.h
+1781166907 c:\psio\arena_game\include\item.h
+	<SFML/Graphics.hpp>
+	<string>
+	"utils.h"
 
-1780928871 source:c:\psio\arena_game\sources\item.cpp
+1781167397 source:c:\psio\arena_game\sources\item.cpp
+	"item.h"
+	"utils.h"
+	"theme.h"
 
 1780928871 c:\psio\arena_game\include\messages.h
 

@@ -28,7 +28,7 @@ Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string n
     Utils::ObjectFormatter<sf::Text>::formatText(priceText);
     priceText.setCharacterSize(15);
     priceText.setFillColor(Theme::Text);
-    priceText.setPosition(pos.x + priceText.getLocalBounds().width/2.f, pos.y + background.getLocalBounds().height/2.f + 50);
+    priceText.setPosition(pos.x + priceText.getLocalBounds().width/2.f - 20, pos.y + background.getLocalBounds().height/2.f +40);
 
     // Text Nazwy
     nameText.setFont(font);
@@ -36,7 +36,7 @@ Item::Item(sf::Texture& texture, sf::Font& font, sf::Vector2f pos, std::string n
     Utils::ObjectFormatter<sf::Text>::formatText(nameText);
     nameText.setCharacterSize(15);
     nameText.setFillColor(Theme::Text);
-    nameText.setPosition(pos.x + nameText.getLocalBounds().width/2.f, pos.y + background.getLocalBounds().height/2.f +20);
+    nameText.setPosition(pos.x + nameText.getLocalBounds().width/2.f , pos.y + background.getLocalBounds().height/2.f +20);
 }
 
 // Animacja i sprawdzenie czy klikniety
@@ -69,8 +69,33 @@ bool Item::IsClicked(Utils::Mouse& mouse){
 
 int Item::getPrice(){return price;}
 
+// Ustawienie stanu itemu - czy jest kupiony/posiadany/wyposa¿ony
+void Item::setState(const ItemState state){
+    itemState = state;
+}
+
+void Item::Update(){
+    switch(itemState){
+        case ItemState::Blocked:
+            priceText.setString(std::to_string(price)+" G");
+            Utils::ObjectFormatter<sf::Text>::formatText(priceText);
+            break;
+
+        case ItemState::Aviable:
+            priceText.setString("Aviable");
+            Utils::ObjectFormatter<sf::Text>::formatText(priceText);
+            break;
+
+        case ItemState::Euiped:
+            priceText.setString("Equiped");
+            Utils::ObjectFormatter<sf::Text>::formatText(priceText);
+            break;
+    }
+}
+
 // Rysowanie itemu
 void Item::Draw(sf::RenderWindow& window){
+    Update();
     window.draw(background);
     window.draw(itemSprite);
     window.draw(priceText);

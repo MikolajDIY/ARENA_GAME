@@ -38,6 +38,9 @@ public:
     void buttonsClicked();
     void itemsClicked();
 
+    //Itemy
+    void UpdateItems(Player& player);
+
     // Rysowanie sklepu
     void OnEnter();
     void UpdateGold();

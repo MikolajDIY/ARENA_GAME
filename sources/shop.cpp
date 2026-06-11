@@ -27,12 +27,12 @@ void Shop::createItems(){
     switch(shopState){
     case ShopState::Armors:
         armors[ArmorsTypes::Steel] = std::make_unique<Item>(menagers.tex.getPlayerTextureSteel(), menagers.tex.getMainFont(), sf::Vector2f(300,300), "Steel Armor", 100);
-        armors[ArmorsTypes::Godness] = std::make_unique<Item>(menagers.tex.getPlayerTextureGodnes(), menagers.tex.getMainFont(), sf::Vector2f(500,300), "Goodness Armor", 1000);
+        armors[ArmorsTypes::Godness] = std::make_unique<Item>(menagers.tex.getPlayerTextureGodnes(), menagers.tex.getMainFont(), sf::Vector2f(500,300), "Goddess Armor", 1000);
         break;
 
     case ShopState::Swords:
         swords[SwordsTypes::Steel] = std::make_unique<Item>(menagers.tex.getSteelSwordTexture(), menagers.tex.getMainFont(), sf::Vector2f(300,200), "Steel Sword", 100);
-        swords[SwordsTypes::Godness] = std::make_unique<Item>(menagers.tex.getGodnesSwordTexture(), menagers.tex.getMainFont(), sf::Vector2f(500,200), "Goodness Sword", 1000);
+        swords[SwordsTypes::Godness] = std::make_unique<Item>(menagers.tex.getGodnesSwordTexture(), menagers.tex.getMainFont(), sf::Vector2f(500,200), "Goddess Sword", 1000);
         break;
 
     }
@@ -150,6 +150,39 @@ void Shop::itemsClicked(){
     }
 }
 
+void Shop::UpdateItems(Player& player){
+    for(auto& armor : armors){
+            // Domysle zablokowanie
+            armors.at(armor.first)->setState(ItemState::Blocked);
+
+            // Jezeli player ma item - odblokowanie
+            if(player.hasArmor(armor.first)){
+                 armors.at(armor.first)->setState(ItemState::Aviable);
+            }
+
+            // Jezeli player jest wyposazony - wyposazenie
+            if(player.getArmor() == armor.first){
+                armors.at(armor.first)->setState(ItemState::Euiped);
+            }
+    }
+
+    for(auto& sword : swords){
+            // Domysle zablokowanie
+            swords.at(sword.first)->setState(ItemState::Blocked);
+
+            // Jezeli player ma item - odblokowanie
+            if(player.hasSword(sword.first)){
+                 swords.at(sword.first)->setState(ItemState::Aviable);
+            }
+
+            // Jezeli player jest wyposazony - wyposazenie
+            if(player.getSword() == sword.first){
+                swords.at(sword.first)->setState(ItemState::Euiped);
+            }
+    }
+
+}
+
 // -------------------------------------
 // RYSOWANIE SKLEPU
 // -------------------------------------
@@ -169,6 +202,7 @@ bool Shop::Update(Utils::Mouse& m){
     mouse = m;
 
     // Czy gracz cos klika - uruchomienie logiki sklepu i animacji
+    UpdateItems(player); // Update stanu itemu
     buttonsClicked();
     itemsClicked();
     return true;
