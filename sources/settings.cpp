@@ -183,83 +183,93 @@ void Settings::saveGame(Slots slot)
 {
     std::string filename = "Save_" + std::to_string(static_cast<int>(slot))+".txt";
     std::ofstream file(filename);
-    if(!file.is_open())
-    {
-        menagers.msg.add("Failed to create save",MessageType::Error,Utils::TimeOfMessage);
-        return;
-    }
-    file<<player.getname()<<'\n';
-    file<<player.getGold()<<'\n';
-    file<<player.getPoints()<<'\n';
-    file<<static_cast<int>(Stats::difficulty)<<'\n';
+    try{
+        if(!file.is_open())
+        {
+            throw std::runtime_error("Failed to create save");
+        }
+        file<<player.getname()<<'\n';
+        file<<player.getGold()<<'\n';
+        file<<player.getPoints()<<'\n';
+        file<<static_cast<int>(Stats::difficulty)<<'\n';
 
-    auto swords = player.getUnlockedSwords();
-    auto armors = player.getUnlockedArmors();
-    file<<swords.size()<<'\n';
-    for(auto const& sword:swords)
-    {
-        file<<static_cast<int>(sword.first)<<" "<<sword.second<<'\n';
+        auto swords = player.getUnlockedSwords();
+        auto armors = player.getUnlockedArmors();
+        file<<swords.size()<<'\n';
+        for(auto const& sword:swords)
+        {
+            file<<static_cast<int>(sword.first)<<" "<<sword.second<<'\n';
+        }
+        file<<armors.size()<<'\n';
+        for(auto const& armor:armors)
+        {
+            file<<static_cast<int>(armor.first)<<" "<<armor.second<<'\n';
+        }
+        file<<static_cast<int>(player.getSword())<<'\n';
+        file<<static_cast<int>(player.getArmor())<<'\n';
+        file.close();
+        menagers.msg.add("Game saved",MessageType::Success,Utils::TimeOfMessage);
     }
-    file<<armors.size()<<'\n';
-    for(auto const& armor:armors)
-    {
-        file<<static_cast<int>(armor.first)<<" "<<armor.second<<'\n';
+    catch(const std::runtime_error& e){
+        menagers.msg.add(e.what(), MessageType::Error, Utils::TimeOfMessage);
     }
-    file<<static_cast<int>(player.getSword())<<'\n';
-    file<<static_cast<int>(player.getArmor())<<'\n';
-    file.close();
-    menagers.msg.add("Game saved",MessageType::Success,Utils::TimeOfMessage);
 }
 void Settings::loadGame(Slots slot)
 {
     std::string filename = "Save_" + std::to_string(static_cast<int>(slot))+".txt";
     std::ifstream file(filename);
-    if(!file.is_open())
-    {
-        menagers.msg.add("Failed to load save",MessageType::Error,Utils::TimeOfMessage);
-        return;
-    }
-    std::string line;
-    std::getline(file,line);
-    player.setName(line);
 
-    std::getline(file,line);
-    player.setGold(std::stoi(line));
+    try{
+        if(!file.is_open())
+        {
+            throw std::runtime_error("Failed to load save: file not found");
+        }
 
-    std::getline(file,line);
-    player.setPoints(std::stoi(line));
-
-    std::getline(file,line);
-    Stats::difficulty=static_cast<Difficulties>(std::stoi(line));
-
-
-
-    std::getline(file,line);
-    int numberofswords = std::stoi(line);
-    int type;
-    bool status;
-    for(int i=0;i<numberofswords;i++)
-    {
+        std::string line;
         std::getline(file,line);
-        std::stringstream ss(line);
-        ss>>type>>status;
-        player.setUnlockedSwords(static_cast<SwordsTypes>(type),status);
-    }
-    std::getline(file,line);
-    int numberofarmors = std::stoi(line);
-    for(int i=0;i<numberofarmors;i++)
-    {
-        std::getline(file,line);
-        std::stringstream ss(line);
-        ss>>type>>status;
-        player.setUnlockedArmors(static_cast<ArmorsTypes>(type),status);
-    }
-    std::getline(file,line);
-    player.setSword(static_cast<SwordsTypes>(std::stoi(line)));
+        player.setName(line);
 
-    std::getline(file,line);
-    player.setArmor(static_cast<ArmorsTypes>(std::stoi(line)));
-    menagers.msg.add("Save loaded succesfully",MessageType::Success,Utils::TimeOfMessage);
+        std::getline(file,line);
+        player.setGold(std::stoi(line));
+
+        std::getline(file,line);
+        player.setPoints(std::stoi(line));
+
+        std::getline(file,line);
+        Stats::difficulty=static_cast<Difficulties>(std::stoi(line));
+
+
+
+        std::getline(file,line);
+        int numberofswords = std::stoi(line);
+        int type;
+        bool status;
+        for(int i=0;i<numberofswords;i++)
+        {
+            std::getline(file,line);
+            std::stringstream ss(line);
+            ss>>type>>status;
+            player.setUnlockedSwords(static_cast<SwordsTypes>(type),status);
+        }
+        std::getline(file,line);
+        int numberofarmors = std::stoi(line);
+        for(int i=0;i<numberofarmors;i++)
+        {
+            std::getline(file,line);
+            std::stringstream ss(line);
+            ss>>type>>status;
+            player.setUnlockedArmors(static_cast<ArmorsTypes>(type),status);
+        }
+        std::getline(file,line);
+        player.setSword(static_cast<SwordsTypes>(std::stoi(line)));
+
+        std::getline(file,line);
+        player.setArmor(static_cast<ArmorsTypes>(std::stoi(line)));
+        menagers.msg.add("Save loaded succesfully",MessageType::Success,Utils::TimeOfMessage);
+    }
+    catch(const std::runtime_error& e){
+        menagers.msg.add(e.what(), MessageType::Error, Utils::TimeOfMessage);
+    }
 }
 
 void Settings::setDifficulty(Difficulties difficulty)
