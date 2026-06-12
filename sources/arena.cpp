@@ -182,8 +182,8 @@ void Arena::Fight(){
 
             if (totalDamageTaken > 0) {
                 sf::FloatRect playerBounds = player.getSprite().getGlobalBounds();
-                sf::Vector2f headPos(playerBounds.left + playerBounds.width / 2.f, playerBounds.top - 30.f);
-                msgManager->add("-" + std::to_string(totalDamageTaken), MessageType::Damage, 1.5f, sf::Color::Red, headPos, 15.f);
+                sf::Vector2f headPos(playerBounds.left + playerBounds.width / 2.f, playerBounds.top + 25.f);
+                msgManager->add("-" + std::to_string(totalDamageTaken), MessageType::Damage, 1.5f, sf::Color::Red, headPos, 25.f);
             }
 
             if(!CheckGameOverConditions()) {
@@ -247,16 +247,21 @@ void Arena::ExecuteAttack(AttackType attackType) {
 
     if (damageDealt > 0) {
         sf::FloatRect enemyBounds = selectedEnemy->getSprite().getGlobalBounds();
-        sf::Vector2f enemyHeadPos(enemyBounds.left + enemyBounds.width / 2.f, enemyBounds.top - 30.f);
+        sf::Vector2f enemyHeadPos(enemyBounds.left + enemyBounds.width / 2.f, enemyBounds.top + 40.f);
 
-        msgManager->add("-" + std::to_string(damageDealt), MessageType::Damage, 1.5f, sf::Color::Red, enemyHeadPos, 15.f);
+        msgManager->add("-" + std::to_string(damageDealt), MessageType::Damage, 1.5f, sf::Color::Red, enemyHeadPos, 25.f);
     }
+    else {
+        sf::FloatRect enemyBounds = selectedEnemy->getSprite().getGlobalBounds();
+        sf::Vector2f enemyHeadPos(enemyBounds.left + enemyBounds.width / 2.f, enemyBounds.top + 40.f);
 
+        msgManager->add("MISS", MessageType::Damage, 1.2f, sf::Color::Red, enemyHeadPos, 25.f);
+    }
     if (playerHpLoss > 0) {
         sf::FloatRect playerBounds = player.getSprite().getGlobalBounds();
-        sf::Vector2f playerHeadPos(playerBounds.left + playerBounds.width / 2.f, playerBounds.top - 30.f);
+        sf::Vector2f playerHeadPos(playerBounds.left + playerBounds.width / 2.f, playerBounds.top + 25.f);
 
-        msgManager->add("-" + std::to_string(playerHpLoss), MessageType::Damage, 1.5f, sf::Color::Red, playerHeadPos, 15.f);
+        msgManager->add("-" + std::to_string(playerHpLoss), MessageType::Damage, 1.5f, sf::Color::Red, playerHeadPos, 25.f);
     }
 
     if (selectedEnemy->isDead()) {
@@ -344,7 +349,7 @@ bool Arena::Update(Utils::Mouse& Mouse) {
             HandlePlayerAttacks(Mouse);
         }
         if (isPlayerSelected && btnHeal->IsClicked(Mouse)) {
-            int neededPoints = static_cast<int>(100 * Stats::difMultipliers.at(Stats::difficulty));
+            int neededPoints = static_cast<int>(150 * Stats::difMultipliers.at(Stats::difficulty));
         if (battlePointsForHeal >= neededPoints) {
             int hpBefore = player.getHealth();
             player.Heal(35);
@@ -352,9 +357,9 @@ bool Arena::Update(Utils::Mouse& Mouse) {
 
             if (healedAmount > 0) {
                 sf::FloatRect bounds = player.getSprite().getGlobalBounds();
-                sf::Vector2f playerHeadPos(bounds.left + bounds.width / 2.f, bounds.top - 25.f);
+                sf::Vector2f playerHeadPos(bounds.left + bounds.width / 2.f, bounds.top + 40.f);
 
-                msgManager->add("+" + std::to_string(healedAmount), MessageType::Heal, 1.5f, sf::Color::Green, playerHeadPos, 15.f);
+                msgManager->add("+" + std::to_string(healedAmount), MessageType::Heal, 1.5f, sf::Color::Green, playerHeadPos, 25.f);
             }
             battlePointsForHeal -= neededPoints;
             isPlayerSelected = false;
@@ -413,7 +418,7 @@ void Arena::Draw(sf::RenderWindow& window){
     window.draw(goldText);
 
     //Rysowanie licznika punktow
-    int neededPoints = static_cast<int>(100 * Stats::difMultipliers.at(Stats::difficulty));
+    int neededPoints = static_cast<int>(150 * Stats::difMultipliers.at(Stats::difficulty));
 
     sf::Text pointsText;
     pointsText.setFont(menagers.tex.getMainFont());
