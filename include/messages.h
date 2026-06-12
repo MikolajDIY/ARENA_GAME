@@ -4,7 +4,7 @@
 #include "utils.h"
 #include "textureMenager.h"
 
-enum class MessageType{Error, Warning, Success, GameIfno};
+enum class MessageType{Error, Warning, Success, GameInfo, Damage, Heal};
 
 class MessageMenager{
 private:

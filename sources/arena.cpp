@@ -13,7 +13,7 @@ Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlaye
     currentState = TurnState::PlayerMove;
     msgManager = new MessageMenager(menagers.tex);
 
-    msgManager->add("The battle has begun", MessageType::GameIfno, 3.0f, Theme::Text, Theme::CenterOfScreen, 60);
+    msgManager->add("The battle has begun", MessageType::GameInfo, 2.5f, Theme::Text, Theme::CenterOfScreen, 60);
     introClock.restart();
 
     maxWaves = static_cast<int>(5 * Stats::difMultipliers.at(Stats::difficulty)); //przykladowa wartosc (dla 5 - max 7)
@@ -60,9 +60,7 @@ Arena::~Arena(){
 //GENEROWANIE PRZECIWNIKOW
 void Arena::SpawnEnemies() {
     if (msgManager != nullptr && currentWave > 1)
-        msgManager->add("Wave " + std::to_string(currentWave) + " starts!", MessageType::Success, 2.5f);
-    static std::mt19937 gen(static_cast<unsigned long>(std::time(nullptr)));
-
+        msgManager->add("Wave " + std::to_string(currentWave) + " starts!", MessageType::GameInfo, 2.5f, Theme::Text, Theme::CenterOfScreen, 60);
     int minEnemies = 1;
     int maxEnemies = 3;
     std::vector<EnemyTypes> availableTypes;
@@ -91,14 +89,11 @@ void Arena::SpawnEnemies() {
     if (maxEnemies > 4) maxEnemies = 4;
     if (minEnemies > maxEnemies) minEnemies = maxEnemies;
 
-    std::uniform_int_distribution<int> countDist(minEnemies, maxEnemies);
-    int enemiesToSpawn = countDist(gen);
-
-    std::uniform_int_distribution<int> typeDist(0, availableTypes.size() - 1);
+    int enemiesToSpawn = Utils::getRandomInt(minEnemies, maxEnemies);
     bool bossAlreadySpawned = false;
 
     for (int i = 0; i < enemiesToSpawn; i++) {
-        int randomIndex = typeDist(gen);
+        int randomIndex = Utils::getRandomInt(0, availableTypes.size() - 1);
         EnemyTypes chosenType = availableTypes[randomIndex];
 
         if (chosenType == EnemyTypes::Boss && bossAlreadySpawned)
@@ -186,7 +181,9 @@ void Arena::Fight(){
             int totalDamageTaken = hpBefore - player.getHealth();
 
             if (totalDamageTaken > 0) {
-            msgManager->add("You took " + std::to_string(totalDamageTaken) + " damage!", MessageType::Error, 2.0f);
+                sf::FloatRect playerBounds = player.getSprite().getGlobalBounds();
+                sf::Vector2f headPos(playerBounds.left + playerBounds.width / 2.f, playerBounds.top - 30.f);
+                msgManager->add("-" + std::to_string(totalDamageTaken), MessageType::Damage, 1.5f, sf::Color::Red, headPos, 15.f);
             }
 
             if(!CheckGameOverConditions()) {
@@ -203,15 +200,15 @@ void Arena::Fight(){
 bool Arena::CheckGameOverConditions() {
     // Gracz stracil cale HP
     if (player.getHealth() <= 0) {
-        msgManager->add("DEFEAT!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
-        msgManager->add("Victoria  has   fallen...", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);
+        msgManager->add("DEFEAT!", MessageType::GameInfo, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
+        msgManager->add("Victoria  has   fallen...", MessageType::GameInfo, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);
         currentState = TurnState::GameOver;
         return true;
     }
     // Brak wrogow na arenie
     if (enemies.empty() && currentWave >= maxWaves) {
-        msgManager->add("VICTORY!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
-        msgManager->add("All  enemies  vanquished!", MessageType::GameIfno, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);
+        msgManager->add("VICTORY!", MessageType::GameInfo, 15.0f, Theme::Text, Theme::CenterOfScreen, 60);
+        msgManager->add("All  enemies  vanquished!", MessageType::GameInfo, 15.0f, Theme::Text, Theme::CenterOfScreen, 30);
         currentState = TurnState::GameOver;
         return true;
     }
@@ -241,11 +238,26 @@ void Arena::HandleTargetSelection(const sf::Vector2f& mouseCoord) {
 void Arena::ExecuteAttack(AttackType attackType) {
     if (!selectedEnemy) return;
 
-    int hpBefore = selectedEnemy->getHealth();
-    player.Hit(*selectedEnemy, attackType);
-    int damageDealt = hpBefore - selectedEnemy->getHealth();
+    int enemyHpBefore = selectedEnemy->getHealth();
+    int playerHpBefore = player.getHealth();
 
-    msgManager->add("Dealt " + std::to_string(damageDealt) + " damage to enemy!", MessageType::Success, 2.0f);
+    player.Hit(*selectedEnemy, attackType);
+    int damageDealt = enemyHpBefore - selectedEnemy->getHealth();
+    int playerHpLoss = playerHpBefore - player.getHealth();
+
+    if (damageDealt > 0) {
+        sf::FloatRect enemyBounds = selectedEnemy->getSprite().getGlobalBounds();
+        sf::Vector2f enemyHeadPos(enemyBounds.left + enemyBounds.width / 2.f, enemyBounds.top - 30.f);
+
+        msgManager->add("-" + std::to_string(damageDealt), MessageType::Damage, 1.5f, sf::Color::Red, enemyHeadPos, 15.f);
+    }
+
+    if (playerHpLoss > 0) {
+        sf::FloatRect playerBounds = player.getSprite().getGlobalBounds();
+        sf::Vector2f playerHeadPos(playerBounds.left + playerBounds.width / 2.f, playerBounds.top - 30.f);
+
+        msgManager->add("-" + std::to_string(playerHpLoss), MessageType::Damage, 1.5f, sf::Color::Red, playerHeadPos, 15.f);
+    }
 
     if (selectedEnemy->isDead()) {
         HandleEnemyDefeat();
@@ -315,7 +327,7 @@ bool Arena::Update(Utils::Mouse& Mouse) {
     }
     if (!introFinished) {
         introFinished = true;
-        msgManager->add("Wave " + std::to_string(currentWave) + " starts!", MessageType::Success, 2.5f);
+        msgManager->add("Wave " + std::to_string(currentWave) + " starts!", MessageType::GameInfo, 2.5f, Theme::Text, Theme::CenterOfScreen, 60);
     }
     if (btnBackToMenu->IsClicked(Mouse)) {
         return false;
@@ -337,8 +349,13 @@ bool Arena::Update(Utils::Mouse& Mouse) {
             int hpBefore = player.getHealth();
             player.Heal(10); //nie wiem czy nie zmienic
             int healedAmount = player.getHealth() - hpBefore;
-            msgManager->add("Healed for " + std::to_string(healedAmount) + " HP", MessageType::Success, 2.0f);
 
+            if (healedAmount > 0) {
+                sf::FloatRect bounds = player.getSprite().getGlobalBounds();
+                sf::Vector2f playerHeadPos(bounds.left + bounds.width / 2.f, bounds.top - 25.f);
+
+                msgManager->add("+" + std::to_string(healedAmount), MessageType::Heal, 1.5f, sf::Color::Green, playerHeadPos, 15.f);
+            }
             battlePointsForHeal -= neededPoints;
             isPlayerSelected = false;
             currentState = TurnState::EnemiesTurn;

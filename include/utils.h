@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <random>
 #include "theme.h"
 
 class TextureMenager;
@@ -10,6 +11,18 @@ enum class MessageType;
 //--------------------------------------
 namespace Utils{
     const float TimeOfMessage = 2.f;
+
+     //LOSOWANIE
+    inline std::mt19937& getGenerator() {
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        return gen;
+    }
+
+    inline int getRandomInt(int min, int max) {
+        std::uniform_int_distribution<int> distrib(min, max);
+        return distrib(getGenerator());
+    }
 
     template <typename T>
     class ObjectFormatter {

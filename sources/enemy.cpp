@@ -23,7 +23,7 @@ Enemy::Enemy(TextureMenager& textures) : textures(textures){
 
     isDeath = false;
 }
-// Zmiana statstyk przeciwnikow
+// Zmiana statystyk przeciwnikow
 Enemy& Enemy::operator*=(float multiplier) {
     stats.health = static_cast<int>(stats.health * multiplier);
     stats.damage = static_cast<int>(stats.damage * multiplier);

@@ -641,7 +641,7 @@
 
 1779127019 source:c:\users\48535\arena_game\resources.rc
 
-1780842688 source:c:\users\48535\arena_game\sources\arena.cpp
+1781280132 source:c:\users\48535\arena_game\sources\arena.cpp
 	"arena.h"
 	"textureMenager.h"
 	"player.h"
@@ -1364,7 +1364,7 @@
 	"textureMenager.h"
 	"item.h"
 
-1780334074 c:\users\48535\arena_game\include\shop.h
+1781168372 c:\users\48535\arena_game\include\shop.h
 	<SFML/Graphics.hpp>
 	<string>
 	<memory>
@@ -1417,7 +1417,7 @@
 	"theme.h"
 	"utils.h"
 
-1780840032 source:c:\users\48535\arena_game\sources\enemy.cpp
+1781169156 source:c:\users\48535\arena_game\sources\enemy.cpp
 	"enemy.h"
 	"utils.h"
 	"stats.h"
@@ -1429,8 +1429,9 @@
 	"theme.h"
 	"utils.h"
 
-1780832522 c:\users\48535\arena_game\include\utils.h
+1781280132 c:\users\48535\arena_game\include\utils.h
 	<SFML/Graphics.hpp>
+	<random>
 	"theme.h"
 
 1780832522 source:c:\users\48535\arena_game\sources\mage.cpp
@@ -1444,9 +1445,10 @@
 	"game.h"
 	"arena.h"
 
-1780832522 source:c:\users\48535\arena_game\sources\player.cpp
+1781280132 source:c:\users\48535\arena_game\sources\player.cpp
 	"player.h"
 	"stats.h"
+	"utils.h"
 
 1780832522 source:c:\users\48535\arena_game\sources\settings.cpp
 	"settings.h"
@@ -1456,7 +1458,7 @@
 	"utils.h"
 	"stats.h"
 
-1780832522 source:c:\users\48535\arena_game\sources\shop.cpp
+1781168372 source:c:\users\48535\arena_game\sources\shop.cpp
 	"shop.h"
 	"game.h"
 	"theme.h"
@@ -1497,23 +1499,23 @@
 
 1779632996 d238b64ae25593be25ce88e81fc6a4e5eae46
 
-1780334074 c:\users\48535\arena_game\include\item.h
+1781168372 c:\users\48535\arena_game\include\item.h
 	<SFML/Graphics.hpp>
 	<string>
 	"utils.h"
 
-1780512739 c:\users\48535\arena_game\include\messages.h
+1781169813 c:\users\48535\arena_game\include\messages.h
 	<SFML/Graphics.hpp>
 	<vector>
 	"utils.h"
 	"textureMenager.h"
 
-1780832522 source:c:\users\48535\arena_game\sources\item.cpp
+1781168372 source:c:\users\48535\arena_game\sources\item.cpp
 	"item.h"
 	"utils.h"
 	"theme.h"
 
-1780832522 source:c:\users\48535\arena_game\sources\messages.cpp
+1781273018 source:c:\users\48535\arena_game\sources\messages.cpp
 	"messages.h"
 
 1780512739 c:\users\48535\arena_game\include\stats.h
