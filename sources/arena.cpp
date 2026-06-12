@@ -344,10 +344,10 @@ bool Arena::Update(Utils::Mouse& Mouse) {
             HandlePlayerAttacks(Mouse);
         }
         if (isPlayerSelected && btnHeal->IsClicked(Mouse)) {
-            int neededPoints = static_cast<int>(200 * Stats::difMultipliers.at(Stats::difficulty));
+            int neededPoints = static_cast<int>(100 * Stats::difMultipliers.at(Stats::difficulty));
         if (battlePointsForHeal >= neededPoints) {
             int hpBefore = player.getHealth();
-            player.Heal(10); //nie wiem czy nie zmienic
+            player.Heal(35);
             int healedAmount = player.getHealth() - hpBefore;
 
             if (healedAmount > 0) {
@@ -413,7 +413,7 @@ void Arena::Draw(sf::RenderWindow& window){
     window.draw(goldText);
 
     //Rysowanie licznika punktow
-    int neededPoints = static_cast<int>(200 * Stats::difMultipliers.at(Stats::difficulty));
+    int neededPoints = static_cast<int>(100 * Stats::difMultipliers.at(Stats::difficulty));
 
     sf::Text pointsText;
     pointsText.setFont(menagers.tex.getMainFont());
