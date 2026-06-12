@@ -5,7 +5,7 @@
 #include "item.h"
 
 struct PlayerStats{
-    int demage;
+    int damage;
     int health;
 };
 
@@ -74,7 +74,7 @@ public:
     // SKLEP I USTAWIENIA - ekwipunek
     int getGold();
 
-    void setSword(SwordsTypes newSword); // Te metody mog¹ tez zmieniac hp i demage gracza
+    void setSword(SwordsTypes newSword); // Te metody moga tez zmieniac hp i damage gracza
     void setArmor(ArmorsTypes newArmor);
 
     bool hasSword(SwordsTypes sword) const;

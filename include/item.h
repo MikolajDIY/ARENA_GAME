@@ -7,8 +7,8 @@
 //      OBECNIE ITEM JEST TYKO DLA SKLEPU
 //---------------------------------------------
 
-enum class SwordsTypes{Basic, Steel, Godness};
-enum class ArmorsTypes{Basic, Steel, Godness};
+enum class SwordsTypes{Basic, Steel, Goddess};
+enum class ArmorsTypes{Basic, Steel, Goddess};
 enum class ItemState{Euiped, Blocked, Aviable};
 
 struct ItemStats{

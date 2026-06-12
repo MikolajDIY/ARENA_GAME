@@ -16,7 +16,7 @@ Arena::Arena(std::string arenaName, Utils::Menagers& menagers, Player& mainPlaye
     msgManager->add("The battle has begun", MessageType::GameInfo, 2.5f, Theme::Text, Theme::CenterOfScreen, 60);
     introClock.restart();
 
-    maxWaves = static_cast<int>(5 * Stats::difMultipliers.at(Stats::difficulty)); //przykladowa wartosc (dla 5 - max 7)
+    maxWaves = static_cast<int>(5 * Stats::difMultipliers.at(Stats::difficulty));
     if (maxWaves < 1) maxWaves = 1;
 
     btnBackToMenu = new Button("MENU", {10,10}, menagers.tex.getMainFont(), Theme::ButtonNormal, Theme::ButtonHover);
@@ -83,7 +83,7 @@ void Arena::SpawnEnemies() {
         availableTypes = { EnemyTypes::Skeleton, EnemyTypes::Zombie, EnemyTypes::Mage, EnemyTypes::Boss };
     }
 
-    int waveBonus = (currentWave - 1) / 2; //mnoznik fali (nie wiem czy zostawic)
+    int waveBonus = (currentWave - 1) / 2;
     minEnemies += waveBonus;
     maxEnemies += waveBonus;
     if (maxEnemies > 4) maxEnemies = 4;
@@ -170,7 +170,7 @@ void Arena::Fight(){
 
         case TurnState::EnemiesTurn:
         {
-            if (turnDelayClock.getElapsedTime().asSeconds() < 3.0f) //przykladowa wartosc opoznienia
+            if (turnDelayClock.getElapsedTime().asSeconds() < 2.5f)
             return;
 
             int hpBefore = player.getHealth();
@@ -380,7 +380,7 @@ void Arena::Draw(sf::RenderWindow& window){
     // Rysowanie Areny
     window.draw(arenaBackGround);
     // Rysowanie Przeciwnikow
-    for(auto const& enemy : enemies){  // Przy zmianie przechowywania na std::map ZMIENIC
+    for(auto const& enemy : enemies){
         enemy->Update();
         enemy->Draw(window);
     }

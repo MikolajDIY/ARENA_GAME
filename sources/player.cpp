@@ -15,11 +15,11 @@ Player::Player(TextureMenager& textures) : textures(textures){
     // Miecze
     unlockedSwords[SwordsTypes::Basic] = true;
     unlockedSwords[SwordsTypes::Steel] = false;
-    unlockedSwords[SwordsTypes::Godness] = false;
+    unlockedSwords[SwordsTypes::Goddess] = false;
     // Zbroje
     unlockedArmors[ArmorsTypes::Basic] = true;
     unlockedArmors[ArmorsTypes::Steel] = false;
-    unlockedArmors[ArmorsTypes::Godness] = false;
+    unlockedArmors[ArmorsTypes::Goddess] = false;
 
     // Wczytanie domyslnego ubioru na potrzeby testu - DOCELOWO MA BYC TU WYWOLANIE METODY ODCZYTUJACEJ EKWIPUNEK Z PLIKU
     // I UBRANIE OSTATNIEGO ZAPISANEGO SETU.
@@ -96,13 +96,13 @@ void Player::Hit(Enemy& target, AttackType attackType) {
 
     switch(attackType) {
         case AttackType::Basic:
-            finalDamage = stats.demage;
+            finalDamage = stats.damage;
             break;
 
         case AttackType::Reckless: //podwojne obrazenia dla wroga, ale gracz traci hp
         {
-            finalDamage = stats.demage * 2;
-            int hpLoss = Utils::getRandomInt(5, 15); //przykladowa wartosc
+            finalDamage = stats.damage * 2;
+            int hpLoss = Utils::getRandomInt(5, 15);
             stats.health -= hpLoss;
             break;
         }
@@ -110,7 +110,7 @@ void Player::Hit(Enemy& target, AttackType attackType) {
         case AttackType::Risky: // atak zadaje duze obrazenia, ale ma tylko 55% szans na trafienie
         {
             if(Utils::getRandomInt(0, 99) < 55) {
-                finalDamage = static_cast<int>(stats.demage * 2.0f);
+                finalDamage = static_cast<int>(stats.damage * 2.0f);
             }
             else {
                 finalDamage = 0;
@@ -120,10 +120,10 @@ void Player::Hit(Enemy& target, AttackType attackType) {
         case AttackType::Combo: // 3 slabsze uderzenia, dla kazdego osobno losuje sie szansa na trafienie
         {
             finalDamage = 0;
-            int singleHitDamage = static_cast<int>(stats.demage * 0.4f); //przykladowa wartosc 40% obrazen
+            int singleHitDamage = static_cast<int>(stats.damage * 0.4f);
 
             for(int i = 0; i < 3; i++) {
-                if (Utils::getRandomInt(0, 99) < 70)  // przykladowa wartosc 70% szans na trafienie
+                if (Utils::getRandomInt(0, 99) < 70)
                     finalDamage += singleHitDamage;
             }
             break;
@@ -157,7 +157,7 @@ void Player::setSword(SwordsTypes newSword){
     sword = newSword;
 
     // Zmiana statystyk gracza
-    stats.demage = Stats::sword.at(sword).value;
+    stats.damage = Stats::sword.at(sword).value;
 
     // Podmiana tekstur miecza
     switch(sword){
@@ -169,7 +169,7 @@ void Player::setSword(SwordsTypes newSword){
         playerDraw.SwordSprite.setTexture(textures.getSteelSwordTexture());
         break;
 
-    case SwordsTypes::Godness:
+    case SwordsTypes::Goddess:
         playerDraw.SwordSprite.setTexture(textures.getGodnesSwordTexture());
         break;
     }
@@ -192,7 +192,7 @@ void Player::setArmor(ArmorsTypes newArmor){
         playerDraw.PlayerSprite.setTexture(textures.getPlayerTextureSteel());
         break;
 
-    case ArmorsTypes::Godness:
+    case ArmorsTypes::Goddess:
         playerDraw.PlayerSprite.setTexture(textures.getPlayerTextureGodnes());
         break;
     }

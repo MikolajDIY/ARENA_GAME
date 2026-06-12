@@ -27,12 +27,12 @@ void Shop::createItems(){
     switch(shopState){
     case ShopState::Armors:
         armors[ArmorsTypes::Steel] = std::make_unique<Item>(menagers.tex.getPlayerTextureSteel(), menagers.tex.getMainFont(), sf::Vector2f(300,300), "Steel Armor", 100);
-        armors[ArmorsTypes::Godness] = std::make_unique<Item>(menagers.tex.getPlayerTextureGodnes(), menagers.tex.getMainFont(), sf::Vector2f(500,300), "Goddess Armor", 1000);
+        armors[ArmorsTypes::Goddess] = std::make_unique<Item>(menagers.tex.getPlayerTextureGodnes(), menagers.tex.getMainFont(), sf::Vector2f(500,300), "Goddess Armor", 1000);
         break;
 
     case ShopState::Swords:
         swords[SwordsTypes::Steel] = std::make_unique<Item>(menagers.tex.getSteelSwordTexture(), menagers.tex.getMainFont(), sf::Vector2f(300,200), "Steel Sword", 100);
-        swords[SwordsTypes::Godness] = std::make_unique<Item>(menagers.tex.getGodnesSwordTexture(), menagers.tex.getMainFont(), sf::Vector2f(500,200), "Goddess Sword", 1000);
+        swords[SwordsTypes::Goddess] = std::make_unique<Item>(menagers.tex.getGodnesSwordTexture(), menagers.tex.getMainFont(), sf::Vector2f(500,200), "Goddess Sword", 1000);
         break;
 
     }

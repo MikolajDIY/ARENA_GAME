@@ -16,13 +16,13 @@ namespace Stats{
     inline const std::map<ArmorsTypes, ItemStats> armor{
         {ArmorsTypes::Basic,{100}},
         {ArmorsTypes::Steel,{300}},
-        {ArmorsTypes::Godness,{1000}}
+        {ArmorsTypes::Goddess,{1000}}
     };
 
     inline const std::map<SwordsTypes, ItemStats> sword{
         {SwordsTypes::Basic,{20}},
         {SwordsTypes::Steel,{60}},
-        {SwordsTypes::Godness,{200}}
+        {SwordsTypes::Goddess,{200}}
     };
 
     inline const std::map<EnemyTypes, EnemyStats> enemy{
