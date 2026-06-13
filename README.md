@@ -68,7 +68,7 @@ W trakcie realizacji projektu wypracowano profesjonalne podejście do pracy grup
 
 ## Autorzy
 <div align="center">
-  <img src="img/for_Readme_file/studio.png" width="150" alt="Ratajczak kwadrat Sakowicz Studio Logo">
+  <img src="img/for_Readme_file/Studio.png" width="150" alt="Ratajczak kwadrat Sakowicz Studio Logo">
 </div>
 
 **Zespół:** Mikołaj Ratajczak, Zuzanna Ratajczak, Filip Sakowicz
