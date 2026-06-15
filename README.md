@@ -64,7 +64,7 @@ Aby poprawnie skompilować i uruchomić grę, postępuj zgodnie z poniższymi kr
 W trakcie realizacji projektu wypracowano profesjonalne podejście do pracy grupowej, opierające się na:
 * **Ścisłym podziale zadań:** Wyraźne określenie ról w zespole (m.in. projekt bazowego silnika, implementacja logiki wrogów, przygotowanie interfejsu).
 * **Wewnętrznej dokumentacji i komentarzach:** Przygotowano dedykowany dokument techniczny dla zespołu opisujący działanie bazowych klas, a kluczowe mechaniki opatrzono komentarzami w kodzie.
-* **Architekturze opartej na UML:** Strukturę obiektową (dziedziczenie, relacje między modułami) zaprojektowano i udokumentowano za pomocą szczegółowego diagramu klas.
+* **Architekturze opartej na UML:** Strukturę obiektową (dziedziczenie, relacje między modułami) zaprojektowano i udokumentowano za pomocą diagramu klas.
 
 ## Autorzy
 <div align="center">
